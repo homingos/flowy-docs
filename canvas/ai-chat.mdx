@@ -1,0 +1,55 @@
+---
+title: "AI chat assistant"
+description: "Build and edit your canvas by chatting with Flowy's AI."
+---
+
+The AI chat assistant lives in your canvas sidebar and turns plain language into work on your canvas. You describe what you want, and it can plan, generate, and edit nodes for you.
+
+It is conversational by design. Ask for a single image, sketch out a whole scene, or refine what is already there, and the assistant proposes the steps before anything happens.
+
+<Frame caption="The AI chat assistant in the canvas sidebar">
+  <img src="/images/ai-chat-sidebar.png" alt="AI chat assistant open in the canvas sidebar" />
+</Frame>
+{/* TODO: capture real screenshot */}
+
+## How a chat turns into nodes
+
+<Steps>
+  <Step title="Describe what you want">
+    Type your prompt in the sidebar. Be as loose or as specific as you like, the assistant fills in the rest.
+  </Step>
+  <Step title="Review the proposed plan">
+    The assistant replies with a plan that lays out what it intends to create or change.
+  </Step>
+  <Step title="Confirm the generation cards">
+    Each generation shows up as a confirm card. Approve the ones you want before any credits are spent.
+  </Step>
+  <Step title="Watch nodes appear and update on your canvas">
+    Confirmed work lands directly on your canvas as nodes, connected and ready to refine.
+  </Step>
+</Steps>
+
+## What the assistant can do
+
+<AccordionGroup>
+  <Accordion title="Edit your canvas">
+    The assistant adds new nodes and edits existing ones straight from your prompt, so you can build and reshape your canvas by chatting.
+  </Accordion>
+  <Accordion title="Generate assets">
+    Ask for an image, video, or other asset and the assistant kicks off the generation, then drops the result onto your canvas as a node.
+  </Accordion>
+  <Accordion title="Vision analysis">
+    Add an image to the chat and the assistant understands what it sees, so it can describe it, build on it, or use it as context.
+  </Accordion>
+  <Accordion title="Choose a model">
+    Pick the model backend that fits the task. You can switch between `Claude`, `OpenAI`, and `Gemini`.
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+  The assistant is metered by tokens and uses credits as it plans and generates. See [credits](/billing/credits) for how the credit wallet works.
+</Note>
+
+<Tip>
+  Want to know more about what the assistant creates? Explore the [node types](/canvas/nodes) it works with and the [generators](/generators/overview) behind each asset.
+</Tip>

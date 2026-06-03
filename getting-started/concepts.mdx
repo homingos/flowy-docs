@@ -1,0 +1,60 @@
+---
+title: "Core concepts"
+description: "How Flowy thinks: canvas, nodes, generations, and the two editors."
+---
+
+Flowy is built around one connected canvas where every idea is a node you can generate, connect, and refine. Once you understand a few core ideas, the rest of Flowy clicks into place. This page walks you through them.
+
+## The infinite canvas
+
+The canvas is your primary workspace, and it never runs out of room. You work at the speed of thought here: ideate, iterate, and refine without leaving the page. Drop in prompts, pan across your ideas, and zoom out to see the whole story at once.
+
+<Frame caption="An infinite canvas with connected nodes">
+  <img src="/images/canvas-overview.png" alt="Flowy canvas with several connected nodes" />
+</Frame>
+{/* TODO: capture real screenshot */}
+
+## Nodes and connections
+
+A node is the basic unit of the canvas. It is either a piece of content, like **Text**, **Image**, **Video**, or **Audio**, or a generator that produces new content from a prompt. You connect a node's output into another node's input to pass results forward, so one image can feed a video, and that video can feed a composition.
+
+When you want to explore options, add a **Router** to fan out into variations and fan them back in. Use a **Group** to organize related nodes, and drop a **Sticky note** to annotate your thinking.
+
+<Tip>
+  Connections are how context flows. Wire nodes together and each step builds on the last.
+</Tip>
+
+## Canvas vs Studio
+
+Flowy has two editors that work together. **Canvas** is the node graph where you generate assets and branch through ideas. **Studio** is the timeline editor where you compose those assets into a finished, exportable video.
+
+You switch between them anytime with the mode-switch pill. A composition you create on the canvas opens directly in **Studio**, so your work stays in continuity from frame to film.
+
+## Generations and credits
+
+Generating content consumes credits from your wallet. The lifecycle is simple: credits are first *reserved* when a generation starts, then *deducted* on success, or *refunded* automatically if it fails. New accounts start with free credits so you can explore right away.
+
+<Note>
+  You never lose credits for a failed generation. Refunds happen automatically. See [Credits](/billing/credits) for the full picture.
+</Note>
+
+## Workspaces and projects
+
+A workspace holds your projects and your team members. A project lives inside a workspace and holds your canvas. You can create or switch workspaces, invite people, and keep related work together in one place.
+
+## Where to next
+
+<CardGroup cols={2}>
+  <Card title="Canvas overview" icon="diagram-project" href="/canvas/overview">
+    Learn the node graph and how to navigate it.
+  </Card>
+  <Card title="Studio overview" icon="film" href="/studio/overview">
+    Compose your assets into a finished video.
+  </Card>
+  <Card title="Generators overview" icon="wand-magic-sparkles" href="/generators/overview">
+    See everything Flowy can generate.
+  </Card>
+  <Card title="Credits" icon="bolt" href="/billing/credits">
+    Understand the credit wallet and billing.
+  </Card>
+</CardGroup>

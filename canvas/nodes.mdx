@@ -1,0 +1,77 @@
+---
+title: "Nodes"
+description: "Every node type on the canvas and how to connect them."
+---
+
+Nodes are the building blocks of the canvas. Each one holds a piece of content or structure, and you wire them together to build your idea step by step.
+
+Most nodes share the same anatomy: a **header** with the type icon, the **content** itself, **connection handles** on the sides for wiring inputs and outputs, and a **footer** with quick actions. Connect one node's output to another's input, and the canvas keeps your thoughts, prompts, pixels, and motion in continuity.
+
+<Frame caption="The anatomy of a canvas node">
+  <img src="/images/node-anatomy.png" alt="A canvas node showing its header, content, handles, and footer" />
+</Frame>
+{/* TODO: capture real screenshot */}
+
+## Content nodes
+
+These nodes carry your actual content. Each connects to others to feed prompts and assets downstream.
+
+<CardGroup cols={3}>
+  <Card title="Text" icon="note-sticky" href="/generators/overview">
+    Write prompts, notes, and copy that feed other nodes.
+  </Card>
+  <Card title="Image" icon="image" href="/generators/image">
+    Generated stills, powered by Google Gemini.
+  </Card>
+  <Card title="Video" icon="video" href="/generators/video">
+    Short clips, powered by Google Veo.
+  </Card>
+  <Card title="Audio" icon="music" href="/generators/audio">
+    Speech, music, and SFX you can layer in.
+  </Card>
+  <Card title="Storyboard" icon="film" href="/generators/storyboard">
+    A sequence of frames to plan your narrative.
+  </Card>
+  <Card title="Flam" icon="wand-magic-sparkles" href="/generators/flam">
+    Interactive HTML and motion experiences.
+  </Card>
+  <Card title="Sketch" icon="pen-nib" href="/canvas/nodes">
+    Draw rough ideas directly on the canvas.
+  </Card>
+  <Card title="Composition" icon="layer-group" href="/studio/overview">
+    Assets assembled into a Studio timeline.
+  </Card>
+  <Card title="3D Model — coming soon" icon="cube" href="/canvas/nodes">
+    Generated 3D assets, on the way.
+  </Card>
+</CardGroup>
+
+## Structural nodes
+
+These nodes don't generate content. They help you organize and branch your work.
+
+- **Router** lets you fan out to run variations in parallel, then fan back in to compare results.
+- **Group** bundles related nodes so you can move and organize them together.
+- **Sticky note** lets you annotate the canvas with notes and reminders for yourself and your team.
+
+## Working with nodes
+
+<Steps>
+  <Step title="Add a node">
+    Drop a node from the toolbar, or generate one through **Quick Creates**. New nodes land right on your canvas.
+  </Step>
+  <Step title="Connect nodes">
+    Drag from one node's output handle to another's input handle to wire them together. The output feeds the input downstream.
+  </Step>
+  <Step title="Run a generation">
+    Trigger the connected node to generate. Results appear in place, ready to connect onward.
+  </Step>
+</Steps>
+
+<Warning>
+  **3D Model** nodes are coming soon. You'll be able to add them, but generation isn't available just yet.
+</Warning>
+
+<Tip>
+  Not sure which node to start with? Ask the [AI chat assistant](/canvas/ai-chat) to plan and add nodes for you, or browse the [generators overview](/generators/overview) to see what each one can make.
+</Tip>

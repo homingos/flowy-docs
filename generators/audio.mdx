@@ -1,0 +1,49 @@
+---
+title: "Audio generator"
+description: "Generate speech, music, and sound effects."
+---
+
+The audio generator creates speech, music, or sound effects from a prompt. Pick a mode, write what you want to hear, set the options, and your audio lands on the canvas as a node.
+
+<Tabs>
+  <Tab title="Speech">
+    Use **Speech** to turn written narration or dialogue into a voice. Type your script, choose a voice, and generate.
+
+    | Voice | Character |
+    | --- | --- |
+    | Kore | Firm female |
+    | Charon | Calm male |
+    | Puck | Upbeat male |
+    | Zephyr | Bright female |
+    | Aoede | Warm female |
+    | Fenrir | Strong male |
+    | Leda | Youthful female |
+
+    You can also pick a speech model: `gemini-flash`, `gemini-pro`, or `elevenlabs`.
+  </Tab>
+
+  <Tab title="Music">
+    Use **Music** to compose a track from a prompt. Choose a sub-type: `Instrumental`, `Song`, or `Pro Song`.
+
+    Shape the mood with tag presets like `Lo-fi`, `Cinematic`, `Trap`, `Ambient`, `Piano`, `Electronic`, `Hip-hop`, and `Orchestral`.
+
+    For songs, structure the lyrics with tags: `Intro`, `Verse`, `Chorus`, `Bridge`, and `Outro`.
+
+    Instrumental durations are `15`, `30`, `60`, `120`, `180`, and `240` seconds.
+  </Tab>
+
+  <Tab title="SFX">
+    Use **SFX** to generate a single sound effect. Describe the sound you want, then set a duration.
+
+    SFX durations are `5`, `10`, `15`, `20`, and `30` seconds.
+  </Tab>
+</Tabs>
+
+<Frame caption="Generating audio in the Quick Creates modal">
+  <img src="/images/audio-generator.png" alt="Audio generator with Speech, Music, and SFX tabs" />
+</Frame>
+{/* TODO: capture real screenshot */}
+
+<Note>
+  Audio uses credits based on how long the clip is, so longer generations cost more. See [Credits](/billing/credits) for how the wallet works.
+</Note>

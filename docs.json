@@ -1,11 +1,14 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "Flowy",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#5C9987",
+    "light": "#5C9987",
+    "dark": "#4A7E6F"
+  },
+  "appearance": {
+    "default": "dark"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -14,40 +17,85 @@
         "group": "Getting Started",
         "pages": [
           "index",
-          "quickstart"
+          "getting-started/quickstart",
+          "getting-started/concepts"
+        ]
+      },
+      {
+        "group": "Canvas Editor",
+        "pages": [
+          "canvas/overview",
+          "canvas/navigation",
+          "canvas/nodes",
+          "canvas/ai-chat"
+        ]
+      },
+      {
+        "group": "Generators",
+        "pages": [
+          "generators/overview",
+          "generators/image",
+          "generators/video",
+          "generators/audio",
+          "generators/flam",
+          "generators/storyboard"
+        ]
+      },
+      {
+        "group": "Studio",
+        "pages": [
+          "studio/overview",
+          "studio/timeline",
+          "studio/export"
+        ]
+      },
+      {
+        "group": "Collaboration & Workspaces",
+        "pages": [
+          "collaboration/workspaces",
+          "collaboration/roles",
+          "collaboration/sharing"
+        ]
+      },
+      {
+        "group": "Credits & Billing",
+        "pages": [
+          "billing/credits"
+        ]
+      },
+      {
+        "group": "Help",
+        "pages": [
+          "help/faq",
+          "help/troubleshooting"
         ]
       }
     ],
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Website",
+          "href": "https://tryflowy.ai",
+          "icon": "globe"
         }
       ]
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/flowy-black.png",
+    "dark": "/logo/flowy-white.png"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:contact@tryflowy.ai"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "label": "Open Flowy",
+      "href": "https://tryflowy.ai"
     }
   },
   "contextual": {
@@ -64,9 +112,9 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/flowy_ai",
+      "instagram": "https://instagram.com/flowy.ai",
+      "facebook": "https://facebook.com/flowy.ai"
     }
   }
 }
