@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "aspen",
   "name": "Flowy",
   "colors": {
     "primary": "#5C9987",
@@ -12,78 +12,100 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "pages": [
+    "tabs": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "getting-started/quickstart",
-          "getting-started/concepts"
+        "tab": "Documentation",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "index",
+              "getting-started/quickstart",
+              "getting-started/concepts"
+            ]
+          },
+          {
+            "group": "Canvas Editor",
+            "pages": [
+              "canvas/overview",
+              "canvas/navigation",
+              "canvas/nodes",
+              "canvas/ai-chat"
+            ]
+          },
+          {
+            "group": "Generators",
+            "pages": [
+              "generators/overview",
+              "generators/image",
+              "generators/video",
+              "generators/audio",
+              "generators/flam",
+              "generators/storyboard"
+            ]
+          },
+          {
+            "group": "Studio",
+            "pages": [
+              "studio/overview",
+              "studio/timeline",
+              "studio/export"
+            ]
+          },
+          {
+            "group": "Collaboration & Workspaces",
+            "pages": [
+              "collaboration/workspaces",
+              "collaboration/roles",
+              "collaboration/sharing"
+            ]
+          }
         ]
       },
       {
-        "group": "Canvas Editor",
-        "pages": [
-          "canvas/overview",
-          "canvas/navigation",
-          "canvas/nodes",
-          "canvas/ai-chat"
-        ]
-      },
-      {
-        "group": "Generators",
-        "pages": [
-          "generators/overview",
-          "generators/image",
-          "generators/video",
-          "generators/audio",
-          "generators/flam",
-          "generators/storyboard"
-        ]
-      },
-      {
-        "group": "Studio",
-        "pages": [
-          "studio/overview",
-          "studio/timeline",
-          "studio/export"
-        ]
-      },
-      {
-        "group": "Collaboration & Workspaces",
-        "pages": [
-          "collaboration/workspaces",
-          "collaboration/roles",
-          "collaboration/sharing"
-        ]
-      },
-      {
-        "group": "Credits & Billing",
-        "pages": [
-          "billing/credits"
-        ]
-      },
-      {
-        "group": "Help",
-        "pages": [
-          "help/faq",
-          "help/troubleshooting"
+        "tab": "Help Center",
+        "icon": "life-ring",
+        "groups": [
+          {
+            "group": "Start here",
+            "pages": [
+              "help/overview",
+              "help/account",
+              "help/contact"
+            ]
+          },
+          {
+            "group": "Credits & billing",
+            "pages": [
+              "billing/credits",
+              "help/payments",
+              "help/refunds"
+            ]
+          },
+          {
+            "group": "Using Flowy",
+            "pages": [
+              "help/generating",
+              "help/exporting",
+              "help/collaboration"
+            ]
+          },
+          {
+            "group": "Troubleshooting & FAQ",
+            "pages": [
+              "help/troubleshooting",
+              "help/faq"
+            ]
+          }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Website",
-          "href": "https://tryflowy.ai",
-          "icon": "globe"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/flowy-black.png",
-    "dark": "/logo/flowy-white.png"
+    "dark": "/logo/flowy-white.png",
+    "href": "https://tryflowy.ai"
   },
   "navbar": {
     "links": [
@@ -94,21 +116,12 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Open Flowy",
-      "href": "https://tryflowy.ai"
+      "label": "Dashboard",
+      "href": "https://tryflowy.ai/signin"
     }
   },
   "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
-    ]
+    "options": ["copy", "view", "chatgpt", "claude", "perplexity", "cursor", "vscode"]
   },
   "footer": {
     "socials": {
