@@ -10,6 +10,16 @@
   "appearance": {
     "default": "dark"
   },
+  "fonts": {
+    "heading": {
+      "family": "Golos Text",
+      "weight": 600
+    },
+    "body": {
+      "family": "Golos Text",
+      "weight": 400
+    }
+  },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
@@ -125,9 +135,12 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/flowy_ai",
-      "instagram": "https://instagram.com/flowy.ai",
-      "facebook": "https://facebook.com/flowy.ai"
+      "x": "https://x.com/TryFlowyAI",
+      "instagram": "https://www.instagram.com/tryflowyai/",
+      "linkedin": "https://www.linkedin.com/in/flowy-ai-756474412/",
+      "youtube": "https://www.youtube.com/@tryflowyai",
+      "reddit": "https://www.reddit.com/r/FlowyAI/",
+      "discord": "https://discord.gg/nTeVdHpZ"
     }
   }
 }
