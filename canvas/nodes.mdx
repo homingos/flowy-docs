@@ -7,10 +7,11 @@ Nodes are the building blocks of the canvas. Each one holds a piece of content o
 
 Most nodes share the same anatomy: a **header** with the type icon, the **content** itself, **connection handles** on the sides for wiring inputs and outputs, and a **footer** with quick actions. Connect one node's output to another's input, and the canvas keeps your thoughts, prompts, pixels, and motion in continuity.
 
-<Frame caption="The anatomy of a canvas node">
+<Frame caption="An Image node, showing its header, content area, side connection handles, and prompt-and-Run footer">
   <img src="/images/node-anatomy.png" alt="A canvas node showing its header, content, handles, and footer" />
 </Frame>
-{/* TODO: capture real screenshot */}
+
+The white dots on the left and right edges are the **connection handles** — left is the input, right is the output. The **⋮ menu** in the top-right corner holds per-node actions, and the pills beneath a node hold its generation settings (aspect ratio, resolution, quality, and so on).
 
 ## Content nodes
 
@@ -56,17 +57,47 @@ These nodes don't generate content. They help you organize and branch your work.
 
 ## Working with nodes
 
-<Steps>
-  <Step title="Add a node">
-    Drop a node from the toolbar, or generate one through **Quick Creates**. New nodes land right on your canvas.
-  </Step>
-  <Step title="Connect nodes">
-    Drag from one node's output handle to another's input handle to wire them together. The output feeds the input downstream.
-  </Step>
-  <Step title="Run a generation">
-    Trigger the connected node to generate. Results appear in place, ready to connect onward.
-  </Step>
-</Steps>
+### Add a node
+
+Click the **+** button at the top of the left toolbar to open the **Add Node** menu. It has two sections: **Generate** (the AI node types) and **Libraries** (bring in your own assets). Every item also has a keyboard shortcut, so you can drop a node without opening the menu at all.
+
+<Frame caption="The Add Node menu, opened from the + button in the left toolbar">
+  <img src="/images/add-node-menu.png" alt="The Add Node menu showing Generate and Libraries sections with keyboard shortcuts" />
+</Frame>
+
+| Node | Shortcut | Node | Shortcut |
+| --- | --- | --- | --- |
+| Text | <kbd>⇧</kbd> <kbd>T</kbd> | 3D | <kbd>⇧</kbd> <kbd>D</kbd> |
+| Image | <kbd>⇧</kbd> <kbd>I</kbd> | Flam | <kbd>⇧</kbd> <kbd>F</kbd> |
+| Video | <kbd>⇧</kbd> <kbd>V</kbd> | Storyboard | <kbd>⇧</kbd> <kbd>S</kbd> |
+| Audio | <kbd>⇧</kbd> <kbd>A</kbd> | Compositor | <kbd>⇧</kbd> <kbd>C</kbd> |
+| Router | <kbd>⇧</kbd> <kbd>R</kbd> | | |
+
+Under **Libraries** you'll also find **Upload** (<kbd>⇧</kbd> <kbd>U</kbd>) and **Asset Library** (<kbd>⇧</kbd> <kbd>L</kbd>) for pulling existing files onto the canvas.
+
+### Fill it in and run
+
+Pick a node and it lands on the canvas. Type into the content area, or write a prompt in the bar at the bottom of the node and click **Run**. When the generation finishes, the result appears in place and the node is auto-named from your prompt.
+
+<Frame caption="A Text node — type directly, or use the prompt bar and Run to generate">
+  <img src="/images/text-node.png" alt="A Text node with a content area and a prompt-and-Run footer" />
+</Frame>
+
+### Connect nodes
+
+Each node has a **connection handle** on its left (input) and right (output). Hover the output handle until it activates, then click and drag to the input handle of another node. A curved edge appears, and the source node's output now feeds the target downstream — connect **Text → Image** to pass a generated description in as an image prompt, or **Text → Audio** for text-to-speech.
+
+<Frame caption="Dragging from a Text node's output handle to an Image node's input handle">
+  <img src="/images/connect-nodes.png" alt="A connection being dragged between two nodes' handles" />
+</Frame>
+
+To remove a connection, select the edge and press <kbd>Delete</kbd>.
+
+### Watch it end to end
+
+<Frame caption="Adding nodes, wiring them together, and running a generation on the canvas">
+  <img src="/images/node-walkthrough.gif" alt="Animated walkthrough of creating and connecting nodes in Flowy" />
+</Frame>
 
 <Warning>
   **3D Model** nodes are coming soon. You'll be able to add them, but generation isn't available just yet.
