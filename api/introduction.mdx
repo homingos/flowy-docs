@@ -58,7 +58,11 @@ data = res.json()["data"]
 ```
 </CodeGroup>
 
-There are two kinds of key — a **secret** key (`flowy_…`) for your server and a browser-safe **publishable** key (`flowy_pk_…`). See [Authentication](/api/authentication) for when to use each, and [Permissions](/api/permissions) to scope a key to exactly what it needs.
+Today you create **secret** keys (`flowy_…`) for your server. See [Authentication](/api/authentication) to create one and [Permissions](/api/permissions) to scope it to exactly what it needs.
+
+<Note>
+  Browser-safe **publishable** keys (`flowy_pk_…`), locked to an allowlist of domains, are coming soon.
+</Note>
 
 <Warning>
   Your **secret** key carries the privileges of its scopes — keep it server-side and never commit it or expose it in client code. Every run is billed to **the key's own workspace**, so a leaked key can only ever spend your balance, never another workspace's.
@@ -84,7 +88,7 @@ There's no official SDK yet — but the API is described by an [OpenAPI 3](https
 
 <CardGroup cols={2}>
   <Card title="Authentication" icon="key" href="/api/authentication">
-    Create a secret or publishable key and send it on every request.
+    Create a secret key and send it on every request.
   </Card>
   <Card title="Permissions" icon="shield-halved" href="/api/permissions">
     Scope a key to exactly what it needs: read apps, read runs, start runs.

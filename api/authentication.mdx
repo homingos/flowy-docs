@@ -13,6 +13,10 @@ A missing, malformed, revoked, or expired key returns `401 Unauthorized`.
 
 ## Secret vs publishable keys
 
+<Note>
+  **Publishable keys are coming soon.** Today every key you create is a **secret** key — the publishable column below previews what's next.
+</Note>
+
 There are two kinds of key. Pick the one that matches where your code runs.
 
 |  | **Secret key** | **Publishable key** |
@@ -32,10 +36,10 @@ There are two kinds of key. Pick the one that matches where your code runs.
     In the app, go to **Settings → API keys** (the **API** page). You'll need to be a workspace **owner** or **editor**.
   </Step>
   <Step title="Choose the key's shape">
-    Pick a **type** (Secret or Publishable), an **owner** (You or Machine), and a **permission** level (Full, Read-only, or Restricted). For a publishable key, add the **domains** it may run from. Optionally set a daily spend cap and rate limit under advanced options.
+    Pick an **owner** (You or Machine) and a **permission** level (All, Read-only, or Restricted). Optionally set a daily spend cap and rate limit under advanced options.
   </Step>
   <Step title="Copy it now">
-    Your key (`flowy_…` or `flowy_pk_…`) is shown **once**. Copy it and store it — a secret key in a secrets manager or server environment variable; a publishable key wherever your frontend reads its config.
+    Your key (`flowy_…`) is shown **once**. Copy it and store it in a secrets manager or server environment variable — you won't be able to see it again.
   </Step>
 </Steps>
 
@@ -83,6 +87,10 @@ data = res.json()["data"]
 </CodeGroup>
 
 ## Using a publishable key in the browser
+
+<Note>
+  Publishable keys aren't available to create yet — this section previews how they'll work.
+</Note>
 
 A publishable key works the same way — `Authorization: Bearer flowy_pk_…` — but the request must come from one of the key's **allowed domains** (matched on the `Origin`, falling back to the `Referer`). Add `example.com` for an exact host, or `*.example.com` to allow any subdomain. A request from a domain that isn't allowlisted returns `403 Forbidden`.
 
