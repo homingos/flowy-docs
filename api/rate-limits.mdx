@@ -1,0 +1,51 @@
+---
+title: "Rate limits"
+description: "Per-key request limits, the rate-limit headers, and how to back off."
+---
+
+Every API key is rate limited per minute. The limit is applied per key, so one key's traffic never eats into another's.
+
+## Limits
+
+| Key type | Default limit |
+| --- | --- |
+| Secret (`flowy_…`) | 60 requests / minute |
+| Publishable (`flowy_pk_…`) | 120 requests / minute |
+
+You can set a **custom per‑key rate limit** when you create or edit a key (under advanced options); it overrides the default for that key. Separately, each key may have at most a small number of **concurrent runs** in flight at once.
+
+## Rate-limit headers
+
+Every response includes headers describing your current window, following the [IETF draft](https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-ratelimit-headers):
+
+| Header | Meaning |
+| --- | --- |
+| `X-RateLimit-Limit` | Maximum requests allowed in the current window (per minute). |
+| `X-RateLimit-Remaining` | Requests remaining in the current window. |
+| `X-RateLimit-Reset` | Unix epoch second at which the window resets. |
+| `Retry-After` | Seconds to wait before retrying — sent on a `429`. |
+
+```http
+HTTP/1.1 200 OK
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 58
+X-RateLimit-Reset: 1893456000
+```
+
+## When you're rate limited
+
+Exceeding the per‑minute limit (or the concurrent‑run limit) returns `429 Too Many Requests`:
+
+```json
+{ "error": "rate limit exceeded" }
+```
+
+The response carries a `Retry-After` header (in seconds) and `X-RateLimit-Remaining: 0`.
+
+<Tip>
+  Read `X-RateLimit-Remaining` proactively and slow down as it approaches `0`. On a `429`, wait the `Retry-After` interval before retrying, and apply exponential backoff with jitter if you keep getting limited. Keep your in‑flight runs below the key's concurrency limit.
+</Tip>
+
+## Spend caps are separate
+
+A rate limit caps **how often** you call; a [daily spend cap](/api/authentication#protecting-your-keys) caps **how many credits** a key burns per day. Hitting the spend cap returns `402`, not `429`. See [Errors](/api/errors) for the full status‑code table.

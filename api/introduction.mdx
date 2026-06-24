@@ -1,65 +1,98 @@
 ---
-title: "API Overview"
+title: "Introduction"
 description: "Run the apps you build in Flowy from your own code over a simple HTTP API."
 ---
 
-The Flowy API lets you run **apps** — the mini‑apps you publish from a canvas — directly from your own server. Send inputs, get back generated images, video, audio, and more.
+The Flowy API lets you run **apps** — the mini-apps you publish from a canvas — programmatically. With it you can:
+
+- **List the apps** in your workspace
+- **Read an app's inputs and outputs** so you know what to send
+- **Start a run** with your own inputs
+- **Poll a run** and download its results — images, video, audio, and more
 
 <Note>
   An **app** is a canvas you've turned into a reusable tool by marking its input and output nodes. Anyone can fill in the inputs and run it. Learn more in [Concepts](/getting-started/concepts).
 </Note>
 
-## How billing works
-
-Every API request is authenticated with a **workspace secret key**, and every run is billed to **that key's workspace** ("caller‑pays").
-
-- Running **your own** app spends **your** workspace credits.
-- Running someone else's **public** app with your key spends **your** credits — never the author's.
-
-This is the core safety guarantee: no one can drain your workspace with your app, and your key only ever spends your own balance. To protect a key that leaks, set a [daily spend cap and rate limit](/api/authentication#protecting-your-keys), or revoke it instantly.
-
 ## Base URL
 
-Your API base URL is your Flowy backend URL followed by `/api/v1`:
+All API requests are made to the following base URL:
 
-```
+```bash
 https://apis.tryflowy.ai/genstudio-svc-v2/api/v1
 ```
 
 <Tip>
-  Copy your exact base URL — and create keys — from **Settings → API keys** in the app (the **API** page). The examples in these docs use `$FLOWY_API` for the base URL and `$FLOWY_KEY` for your secret key.
+  Copy your exact base URL — and create keys — from **Settings → API keys** in the app (the **API** page). These docs use `$FLOWY_API` for the base URL and `$FLOWY_KEY` for your key.
 </Tip>
 
-## Public vs private apps
+## Authentication
 
-| App | Who can run it via the API |
-| --- | --- |
-| **Published** (public) | Any valid key — the caller's workspace pays |
-| **Unpublished** (private) | Only a key from the app's **own** workspace |
+Authenticate every request by sending your API key as a **Bearer token** in the `Authorization` header:
 
-## What you can do
+```bash
+Authorization: Bearer flowy_xxxxxxxx
+```
+
+<CodeGroup>
+```bash cURL
+curl "$FLOWY_API/apps" \
+  -H "Authorization: Bearer $FLOWY_KEY"
+```
+
+```javascript Node.js
+const res = await fetch(`${process.env.FLOWY_API}/apps`, {
+  headers: { Authorization: `Bearer ${process.env.FLOWY_KEY}` },
+});
+const { data } = await res.json();
+```
+
+```python Python
+import os, requests
+
+res = requests.get(
+    f"{os.environ['FLOWY_API']}/apps",
+    headers={"Authorization": f"Bearer {os.environ['FLOWY_KEY']}"},
+)
+data = res.json()["data"]
+```
+</CodeGroup>
+
+There are two kinds of key — a **secret** key (`flowy_…`) for your server and a browser-safe **publishable** key (`flowy_pk_…`). See [Authentication](/api/authentication) for when to use each, and [Permissions](/api/permissions) to scope a key to exactly what it needs.
+
+<Warning>
+  Your **secret** key carries the privileges of its scopes — keep it server-side and never commit it or expose it in client code. Every run is billed to **the key's own workspace**, so a leaked key can only ever spend your balance, never another workspace's.
+</Warning>
+
+## Error handling
+
+The Flowy API uses conventional HTTP status codes to indicate success or failure, and returns a human-readable message on every error:
+
+```json
+{
+  "error": "this API key lacks the runs:write scope"
+}
+```
+
+A `2xx` means success, a `4xx` means the request was rejected (and usually tells you how to fix it), and a `5xx` means something went wrong on our end. See [Errors](/api/errors) for the full list, and [Rate limits](/api/rate-limits) for the `429` and the `X-RateLimit-*` headers.
+
+## SDKs
+
+There's no official SDK yet — but the API is described by an [OpenAPI 3](https://apis.tryflowy.ai/genstudio-svc-v2/api/v1/openapi.json) document (served publicly, no key required). Use it to generate a typed client in your language of choice, or import the API into Postman or Insomnia.
+
+## Next steps
 
 <CardGroup cols={2}>
   <Card title="Authentication" icon="key" href="/api/authentication">
-    Create a secret key and send it on every request.
+    Create a secret or publishable key and send it on every request.
+  </Card>
+  <Card title="Permissions" icon="shield-halved" href="/api/permissions">
+    Scope a key to exactly what it needs: read apps, read runs, start runs.
   </Card>
   <Card title="Run an app" icon="play" href="/api/running-apps">
-    The end‑to‑end flow: list apps, start a run, poll for the result.
+    The end-to-end flow: list apps, start a run, poll for the result.
   </Card>
-  <Card title="Endpoints" icon="code" href="/api/list-apps">
-    Interactive reference for every endpoint — try each one in the browser.
-  </Card>
-  <Card title="Errors & limits" icon="triangle-exclamation" href="/api/errors">
-    Status codes, rate limits, spend caps, and how to handle them.
+  <Card title="Rate limits" icon="gauge-high" href="/api/rate-limits">
+    Per-minute limits, the `X-RateLimit-*` headers, and backing off on `429`.
   </Card>
 </CardGroup>
-
-## OpenAPI spec
-
-The API is described by an OpenAPI 3 document, served publicly (no key required):
-
-```
-GET  https://apis.tryflowy.ai/genstudio-svc-v2/api/v1/openapi.json
-```
-
-Use it to generate a client in your language of choice, or import it into Postman or Insomnia.

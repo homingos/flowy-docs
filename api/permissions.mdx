@@ -1,0 +1,59 @@
+---
+title: "Permissions"
+description: "Scope an API key to exactly the operations it needs."
+---
+
+Every API key carries a set of **scopes** that decide which operations it can perform. Giving a key the narrowest scopes it needs limits the blast radius if it ever leaks — a read‑only key, for instance, can inspect apps and read run results but can never spend a credit.
+
+## Scopes
+
+| Scope | Grants |
+| --- | --- |
+| `apps:read` | List apps and read an app's input/output schema |
+| `runs:read` | Poll a run's status and outputs |
+| `runs:write` | Start runs (spends credits) |
+
+## Permission presets
+
+When you create a key you pick a preset. Internally it resolves to the scopes above.
+
+<CardGroup cols={3}>
+  <Card title="Full">
+    `apps:read` · `runs:read` · `runs:write`
+
+    Everything — discover apps, start runs, and read results.
+  </Card>
+  <Card title="Read-only">
+    `apps:read` · `runs:read`
+
+    Inspect apps and read run results, but **cannot start runs**. A good default for keys that only poll.
+  </Card>
+  <Card title="Restricted">
+    You choose
+
+    Tick exactly the scopes the key should have.
+  </Card>
+</CardGroup>
+
+## Which scope each endpoint needs
+
+| Endpoint | Required scope |
+| --- | --- |
+| `GET /v1/apps` | `apps:read` |
+| `GET /v1/apps/{appId}` | `apps:read` |
+| `POST /v1/apps/{appId}/runs` | `runs:write` |
+| `GET /v1/runs/{runId}` | `runs:read` |
+
+A request to an endpoint whose scope the key doesn't hold returns `403`:
+
+```json
+{ "error": "this API key lacks the runs:write scope" }
+```
+
+<Tip>
+  A common, safe setup for a browser **publishable** key is `apps:read` + `runs:write` + `runs:read` (so the page can fetch the app's inputs, start a run, and show the result) combined with a tight domain allowlist and a daily spend cap.
+</Tip>
+
+## Editing a key's permissions
+
+You can change a key's preset or scopes any time from **Settings → API keys → Edit**. The new permissions take effect immediately on the next request — a key's **type** (secret/publishable) and **owner** (you/machine), however, are fixed at creation.

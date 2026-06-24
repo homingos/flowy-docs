@@ -1,9 +1,29 @@
 ---
 title: "Authentication"
-description: "Create a secret API key and use it to authenticate every request."
+description: "Create an API key and use it to authenticate every request."
 ---
 
-The Flowy API uses **secret keys** for authentication. A key belongs to a workspace, and every run you start with it is billed to that workspace.
+The Flowy API authenticates with **API keys**. A key belongs to a workspace, and every run you start with it is billed to that workspace. Send the key as a Bearer token in the `Authorization` header on every request:
+
+```bash
+Authorization: Bearer flowy_xxxxxxxx
+```
+
+A missing, malformed, revoked, or expired key returns `401 Unauthorized`.
+
+## Secret vs publishable keys
+
+There are two kinds of key. Pick the one that matches where your code runs.
+
+|  | **Secret key** | **Publishable key** |
+| --- | --- | --- |
+| Prefix | `flowy_…` | `flowy_pk_…` |
+| Use it | Server-side only | In a browser / client app |
+| Protected by | Keeping it private | A per-key **domain allowlist** |
+
+<Warning>
+  A **secret** key grants full use of its scopes to anyone who has it — treat it like a password and keep it server-side. A **publishable** key is meant to be visible in client code, so its only real protection is the domain allowlist (plus its [scopes](/api/permissions), daily cap, and [rate limit](/api/rate-limits)). Give publishable keys the narrowest scopes and a sensible spend cap.
+</Warning>
 
 ## Create a key
 
@@ -11,67 +31,84 @@ The Flowy API uses **secret keys** for authentication. A key belongs to a worksp
   <Step title="Open API keys settings">
     In the app, go to **Settings → API keys** (the **API** page). You'll need to be a workspace **owner** or **editor**.
   </Step>
-  <Step title="Create the key">
-    Click **Create API key**, give it a name, and optionally set a daily spend cap and rate limit under **Advanced options**.
+  <Step title="Choose the key's shape">
+    Pick a **type** (Secret or Publishable), an **owner** (You or Machine), and a **permission** level (Full, Read-only, or Restricted). For a publishable key, add the **domains** it may run from. Optionally set a daily spend cap and rate limit under advanced options.
   </Step>
   <Step title="Copy it now">
-    Your key (it looks like `flw_sk_…`) is shown **once**. Copy it and store it in a secrets manager or server environment variable — you won't be able to see it again.
+    Your key (`flowy_…` or `flowy_pk_…`) is shown **once**. Copy it and store it — a secret key in a secrets manager or server environment variable; a publishable key wherever your frontend reads its config.
   </Step>
 </Steps>
 
-<Warning>
-  Treat a secret key like a password. Keep it on your server — never commit it to source control or expose it in a browser or other client‑side code.
-</Warning>
+## Key owner: You vs Machine
+
+When you create a key you choose who **owns** it:
+
+- **You** — the key is tied to your user account.
+- **Machine** — the key is owned by a workspace **service account**. It keeps working even if you later leave the workspace, and runs are attributed to the service account rather than to you. The service account takes no seat and never appears in your members list.
+
+<Tip>
+  Use a **Machine** owner for long-lived production integrations, so the key doesn't break the day the person who created it changes teams.
+</Tip>
 
 ## Authenticate a request
 
-Send the key as a Bearer token in the `Authorization` header on every request:
+<CodeGroup>
+```bash cURL
+export FLOWY_API="https://apis.tryflowy.ai/genstudio-svc-v2/api/v1"
+export FLOWY_KEY="flowy_..."
 
-<Tabs>
-  <Tab title="cURL">
-    ```bash
-    export FLOWY_API="https://apis.tryflowy.ai/genstudio-svc-v2/api/v1"
-    export FLOWY_KEY="flw_sk_..."
+curl "$FLOWY_API/apps" \
+  -H "Authorization: Bearer $FLOWY_KEY"
+```
 
-    curl "$FLOWY_API/apps" \
-      -H "Authorization: Bearer $FLOWY_KEY"
-    ```
-  </Tab>
-  <Tab title="JavaScript">
-    ```javascript
-    const BASE = "https://apis.tryflowy.ai/genstudio-svc-v2/api/v1";
-    const KEY = process.env.FLOWY_KEY; // "flw_sk_..."
+```javascript Node.js
+const BASE = "https://apis.tryflowy.ai/genstudio-svc-v2/api/v1";
+const KEY = process.env.FLOWY_KEY; // "flowy_..."
 
-    const res = await fetch(`${BASE}/apps`, {
-      headers: { Authorization: `Bearer ${KEY}` },
-    });
-    const { data } = await res.json();
-    ```
-  </Tab>
-  <Tab title="Python">
-    ```python
-    import os, requests
+const res = await fetch(`${BASE}/apps`, {
+  headers: { Authorization: `Bearer ${KEY}` },
+});
+const { data } = await res.json();
+```
 
-    BASE = "https://apis.tryflowy.ai/genstudio-svc-v2/api/v1"
-    KEY = os.environ["FLOWY_KEY"]  # "flw_sk_..."
+```python Python
+import os, requests
 
-    res = requests.get(f"{BASE}/apps", headers={"Authorization": f"Bearer {KEY}"})
-    data = res.json()["data"]
-    ```
-  </Tab>
-</Tabs>
+BASE = "https://apis.tryflowy.ai/genstudio-svc-v2/api/v1"
+KEY = os.environ["FLOWY_KEY"]  # "flowy_..."
 
-A missing, malformed, revoked, or expired key returns `401 Unauthorized`.
+res = requests.get(f"{BASE}/apps", headers={"Authorization": f"Bearer {KEY}"})
+data = res.json()["data"]
+```
+</CodeGroup>
+
+## Using a publishable key in the browser
+
+A publishable key works the same way — `Authorization: Bearer flowy_pk_…` — but the request must come from one of the key's **allowed domains** (matched on the `Origin`, falling back to the `Referer`). Add `example.com` for an exact host, or `*.example.com` to allow any subdomain. A request from a domain that isn't allowlisted returns `403 Forbidden`.
+
+```javascript Browser
+// Runs from https://example.com — an allowed domain — succeed.
+await fetch(`${BASE}/apps/${appId}/runs`, {
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${PUBLISHABLE_KEY}`, // flowy_pk_...
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ inputs: { node_1: "a red bicycle" } }),
+});
+```
 
 ## Protecting your keys
 
-Because a leaked key spends your workspace credits, every key supports three safeguards (set them when you create or edit a key):
+Because a leaked key spends your workspace credits, every key has several safeguards. Set them when you create or edit a key:
 
 | Safeguard | What it does |
 | --- | --- |
-| **Daily spend cap** | Once the key has spent its cap (credits/day), new runs are rejected with `402` until the next UTC day. Bounds the damage from a leak. |
-| **Rate limit** | Caps requests per minute for the key (default applies if unset). Excess requests get `429`. |
-| **Revoke** | Disables the key immediately. The **Last used** column helps you spot a key that's behaving unexpectedly. |
+| **Scopes** | Limit which operations the key can perform — e.g. a read-only key can't start runs. See [Permissions](/api/permissions). |
+| **Domain allowlist** | For publishable keys: only requests from your domains are accepted. |
+| **Daily spend cap** | Once the key spends its cap (credits/day), new runs are rejected with `402` until the next UTC day. |
+| **Rate limit** | Caps requests per minute for the key. Excess requests get `429`. See [Rate limits](/api/rate-limits). |
+| **Revoke** | Disables the key immediately. The **Last used** column helps you spot a key behaving unexpectedly. |
 
 <Note>
   Your workspace's available credit balance is always the final backstop: when it reaches zero, runs stop regardless of any cap.

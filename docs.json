@@ -119,6 +119,7 @@
             "pages": [
               "api/introduction",
               "api/authentication",
+              "api/permissions",
               "api/running-apps"
             ]
           },
@@ -135,6 +136,7 @@
           {
             "group": "Reference",
             "pages": [
+              "api/rate-limits",
               "api/errors"
             ]
           }
