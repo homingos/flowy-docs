@@ -109,6 +109,27 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "API Reference",
+        "icon": "code",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "api/introduction",
+              "api/authentication",
+              "api/running-apps"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "api/endpoints",
+              "api/errors"
+            ]
+          }
+        ]
       }
     ]
   },

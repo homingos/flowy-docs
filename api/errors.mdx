@@ -1,0 +1,46 @@
+---
+title: "Errors & limits"
+description: "Status codes, rate limits, spend caps, and how to handle them."
+---
+
+## Error format
+
+Every error returns a JSON body with an `error` message and the matching HTTP status code:
+
+```json
+{ "error": "insufficient workspace credits" }
+```
+
+## Status codes
+
+| Status | Meaning | What to do |
+| --- | --- | --- |
+| `200` / `202` | Success. `202` is returned when a run is accepted. | — |
+| `401` | Missing, malformed, revoked, or expired API key. | Check the `Authorization` header and that the key is still active. |
+| `402` | Daily spend cap reached, or the workspace is out of credits. | Raise the key's cap, top up credits, or wait for the next UTC day. |
+| `403` | Not allowed — e.g. a private app that isn't in your workspace, or a run from another workspace. | Use a key from the app's own workspace. |
+| `404` | App or run not found. | Check the `appId` / `runId`. |
+| `429` | Rate limit or concurrency limit exceeded. | Back off and retry — see below. |
+
+## Rate limits
+
+Each key has a **per‑minute request limit** (a default applies, overridable per key) and a **maximum number of concurrent runs**.
+
+- Exceeding either returns `429 Too Many Requests`.
+- A `Retry-After` header tells you how long to wait (in seconds) before retrying.
+
+<Tip>
+  Implement exponential backoff on `429`: wait the `Retry-After` interval (or a few seconds), then retry. Keep your concurrent in‑flight runs below the key's limit.
+</Tip>
+
+## Daily spend cap
+
+If a key has a daily spend cap, runs are rejected with `402` once the key has spent its cap of credits for the current UTC day. The counter resets at the start of the next UTC day.
+
+<Note>
+  The cap is a best‑effort guard against a leaked key, checked when a run starts. Because runs are asynchronous, a run started just under the cap can push spend slightly over it. Your workspace's available credit balance is the exact, hard backstop — when it hits zero, runs stop regardless of the cap.
+</Note>
+
+## Handling failed runs
+
+A run can also fail **after** it starts (for example, an upstream generation error). In that case the run reaches `status: "failed"` with a human‑readable `error` field — poll **Get a run** to read it. Credits for a failed generation are refunded to the workspace automatically.

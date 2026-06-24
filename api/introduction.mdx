@@ -1,0 +1,65 @@
+---
+title: "API Overview"
+description: "Run the apps you build in Flowy from your own code over a simple HTTP API."
+---
+
+The Flowy API lets you run **apps** — the mini‑apps you publish from a canvas — directly from your own server. Send inputs, get back generated images, video, audio, and more.
+
+<Note>
+  An **app** is a canvas you've turned into a reusable tool by marking its input and output nodes. Anyone can fill in the inputs and run it. Learn more in [Concepts](/getting-started/concepts).
+</Note>
+
+## How billing works
+
+Every API request is authenticated with a **workspace secret key**, and every run is billed to **that key's workspace** ("caller‑pays").
+
+- Running **your own** app spends **your** workspace credits.
+- Running someone else's **public** app with your key spends **your** credits — never the author's.
+
+This is the core safety guarantee: no one can drain your workspace with your app, and your key only ever spends your own balance. To protect a key that leaks, set a [daily spend cap and rate limit](/api/authentication#protecting-your-keys), or revoke it instantly.
+
+## Base URL
+
+Your API base URL is your Flowy backend URL followed by `/api/v1`:
+
+```
+https://apis.tryflowy.ai/genstudio-svc-v2/api/v1
+```
+
+<Tip>
+  Copy your exact base URL — and create keys — from **Settings → API keys** in the app (the **API** page). The examples in these docs use `$FLOWY_API` for the base URL and `$FLOWY_KEY` for your secret key.
+</Tip>
+
+## Public vs private apps
+
+| App | Who can run it via the API |
+| --- | --- |
+| **Published** (public) | Any valid key — the caller's workspace pays |
+| **Unpublished** (private) | Only a key from the app's **own** workspace |
+
+## What you can do
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="key" href="/api/authentication">
+    Create a secret key and send it on every request.
+  </Card>
+  <Card title="Run an app" icon="play" href="/api/running-apps">
+    The end‑to‑end flow: list apps, start a run, poll for the result.
+  </Card>
+  <Card title="Endpoints" icon="code" href="/api/endpoints">
+    Full reference for every endpoint, with request and response shapes.
+  </Card>
+  <Card title="Errors & limits" icon="triangle-exclamation" href="/api/errors">
+    Status codes, rate limits, spend caps, and how to handle them.
+  </Card>
+</CardGroup>
+
+## OpenAPI spec
+
+The API is described by an OpenAPI 3 document, served publicly (no key required):
+
+```
+GET  https://apis.tryflowy.ai/genstudio-svc-v2/api/v1/openapi.json
+```
+
+Use it to generate a client in your language of choice, or import it into Postman or Insomnia.

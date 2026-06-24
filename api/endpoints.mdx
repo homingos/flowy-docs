@@ -1,0 +1,123 @@
+---
+title: "Endpoints"
+description: "Reference for every Flowy API endpoint, with request and response shapes."
+---
+
+All endpoints are relative to your base URL (`$FLOWY_API`) and require the `Authorization: Bearer flw_sk_…` header, except the public OpenAPI spec. Responses are wrapped in a `data` envelope.
+
+## List apps
+
+```
+GET /apps
+```
+
+Lists the active apps in the authenticated key's workspace.
+
+**Response**
+
+```json
+{ "data": [
+  {
+    "id": "string",
+    "slug": "string",
+    "title": "string",
+    "description": "string",
+    "published": true,
+    "runCount": 0,
+    "thumbnailUrl": "string"
+  }
+] }
+```
+
+## Get an app
+
+```
+GET /apps/{appId}
+```
+
+Returns an app's identity plus its **input/output schema**. Allowed when the app is published (any key) or belongs to the key's own workspace (private).
+
+| Path parameter | Description |
+| --- | --- |
+| `appId` | The app's `id` (from **List apps**). |
+
+**Response**
+
+```json
+{ "data": {
+  "id": "string",
+  "slug": "string",
+  "title": "string",
+  "description": "string",
+  "published": true,
+  "inputs": [
+    { "nodeId": "string", "label": "string", "kind": "text | image_url | video_url | audio_url", "required": true }
+  ],
+  "outputs": [
+    { "nodeId": "string", "label": "string", "outputType": "image | video | audio | text | flam" }
+  ]
+} }
+```
+
+Each input's `nodeId` is the key you pass in the run request's `inputs` map.
+
+## Start a run
+
+```
+POST /apps/{appId}/runs
+```
+
+Starts an asynchronous run. The run is billed to the key's workspace. Returns immediately with a `runId` — poll **Get a run** for the result.
+
+| Path parameter | Description |
+| --- | --- |
+| `appId` | The app to run. |
+
+**Request body** (optional — omit for an app with no inputs)
+
+```json
+{ "inputs": { "NODE_ID": "text value or media URL" } }
+```
+
+**Response** — `202 Accepted`
+
+```json
+{ "data": { "runId": "string", "status": "queued" } }
+```
+
+## Get a run
+
+```
+GET /runs/{runId}
+```
+
+Returns a run's status and, once complete, its outputs (signed, downloadable media URLs). Only runs started by your own workspace are visible.
+
+| Path parameter | Description |
+| --- | --- |
+| `runId` | The id returned by **Start a run**. |
+
+**Response**
+
+```json
+{ "data": {
+  "runId": "string",
+  "appId": "string",
+  "appTitle": "string",
+  "status": "queued | running | completed | failed",
+  "outputs": [
+    { "nodeId": "string", "kind": "image | video | audio | text | flam", "url": "string", "text": "string" }
+  ],
+  "error": "string",
+  "createdAt": "2026-01-01T00:00:00Z",
+  "updatedAt": "2026-01-01T00:00:00Z"
+} }
+```
+
+## OpenAPI spec
+
+```
+GET /openapi.json
+```
+
+The machine‑readable OpenAPI 3 description of this API. **Public** — no key required. Use it to generate SDKs or import the API into Postman/Insomnia.
