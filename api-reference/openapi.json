@@ -3,7 +3,7 @@
   "info": {
     "title": "Flowy App API",
     "version": "1.0.0",
-    "description": "Run Flowy apps programmatically. Authenticate with a workspace secret API key (Authorization: Bearer flw_sk_...). Every run bills the API key's own workspace credits (caller-pays). A published (public) app is runnable by any key; a private app is runnable only by a key of its own workspace."
+    "description": "Run Flowy apps programmatically. Authenticate with a workspace secret API key (`Authorization: Bearer flw_sk_...`). Every run bills the API key's own workspace credits (caller-pays). A published (public) app is runnable by any key; a private app is runnable only by a key of its own workspace."
   },
   "servers": [
     {
@@ -12,6 +12,11 @@
     }
   ],
   "security": [{ "ApiKeyAuth": [] }],
+  "tags": [
+    { "name": "Apps", "description": "Discover apps and inspect their input/output schema." },
+    { "name": "Runs", "description": "Start runs and poll for their results." },
+    { "name": "Spec", "description": "The machine-readable OpenAPI document." }
+  ],
   "components": {
     "securitySchemes": {
       "ApiKeyAuth": {
@@ -24,7 +29,52 @@
     "schemas": {
       "Error": {
         "type": "object",
-        "properties": { "error": { "type": "string" } }
+        "properties": {
+          "error": { "type": "string", "description": "Human-readable error message.", "example": "insufficient workspace credits" }
+        },
+        "required": ["error"]
+      },
+      "AppInput": {
+        "type": "object",
+        "description": "An input field the app expects. Its `nodeId` is the key you pass in the run request's `inputs` map.",
+        "properties": {
+          "nodeId": { "type": "string", "description": "Key to use in the run request's `inputs` map.", "example": "node_1" },
+          "label": { "type": "string", "description": "Human-readable label shown in the app.", "example": "Your photo" },
+          "kind": {
+            "type": "string",
+            "description": "The value type this input accepts. Media inputs take a URL.",
+            "enum": ["text", "image_url", "video_url", "audio_url"],
+            "example": "image_url"
+          },
+          "required": { "type": "boolean", "description": "Whether the run will fail without this input.", "example": true }
+        }
+      },
+      "AppOutput": {
+        "type": "object",
+        "description": "An output the app produces.",
+        "properties": {
+          "nodeId": { "type": "string", "example": "node_9" },
+          "label": { "type": "string", "example": "Headshot" },
+          "outputType": {
+            "type": "string",
+            "enum": ["image", "video", "audio", "text", "flam"],
+            "example": "image"
+          }
+        }
+      },
+      "RunOutput": {
+        "type": "object",
+        "description": "A single produced output. Media outputs carry a signed `url`; text outputs carry `text`.",
+        "properties": {
+          "nodeId": { "type": "string", "example": "node_9" },
+          "kind": {
+            "type": "string",
+            "enum": ["image", "video", "audio", "text", "flam"],
+            "example": "image"
+          },
+          "url": { "type": "string", "description": "Signed, downloadable media URL. Present for media outputs; expires.", "example": "https://cdn.tryflowy.ai/runs/headshot.png" },
+          "text": { "type": "string", "description": "Text result. Present for text outputs." }
+        }
       },
       "RunResponse": {
         "type": "object",
@@ -32,8 +82,8 @@
           "data": {
             "type": "object",
             "properties": {
-              "runId": { "type": "string" },
-              "status": { "type": "string", "enum": ["queued", "running", "completed", "failed"] }
+              "runId": { "type": "string", "example": "64c3f2a1e8b9c0d1f2e3a4b5" },
+              "status": { "type": "string", "enum": ["queued", "running", "completed", "failed"], "example": "queued" }
             }
           }
         }
@@ -44,25 +94,17 @@
           "data": {
             "type": "object",
             "properties": {
-              "runId": { "type": "string" },
-              "appId": { "type": "string" },
-              "appTitle": { "type": "string" },
-              "status": { "type": "string", "enum": ["queued", "running", "completed", "failed"] },
+              "runId": { "type": "string", "example": "64c3f2a1e8b9c0d1f2e3a4b5" },
+              "appId": { "type": "string", "example": "507f1f77bcf86cd799439011" },
+              "appTitle": { "type": "string", "example": "Headshot generator" },
+              "status": { "type": "string", "enum": ["queued", "running", "completed", "failed"], "example": "completed" },
               "outputs": {
                 "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "nodeId": { "type": "string" },
-                    "kind": { "type": "string", "enum": ["image", "video", "audio", "text", "flam"] },
-                    "url": { "type": "string" },
-                    "text": { "type": "string" }
-                  }
-                }
+                "items": { "$ref": "#/components/schemas/RunOutput" }
               },
-              "error": { "type": "string" },
-              "createdAt": { "type": "string", "format": "date-time" },
-              "updatedAt": { "type": "string", "format": "date-time" }
+              "error": { "type": "string", "description": "Human-readable failure reason. Present only when `status` is `failed`." },
+              "createdAt": { "type": "string", "format": "date-time", "example": "2026-01-01T00:00:00Z" },
+              "updatedAt": { "type": "string", "format": "date-time", "example": "2026-01-01T00:00:05Z" }
             }
           }
         }
@@ -70,26 +112,33 @@
       "AppSummary": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "slug": { "type": "string" },
-          "title": { "type": "string" },
-          "description": { "type": "string" },
-          "published": { "type": "boolean" },
-          "runCount": { "type": "integer" },
-          "thumbnailUrl": { "type": "string" }
+          "id": { "type": "string", "example": "507f1f77bcf86cd799439011" },
+          "slug": { "type": "string", "example": "headshot-generator" },
+          "title": { "type": "string", "example": "Headshot generator" },
+          "description": { "type": "string", "example": "Turn a selfie into a studio headshot." },
+          "published": { "type": "boolean", "example": true },
+          "runCount": { "type": "integer", "example": 42 },
+          "thumbnailUrl": { "type": "string", "example": "https://cdn.tryflowy.ai/apps/headshot.png" }
         }
       },
       "AppDetail": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "slug": { "type": "string" },
-          "title": { "type": "string" },
-          "description": { "type": "string" },
-          "published": { "type": "boolean" },
-          "thumbnailUrl": { "type": "string" },
-          "inputs": { "type": "array", "items": { "type": "object" }, "description": "Input field schema; each item's nodeId is the key used in the run request inputs map." },
-          "outputs": { "type": "array", "items": { "type": "object" } }
+          "id": { "type": "string", "example": "507f1f77bcf86cd799439011" },
+          "slug": { "type": "string", "example": "headshot-generator" },
+          "title": { "type": "string", "example": "Headshot generator" },
+          "description": { "type": "string", "example": "Turn a selfie into a studio headshot." },
+          "published": { "type": "boolean", "example": true },
+          "thumbnailUrl": { "type": "string", "example": "https://cdn.tryflowy.ai/apps/headshot.png" },
+          "inputs": {
+            "type": "array",
+            "description": "Input field schema. Each item's `nodeId` is the key used in the run request's `inputs` map.",
+            "items": { "$ref": "#/components/schemas/AppInput" }
+          },
+          "outputs": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/AppOutput" }
+          }
         }
       }
     }
@@ -97,12 +146,23 @@
   "paths": {
     "/v1/apps": {
       "get": {
-        "summary": "List apps in the key's workspace",
+        "tags": ["Apps"],
+        "summary": "List apps",
+        "description": "Lists the active apps in the authenticated key's workspace.",
         "operationId": "listApps",
         "responses": {
           "200": {
-            "description": "Apps",
-            "content": { "application/json": { "schema": { "type": "object", "properties": { "data": { "type": "array", "items": { "$ref": "#/components/schemas/AppSummary" } } } } } }
+            "description": "The apps in your workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": { "type": "array", "items": { "$ref": "#/components/schemas/AppSummary" } }
+                  }
+                }
+              }
+            }
           },
           "401": { "description": "Invalid or missing API key", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
           "429": { "description": "Rate limit exceeded", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
@@ -111,22 +171,30 @@
     },
     "/v1/apps/{appId}": {
       "get": {
-        "summary": "Get an app's input/output schema",
+        "tags": ["Apps"],
+        "summary": "Get an app",
+        "description": "Returns an app's identity plus its input/output schema. Allowed when the app is published (any key) or belongs to the key's own workspace (private). Use each input's `nodeId` as the key in the run request's `inputs` map.",
         "operationId": "getApp",
-        "parameters": [{ "name": "appId", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          { "name": "appId", "in": "path", "required": true, "description": "The app's `id` (from List apps).", "schema": { "type": "string" }, "example": "507f1f77bcf86cd799439011" }
+        ],
         "responses": {
-          "200": { "description": "App detail", "content": { "application/json": { "schema": { "type": "object", "properties": { "data": { "$ref": "#/components/schemas/AppDetail" } } } } } },
-          "401": { "description": "Invalid or missing API key" },
-          "403": { "description": "Private app not in your workspace" },
-          "404": { "description": "App not found" }
+          "200": { "description": "App detail with input/output schema.", "content": { "application/json": { "schema": { "type": "object", "properties": { "data": { "$ref": "#/components/schemas/AppDetail" } } } } } },
+          "401": { "description": "Invalid or missing API key", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "403": { "description": "Private app not in your workspace", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "404": { "description": "App not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
         }
       }
     },
     "/v1/apps/{appId}/runs": {
       "post": {
-        "summary": "Start an app run (bills the key's workspace)",
+        "tags": ["Runs"],
+        "summary": "Start a run",
+        "description": "Starts an asynchronous run, billed to the key's workspace. Returns immediately with a `runId` — poll `GET /v1/runs/{runId}` for the result. Omit the body for an app with no inputs.",
         "operationId": "startRun",
-        "parameters": [{ "name": "appId", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          { "name": "appId", "in": "path", "required": true, "description": "The app to run.", "schema": { "type": "string" }, "example": "507f1f77bcf86cd799439011" }
+        ],
         "requestBody": {
           "required": false,
           "content": {
@@ -134,41 +202,59 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "inputs": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Map of input nodeId -> value (text, or a URL for media inputs). Get the keys from GET /v1/apps/{appId}." }
+                  "inputs": {
+                    "type": "object",
+                    "additionalProperties": { "type": "string" },
+                    "description": "Map of input `nodeId` -> value (text, or a URL for media inputs). Get the keys from `GET /v1/apps/{appId}`."
+                  }
+                }
+              },
+              "example": {
+                "inputs": {
+                  "node_1": "https://example.com/me.jpg",
+                  "node_2": "studio lighting, neutral background"
                 }
               }
             }
           }
         },
         "responses": {
-          "202": { "description": "Run accepted (poll GET /v1/runs/{runId})", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RunResponse" } } } },
-          "401": { "description": "Invalid or missing API key" },
-          "402": { "description": "Daily spend cap reached or insufficient workspace credits" },
-          "403": { "description": "Private app not in your workspace" },
-          "404": { "description": "App not found" },
-          "429": { "description": "Rate limit or concurrency limit exceeded" }
+          "202": { "description": "Run accepted. Poll `GET /v1/runs/{runId}`.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RunResponse" } } } },
+          "401": { "description": "Invalid or missing API key", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "402": { "description": "Daily spend cap reached or insufficient workspace credits", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "403": { "description": "Private app not in your workspace", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "404": { "description": "App not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "429": { "description": "Rate limit or concurrency limit exceeded", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
         }
       }
     },
     "/v1/runs/{runId}": {
       "get": {
-        "summary": "Poll a run's status and outputs",
+        "tags": ["Runs"],
+        "summary": "Get a run",
+        "description": "Returns a run's status and, once complete, its outputs (signed, downloadable media URLs). Only runs started by your own workspace are visible.",
         "operationId": "getRun",
-        "parameters": [{ "name": "runId", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          { "name": "runId", "in": "path", "required": true, "description": "The id returned by Start a run.", "schema": { "type": "string" }, "example": "64c3f2a1e8b9c0d1f2e3a4b5" }
+        ],
         "responses": {
-          "200": { "description": "Run status", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RunView" } } } },
-          "401": { "description": "Invalid or missing API key" },
-          "403": { "description": "Run belongs to another workspace" },
-          "404": { "description": "Run not found" }
+          "200": { "description": "Run status and outputs.", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RunView" } } } },
+          "401": { "description": "Invalid or missing API key", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "403": { "description": "Run belongs to another workspace", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "404": { "description": "Run not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
         }
       }
     },
     "/v1/openapi.json": {
       "get": {
-        "summary": "This OpenAPI document",
+        "tags": ["Spec"],
+        "summary": "Get the OpenAPI spec",
+        "description": "The machine-readable OpenAPI 3 description of this API. Public — no key required. Use it to generate SDKs or import the API into Postman/Insomnia.",
         "operationId": "getOpenAPISpec",
         "security": [],
-        "responses": { "200": { "description": "OpenAPI 3 spec", "content": { "application/json": {} } } }
+        "responses": {
+          "200": { "description": "OpenAPI 3 document.", "content": { "application/json": {} } }
+        }
       }
     }
   }

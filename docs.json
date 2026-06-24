@@ -123,9 +123,18 @@
             ]
           },
           {
+            "group": "Endpoints",
+            "pages": [
+              "api/list-apps",
+              "api/get-app",
+              "api/start-run",
+              "api/get-run",
+              "api/get-openapi"
+            ]
+          },
+          {
             "group": "Reference",
             "pages": [
-              "api/endpoints",
               "api/errors"
             ]
           }
