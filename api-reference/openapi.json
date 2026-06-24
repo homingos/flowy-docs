@@ -9,34 +9,13 @@
     {
       "url": "https://apis.tryflowy.ai/genstudio-svc-v2/api",
       "description": "Flowy production API"
-    },
-    {
-      "url": "https://fi.development.flamapis.com/genstudio-svc-v2/api",
-      "description": "Development"
-    },
-    {
-      "url": "http://localhost:8000/genstudio-svc-v2/api",
-      "description": "Local"
     }
   ],
-  "security": [
-    {
-      "ApiKeyAuth": []
-    }
-  ],
+  "security": [{ "ApiKeyAuth": [] }],
   "tags": [
-    {
-      "name": "Apps",
-      "description": "Discover apps and inspect their input/output schema."
-    },
-    {
-      "name": "Runs",
-      "description": "Start runs and poll for their results."
-    },
-    {
-      "name": "Spec",
-      "description": "The machine-readable OpenAPI document."
-    }
+    { "name": "Apps", "description": "Discover apps and inspect their input/output schema." },
+    { "name": "Runs", "description": "Start runs and poll for their results." },
+    { "name": "Spec", "description": "The machine-readable OpenAPI document." }
   ],
   "components": {
     "securitySchemes": {
@@ -50,45 +29,26 @@
     "headers": {
       "X-RateLimit-Limit": {
         "description": "Maximum requests allowed in the current window (per minute).",
-        "schema": {
-          "type": "integer",
-          "example": 60
-        }
+        "schema": { "type": "integer", "example": 60 }
       },
       "X-RateLimit-Remaining": {
         "description": "Requests remaining in the current window.",
-        "schema": {
-          "type": "integer",
-          "example": 59
-        }
+        "schema": { "type": "integer", "example": 59 }
       },
       "X-RateLimit-Reset": {
         "description": "Unix epoch second at which the current window resets.",
-        "schema": {
-          "type": "integer",
-          "example": 1893456000
-        }
+        "schema": { "type": "integer", "example": 1893456000 }
       },
       "Retry-After": {
         "description": "Seconds to wait before retrying (sent on 429).",
-        "schema": {
-          "type": "integer",
-          "example": 12
-        }
+        "schema": { "type": "integer", "example": 12 }
       }
     },
     "schemas": {
       "Error": {
         "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "example": "this API key lacks the runs:write scope"
-          }
-        },
-        "required": [
-          "error"
-        ]
+        "properties": { "error": { "type": "string", "example": "this API key lacks the runs:write scope" } },
+        "required": ["error"]
       },
       "RunResponse": {
         "type": "object",
@@ -96,20 +56,8 @@
           "data": {
             "type": "object",
             "properties": {
-              "runId": {
-                "type": "string",
-                "example": "64c3f2a1e8b9c0d1f2e3a4b5"
-              },
-              "status": {
-                "type": "string",
-                "enum": [
-                  "queued",
-                  "running",
-                  "completed",
-                  "failed"
-                ],
-                "example": "queued"
-              }
+              "runId": { "type": "string", "example": "64c3f2a1e8b9c0d1f2e3a4b5" },
+              "status": { "type": "string", "enum": ["queued", "running", "completed", "failed"], "example": "queued" }
             }
           }
         }
@@ -120,74 +68,25 @@
           "data": {
             "type": "object",
             "properties": {
-              "runId": {
-                "type": "string",
-                "example": "64c3f2a1e8b9c0d1f2e3a4b5"
-              },
-              "appId": {
-                "type": "string",
-                "example": "507f1f77bcf86cd799439011"
-              },
-              "appTitle": {
-                "type": "string",
-                "example": "Headshot generator"
-              },
-              "status": {
-                "type": "string",
-                "enum": [
-                  "queued",
-                  "running",
-                  "completed",
-                  "failed"
-                ],
-                "example": "completed"
-              },
+              "runId": { "type": "string", "example": "64c3f2a1e8b9c0d1f2e3a4b5" },
+              "appId": { "type": "string", "example": "507f1f77bcf86cd799439011" },
+              "appTitle": { "type": "string", "example": "Headshot generator" },
+              "status": { "type": "string", "enum": ["queued", "running", "completed", "failed"], "example": "completed" },
               "outputs": {
                 "type": "array",
                 "items": {
                   "type": "object",
                   "properties": {
-                    "nodeId": {
-                      "type": "string",
-                      "example": "node_9"
-                    },
-                    "kind": {
-                      "type": "string",
-                      "enum": [
-                        "image",
-                        "video",
-                        "audio",
-                        "text",
-                        "flam"
-                      ],
-                      "example": "image"
-                    },
-                    "url": {
-                      "type": "string",
-                      "description": "Signed, downloadable media URL — present for media outputs; expires.",
-                      "example": "https://cdn.tryflowy.ai/runs/headshot.png"
-                    },
-                    "text": {
-                      "type": "string",
-                      "description": "Text result — present for text outputs."
-                    }
+                    "nodeId": { "type": "string", "example": "node_9" },
+                    "kind": { "type": "string", "enum": ["image", "video", "audio", "text", "flam"], "example": "image" },
+                    "url": { "type": "string", "description": "Signed, downloadable media URL — present for media outputs; expires.", "example": "https://cdn.tryflowy.ai/runs/headshot.png" },
+                    "text": { "type": "string", "description": "Text result — present for text outputs." }
                   }
                 }
               },
-              "error": {
-                "type": "string",
-                "description": "Human-readable failure reason. Present only when status is failed."
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "example": "2026-01-01T00:00:00Z"
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "example": "2026-01-01T00:00:05Z"
-              }
+              "error": { "type": "string", "description": "Human-readable failure reason. Present only when status is failed." },
+              "createdAt": { "type": "string", "format": "date-time", "example": "2026-01-01T00:00:00Z" },
+              "updatedAt": { "type": "string", "format": "date-time", "example": "2026-01-01T00:00:05Z" }
             }
           }
         }
@@ -195,76 +94,26 @@
       "AppSummary": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "example": "507f1f77bcf86cd799439011"
-          },
-          "slug": {
-            "type": "string",
-            "example": "headshot-generator"
-          },
-          "title": {
-            "type": "string",
-            "example": "Headshot generator"
-          },
-          "description": {
-            "type": "string",
-            "example": "Turn a selfie into a studio headshot."
-          },
-          "published": {
-            "type": "boolean",
-            "example": true
-          },
-          "runCount": {
-            "type": "integer",
-            "example": 42
-          },
-          "thumbnailUrl": {
-            "type": "string",
-            "example": "https://cdn.tryflowy.ai/apps/headshot.png"
-          }
+          "id": { "type": "string", "example": "507f1f77bcf86cd799439011" },
+          "slug": { "type": "string", "example": "headshot-generator" },
+          "title": { "type": "string", "example": "Headshot generator" },
+          "description": { "type": "string", "example": "Turn a selfie into a studio headshot." },
+          "published": { "type": "boolean", "example": true },
+          "runCount": { "type": "integer", "example": 42 },
+          "thumbnailUrl": { "type": "string", "example": "https://cdn.tryflowy.ai/apps/headshot.png" }
         }
       },
       "AppDetail": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "example": "507f1f77bcf86cd799439011"
-          },
-          "slug": {
-            "type": "string",
-            "example": "headshot-generator"
-          },
-          "title": {
-            "type": "string",
-            "example": "Headshot generator"
-          },
-          "description": {
-            "type": "string",
-            "example": "Turn a selfie into a studio headshot."
-          },
-          "published": {
-            "type": "boolean",
-            "example": true
-          },
-          "thumbnailUrl": {
-            "type": "string",
-            "example": "https://cdn.tryflowy.ai/apps/headshot.png"
-          },
-          "inputs": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            },
-            "description": "Input field schema; each item's nodeId is the key used in the run request inputs map."
-          },
-          "outputs": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          }
+          "id": { "type": "string", "example": "507f1f77bcf86cd799439011" },
+          "slug": { "type": "string", "example": "headshot-generator" },
+          "title": { "type": "string", "example": "Headshot generator" },
+          "description": { "type": "string", "example": "Turn a selfie into a studio headshot." },
+          "published": { "type": "boolean", "example": true },
+          "thumbnailUrl": { "type": "string", "example": "https://cdn.tryflowy.ai/apps/headshot.png" },
+          "inputs": { "type": "array", "items": { "type": "object" }, "description": "Input field schema; each item's nodeId is the key used in the run request inputs map." },
+          "outputs": { "type": "array", "items": { "type": "object" } }
         }
       }
     }
@@ -272,9 +121,7 @@
   "paths": {
     "/v1/apps": {
       "get": {
-        "tags": [
-          "Apps"
-        ],
+        "tags": ["Apps"],
         "summary": "List apps",
         "description": "Lists the active apps in the authenticated key's workspace. **Requires the `apps:read` scope.**",
         "operationId": "listApps",
@@ -282,168 +129,48 @@
           "200": {
             "description": "The apps in your workspace.",
             "headers": {
-              "X-RateLimit-Limit": {
-                "$ref": "#/components/headers/X-RateLimit-Limit"
-              },
-              "X-RateLimit-Remaining": {
-                "$ref": "#/components/headers/X-RateLimit-Remaining"
-              },
-              "X-RateLimit-Reset": {
-                "$ref": "#/components/headers/X-RateLimit-Reset"
-              }
+              "X-RateLimit-Limit": { "$ref": "#/components/headers/X-RateLimit-Limit" },
+              "X-RateLimit-Remaining": { "$ref": "#/components/headers/X-RateLimit-Remaining" },
+              "X-RateLimit-Reset": { "$ref": "#/components/headers/X-RateLimit-Reset" }
             },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AppSummary"
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "data": { "type": "array", "items": { "$ref": "#/components/schemas/AppSummary" } } } } } }
           },
-          "401": {
-            "description": "Invalid or missing API key",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "The key lacks the apps:read scope",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Rate limit exceeded",
-            "headers": {
-              "Retry-After": {
-                "$ref": "#/components/headers/Retry-After"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
+          "401": { "description": "Invalid or missing API key", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "403": { "description": "The key lacks the apps:read scope", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "429": { "description": "Rate limit exceeded", "headers": { "Retry-After": { "$ref": "#/components/headers/Retry-After" } }, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
         }
       }
     },
     "/v1/apps/{appId}": {
       "get": {
-        "tags": [
-          "Apps"
-        ],
+        "tags": ["Apps"],
         "summary": "Get an app",
         "description": "Returns an app's identity plus its input/output schema. Use each input's `nodeId` as the key in the run request's `inputs` map. Allowed when the app is published (any key) or belongs to the key's own workspace. **Requires the `apps:read` scope.**",
         "operationId": "getApp",
-        "parameters": [
-          {
-            "name": "appId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "507f1f77bcf86cd799439011"
-          }
-        ],
+        "parameters": [{ "name": "appId", "in": "path", "required": true, "schema": { "type": "string" }, "example": "507f1f77bcf86cd799439011" }],
         "responses": {
           "200": {
             "description": "App detail with input/output schema.",
             "headers": {
-              "X-RateLimit-Limit": {
-                "$ref": "#/components/headers/X-RateLimit-Limit"
-              },
-              "X-RateLimit-Remaining": {
-                "$ref": "#/components/headers/X-RateLimit-Remaining"
-              },
-              "X-RateLimit-Reset": {
-                "$ref": "#/components/headers/X-RateLimit-Reset"
-              }
+              "X-RateLimit-Limit": { "$ref": "#/components/headers/X-RateLimit-Limit" },
+              "X-RateLimit-Remaining": { "$ref": "#/components/headers/X-RateLimit-Remaining" },
+              "X-RateLimit-Reset": { "$ref": "#/components/headers/X-RateLimit-Reset" }
             },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/AppDetail"
-                    }
-                  }
-                }
-              }
-            }
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "data": { "$ref": "#/components/schemas/AppDetail" } } } } }
           },
-          "401": {
-            "description": "Invalid or missing API key",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Private app not in your workspace, or the key lacks the apps:read scope",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "App not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
+          "401": { "description": "Invalid or missing API key", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "403": { "description": "Private app not in your workspace, or the key lacks the apps:read scope", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "404": { "description": "App not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
         }
       }
     },
     "/v1/apps/{appId}/runs": {
       "post": {
-        "tags": [
-          "Runs"
-        ],
+        "tags": ["Runs"],
         "summary": "Start a run",
         "description": "Starts an asynchronous run, billed to the key's workspace. Returns immediately with a `runId` — poll `GET /v1/runs/{runId}` for the result. Omit the body for an app with no inputs. **Requires the `runs:write` scope.**",
         "operationId": "startRun",
-        "parameters": [
-          {
-            "name": "appId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "507f1f77bcf86cd799439011"
-          }
-        ],
+        "parameters": [{ "name": "appId", "in": "path", "required": true, "schema": { "type": "string" }, "example": "507f1f77bcf86cd799439011" }],
         "requestBody": {
           "required": false,
           "content": {
@@ -451,21 +178,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "inputs": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "description": "Map of input nodeId -> value (text, or a URL for media inputs). Get the keys from GET /v1/apps/{appId}."
-                  }
+                  "inputs": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Map of input nodeId -> value (text, or a URL for media inputs). Get the keys from GET /v1/apps/{appId}." }
                 }
               },
-              "example": {
-                "inputs": {
-                  "node_1": "https://example.com/me.jpg",
-                  "node_2": "studio lighting, neutral background"
-                }
-              }
+              "example": { "inputs": { "node_1": "https://example.com/me.jpg", "node_2": "studio lighting, neutral background" } }
             }
           }
         },
@@ -473,173 +189,51 @@
           "202": {
             "description": "Run accepted. Poll GET /v1/runs/{runId}.",
             "headers": {
-              "X-RateLimit-Limit": {
-                "$ref": "#/components/headers/X-RateLimit-Limit"
-              },
-              "X-RateLimit-Remaining": {
-                "$ref": "#/components/headers/X-RateLimit-Remaining"
-              },
-              "X-RateLimit-Reset": {
-                "$ref": "#/components/headers/X-RateLimit-Reset"
-              }
+              "X-RateLimit-Limit": { "$ref": "#/components/headers/X-RateLimit-Limit" },
+              "X-RateLimit-Remaining": { "$ref": "#/components/headers/X-RateLimit-Remaining" },
+              "X-RateLimit-Reset": { "$ref": "#/components/headers/X-RateLimit-Reset" }
             },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RunResponse"
-                }
-              }
-            }
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RunResponse" } } }
           },
-          "401": {
-            "description": "Invalid or missing API key",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "402": {
-            "description": "Daily spend cap reached or insufficient workspace credits",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Private app not in your workspace, or the key lacks the runs:write scope",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "App not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Rate limit or concurrency limit exceeded",
-            "headers": {
-              "Retry-After": {
-                "$ref": "#/components/headers/Retry-After"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
+          "401": { "description": "Invalid or missing API key", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "402": { "description": "Daily spend cap reached or insufficient workspace credits", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "403": { "description": "Private app not in your workspace, or the key lacks the runs:write scope", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "404": { "description": "App not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "429": { "description": "Rate limit or concurrency limit exceeded", "headers": { "Retry-After": { "$ref": "#/components/headers/Retry-After" } }, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
         }
       }
     },
     "/v1/runs/{runId}": {
       "get": {
-        "tags": [
-          "Runs"
-        ],
+        "tags": ["Runs"],
         "summary": "Get a run",
         "description": "Returns a run's status and, once complete, its outputs (signed, downloadable media URLs). Only runs started by your own workspace are visible. **Requires the `runs:read` scope.**",
         "operationId": "getRun",
-        "parameters": [
-          {
-            "name": "runId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "64c3f2a1e8b9c0d1f2e3a4b5"
-          }
-        ],
+        "parameters": [{ "name": "runId", "in": "path", "required": true, "schema": { "type": "string" }, "example": "64c3f2a1e8b9c0d1f2e3a4b5" }],
         "responses": {
           "200": {
             "description": "Run status and outputs.",
             "headers": {
-              "X-RateLimit-Limit": {
-                "$ref": "#/components/headers/X-RateLimit-Limit"
-              },
-              "X-RateLimit-Remaining": {
-                "$ref": "#/components/headers/X-RateLimit-Remaining"
-              },
-              "X-RateLimit-Reset": {
-                "$ref": "#/components/headers/X-RateLimit-Reset"
-              }
+              "X-RateLimit-Limit": { "$ref": "#/components/headers/X-RateLimit-Limit" },
+              "X-RateLimit-Remaining": { "$ref": "#/components/headers/X-RateLimit-Remaining" },
+              "X-RateLimit-Reset": { "$ref": "#/components/headers/X-RateLimit-Reset" }
             },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RunView"
-                }
-              }
-            }
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RunView" } } }
           },
-          "401": {
-            "description": "Invalid or missing API key",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Run belongs to another workspace, or the key lacks the runs:read scope",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Run not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
+          "401": { "description": "Invalid or missing API key", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "403": { "description": "Run belongs to another workspace, or the key lacks the runs:read scope", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "404": { "description": "Run not found", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
         }
       }
     },
     "/v1/openapi.json": {
       "get": {
-        "tags": [
-          "Spec"
-        ],
+        "tags": ["Spec"],
         "summary": "Get the OpenAPI spec",
         "description": "The machine-readable OpenAPI 3 description of this API. Public — no key required.",
         "operationId": "getOpenAPISpec",
         "security": [],
-        "responses": {
-          "200": {
-            "description": "OpenAPI 3 document",
-            "content": {
-              "application/json": {}
-            }
-          }
-        }
+        "responses": { "200": { "description": "OpenAPI 3 document", "content": { "application/json": {} } } }
       }
     }
   }
