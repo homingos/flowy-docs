@@ -1,46 +1,80 @@
 ---
-title: "Errors & limits"
-description: "Status codes, rate limits, spend caps, and how to handle them."
+title: "Errors"
+description: "How the Flowy API reports errors, and what each status code means."
 ---
 
-## Error format
-
-Every error returns a JSON body with an `error` message and the matching HTTP status code:
+The Flowy API uses conventional **HTTP status codes** to indicate the success or failure of a request. The status code is the machine-readable signal; every error also returns a human-readable `error` message in the body:
 
 ```json
-{ "error": "insufficient workspace credits" }
+{
+  "error": "this API key lacks the runs:write scope"
+}
 ```
+
+In general: `2xx` means success, `4xx` means the request was rejected and usually tells you how to fix it, and `5xx` means something went wrong on Flowy's side.
 
 ## Status codes
 
-| Status | Meaning | What to do |
-| --- | --- | --- |
-| `200` / `202` | Success. `202` is returned when a run is accepted. | — |
-| `401` | Missing, malformed, revoked, or expired API key. | Check the `Authorization` header and that the key is still active. |
-| `402` | Daily spend cap reached, or the workspace is out of credits. | Raise the key's cap, top up credits, or wait for the next UTC day. |
-| `403` | Not allowed — e.g. a private app that isn't in your workspace, or a run from another workspace. | Use a key from the app's own workspace. |
-| `404` | App or run not found. | Check the `appId` / `runId`. |
-| `429` | Rate limit or concurrency limit exceeded. | Back off and retry — see below. |
+<AccordionGroup>
+  <Accordion title="200 / 202 — Success">
+    **Problem:** None — the request succeeded. `202 Accepted` is returned when a run is accepted for processing; `200 OK` for everything else.
 
-## Rate limits
+    **Solution:** For a `202`, poll [Get a run](/api/get-run) until its `status` is `completed` or `failed`.
+  </Accordion>
 
-Each key has a **per‑minute request limit** (a default applies, overridable per key) and a **maximum number of concurrent runs**.
+  <Accordion title="400 — Bad request">
+    **Problem:** The request was malformed — for example, invalid JSON or a missing required input.
 
-- Exceeding either returns `429 Too Many Requests`.
-- A `Retry-After` header tells you how long to wait (in seconds) before retrying.
+    **Solution:** Check the request body against the app's input schema from [Get an app](/api/get-app). Each input's `nodeId` is the key in the `inputs` map.
+  </Accordion>
 
-<Tip>
-  Implement exponential backoff on `429`: wait the `Retry-After` interval (or a few seconds), then retry. Keep your concurrent in‑flight runs below the key's limit.
-</Tip>
+  <Accordion title="401 — Unauthorized">
+    **Problem:** The API key is missing, malformed, revoked, or expired.
 
-## Daily spend cap
+    **Solution:** Send the key in the `Authorization: Bearer flowy_…` header and confirm it's still active under **Settings → API keys**.
+  </Accordion>
 
-If a key has a daily spend cap, runs are rejected with `402` once the key has spent its cap of credits for the current UTC day. The counter resets at the start of the next UTC day.
+  <Accordion title="402 — Payment required">
+    **Problem:** The key hit its **daily spend cap**, or the workspace is out of credits.
 
-<Note>
-  The cap is a best‑effort guard against a leaked key, checked when a run starts. Because runs are asynchronous, a run started just under the cap can push spend slightly over it. Your workspace's available credit balance is the exact, hard backstop — when it hits zero, runs stop regardless of the cap.
-</Note>
+    **Solution:** Raise the key's cap, top up the workspace's credits, or wait for the next UTC day. The available balance is the hard backstop — when it reaches zero, runs stop regardless of any cap.
+  </Accordion>
+
+  <Accordion title="403 — Forbidden">
+    **Problem:** The request is authenticated but not allowed. Common causes: the key lacks the required [scope](/api/permissions); the app is private and not in the key's workspace; the run belongs to another workspace; or a publishable key was used from a domain that isn't allowlisted.
+
+    **Solution:** Grant the key the needed scope, use a key from the app's own workspace, or call from an allowed domain.
+  </Accordion>
+
+  <Accordion title="404 — Not found">
+    **Problem:** No app or run matches the `appId` / `runId` in the path.
+
+    **Solution:** Double-check the id. List apps with [List apps](/api/list-apps), and use the `runId` returned by [Start a run](/api/start-run).
+  </Accordion>
+
+  <Accordion title="429 — Too many requests">
+    **Problem:** You exceeded the key's per-minute request limit or its concurrent-run limit.
+
+    **Solution:** Back off and retry after the `Retry-After` interval. Watch the `X-RateLimit-Remaining` header and keep in-flight runs under the limit. See [Rate limits](/api/rate-limits).
+  </Accordion>
+
+  <Accordion title="500 — Internal server error">
+    **Problem:** Something went wrong on Flowy's side.
+
+    **Solution:** Retry after a short delay. If it persists, [contact support](mailto:contact@tryflowy.ai) with the time of the request.
+  </Accordion>
+</AccordionGroup>
 
 ## Handling failed runs
 
-A run can also fail **after** it starts (for example, an upstream generation error). In that case the run reaches `status: "failed"` with a human‑readable `error` field — poll **Get a run** to read it. Credits for a failed generation are refunded to the workspace automatically.
+A run can also fail **after** it starts — for example, an upstream generation error. In that case the run reaches `status: "failed"` with a human-readable `error` field; poll [Get a run](/api/get-run) to read it. Credits for a failed generation are refunded to the workspace automatically.
+
+```json
+{
+  "data": {
+    "runId": "64c3f2a1e8b9c0d1f2e3a4b5",
+    "status": "failed",
+    "error": "the upstream model rejected the input image"
+  }
+}
+```

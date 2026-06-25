@@ -119,13 +119,24 @@
             "pages": [
               "api/introduction",
               "api/authentication",
+              "api/permissions",
               "api/running-apps"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
+              "api/list-apps",
+              "api/get-app",
+              "api/start-run",
+              "api/get-run",
+              "api/get-openapi"
             ]
           },
           {
             "group": "Reference",
             "pages": [
-              "api/endpoints",
+              "api/rate-limits",
               "api/errors"
             ]
           }

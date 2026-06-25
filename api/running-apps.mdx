@@ -3,37 +3,38 @@ title: "Run an app"
 description: "The end-to-end flow: find an app, send inputs, and poll for the result."
 ---
 
-Running an app is **asynchronous**: you start a run and get a `runId` back immediately, then poll until the run completes. This page walks through the whole flow.
+Running an app is **asynchronous**: you start a run and get a `runId` back immediately, then poll until it completes. This guide walks through the whole flow.
 
 All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication](/api/authentication).
+
+<Note>
+  This flow touches all three [scopes](/api/permissions): listing and fetching an app needs `apps:read`, starting the run needs `runs:write`, and polling needs `runs:read`. A **Full**-access key has all three; a **Read-only** key can do every step except start the run.
+</Note>
 
 <Steps>
   <Step title="Find the app you want to run">
     List the apps in your workspace and grab an app's `id`.
 
-    <Tabs>
-      <Tab title="cURL">
-        ```bash
-        curl "$FLOWY_API/apps" -H "Authorization: Bearer $FLOWY_KEY"
-        ```
-      </Tab>
-      <Tab title="JavaScript">
-        ```javascript
-        const res = await fetch(`${BASE}/apps`, {
-          headers: { Authorization: `Bearer ${KEY}` },
-        });
-        const { data: apps } = await res.json();
-        ```
-      </Tab>
-      <Tab title="Python">
-        ```python
-        apps = requests.get(f"{BASE}/apps",
-          headers={"Authorization": f"Bearer {KEY}"}).json()["data"]
-        ```
-      </Tab>
-    </Tabs>
+    <CodeGroup>
+    ```bash cURL
+    curl "$FLOWY_API/apps" -H "Authorization: Bearer $FLOWY_KEY"
+    ```
 
-    ```json
+    ```javascript Node.js
+    const res = await fetch(`${BASE}/apps`, {
+      headers: { Authorization: `Bearer ${KEY}` },
+    });
+    const { data: apps } = await res.json();
+    ```
+
+    ```python Python
+    apps = requests.get(
+        f"{BASE}/apps", headers={"Authorization": f"Bearer {KEY}"}
+    ).json()["data"]
+    ```
+    </CodeGroup>
+
+    ```json Response
     { "data": [
       { "id": "507f1f77bcf86cd799439011", "title": "Headshot generator",
         "published": true, "runCount": 42 }
@@ -44,29 +45,26 @@ All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication]
   <Step title="Look up the app's inputs">
     Fetch the app to see which inputs it expects. Each input's `nodeId` is the key you'll send in the run request.
 
-    <Tabs>
-      <Tab title="cURL">
-        ```bash
-        curl "$FLOWY_API/apps/APP_ID" -H "Authorization: Bearer $FLOWY_KEY"
-        ```
-      </Tab>
-      <Tab title="JavaScript">
-        ```javascript
-        const res = await fetch(`${BASE}/apps/APP_ID`, {
-          headers: { Authorization: `Bearer ${KEY}` },
-        });
-        const { data: app } = await res.json();
-        ```
-      </Tab>
-      <Tab title="Python">
-        ```python
-        app = requests.get(f"{BASE}/apps/APP_ID",
-          headers={"Authorization": f"Bearer {KEY}"}).json()["data"]
-        ```
-      </Tab>
-    </Tabs>
+    <CodeGroup>
+    ```bash cURL
+    curl "$FLOWY_API/apps/APP_ID" -H "Authorization: Bearer $FLOWY_KEY"
+    ```
 
-    ```json
+    ```javascript Node.js
+    const res = await fetch(`${BASE}/apps/APP_ID`, {
+      headers: { Authorization: `Bearer ${KEY}` },
+    });
+    const { data: app } = await res.json();
+    ```
+
+    ```python Python
+    app = requests.get(
+        f"{BASE}/apps/APP_ID", headers={"Authorization": f"Bearer {KEY}"}
+    ).json()["data"]
+    ```
+    </CodeGroup>
+
+    ```json Response
     { "data": {
       "id": "APP_ID", "title": "Headshot generator",
       "inputs": [
@@ -81,53 +79,51 @@ All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication]
   <Step title="Start the run">
     `POST` to the app's `runs` endpoint with an `inputs` map of `nodeId → value`. Text inputs take a string; media inputs take a URL. You get a `runId` back right away.
 
-    <Tabs>
-      <Tab title="cURL">
-        ```bash
-        curl -X POST "$FLOWY_API/apps/APP_ID/runs" \
-          -H "Authorization: Bearer $FLOWY_KEY" \
-          -H "Content-Type: application/json" \
-          -d '{
-            "inputs": {
-              "node_1": "https://example.com/me.jpg",
-              "node_2": "studio lighting, neutral background"
-            }
-          }'
-        ```
-      </Tab>
-      <Tab title="JavaScript">
-        ```javascript
-        const res = await fetch(`${BASE}/apps/APP_ID/runs`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            inputs: {
-              node_1: "https://example.com/me.jpg",
-              node_2: "studio lighting, neutral background",
-            },
-          }),
-        });
-        const { data } = await res.json();
-        const runId = data.runId;
-        ```
-      </Tab>
-      <Tab title="Python">
-        ```python
-        res = requests.post(f"{BASE}/apps/APP_ID/runs",
-          headers={"Authorization": f"Bearer {KEY}"},
-          json={"inputs": {
+    <CodeGroup>
+    ```bash cURL
+    curl -X POST "$FLOWY_API/apps/APP_ID/runs" \
+      -H "Authorization: Bearer $FLOWY_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "inputs": {
+          "node_1": "https://example.com/me.jpg",
+          "node_2": "studio lighting, neutral background"
+        }
+      }'
+    ```
+
+    ```javascript Node.js
+    const res = await fetch(`${BASE}/apps/APP_ID/runs`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        inputs: {
+          node_1: "https://example.com/me.jpg",
+          node_2: "studio lighting, neutral background",
+        },
+      }),
+    });
+    const { data } = await res.json();
+    const runId = data.runId;
+    ```
+
+    ```python Python
+    res = requests.post(
+        f"{BASE}/apps/APP_ID/runs",
+        headers={"Authorization": f"Bearer {KEY}"},
+        json={"inputs": {
             "node_1": "https://example.com/me.jpg",
             "node_2": "studio lighting, neutral background",
-          }})
-        run_id = res.json()["data"]["runId"]
-        ```
-      </Tab>
-    </Tabs>
+        }},
+    )
+    run_id = res.json()["data"]["runId"]
+    ```
+    </CodeGroup>
 
-    ```json
+    ```json Response
     { "data": { "runId": "64c3f2a1e8b9c0d1f2e3a4b5", "status": "queued" } }
     ```
   </Step>
@@ -135,49 +131,47 @@ All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication]
   <Step title="Poll until it's done">
     Poll the run every couple of seconds until `status` is `completed` or `failed`. Output media URLs are signed and ready to download.
 
-    <Tabs>
-      <Tab title="cURL">
-        ```bash
-        curl "$FLOWY_API/runs/RUN_ID" -H "Authorization: Bearer $FLOWY_KEY"
-        ```
-      </Tab>
-      <Tab title="JavaScript">
-        ```javascript
-        async function waitForRun(runId) {
-          while (true) {
-            const res = await fetch(`${BASE}/runs/${runId}`, {
-              headers: { Authorization: `Bearer ${KEY}` },
-            });
-            const { data } = await res.json();
-            if (data.status === "completed") return data.outputs;
-            if (data.status === "failed") throw new Error(data.error);
-            await new Promise((r) => setTimeout(r, 2500));
-          }
-        }
-        ```
-      </Tab>
-      <Tab title="Python">
-        ```python
-        import time
+    <CodeGroup>
+    ```bash cURL
+    curl "$FLOWY_API/runs/RUN_ID" -H "Authorization: Bearer $FLOWY_KEY"
+    ```
 
-        def wait_for_run(run_id):
-            while True:
-                data = requests.get(f"{BASE}/runs/{run_id}",
-                  headers={"Authorization": f"Bearer {KEY}"}).json()["data"]
-                if data["status"] == "completed":
-                    return data["outputs"]
-                if data["status"] == "failed":
-                    raise RuntimeError(data["error"])
-                time.sleep(2.5)
-        ```
-      </Tab>
-    </Tabs>
+    ```javascript Node.js
+    async function waitForRun(runId) {
+      while (true) {
+        const res = await fetch(`${BASE}/runs/${runId}`, {
+          headers: { Authorization: `Bearer ${KEY}` },
+        });
+        const { data } = await res.json();
+        if (data.status === "completed") return data.outputs;
+        if (data.status === "failed") throw new Error(data.error);
+        await new Promise((r) => setTimeout(r, 2500));
+      }
+    }
+    ```
 
-    ```json
+    ```python Python
+    import time
+
+    def wait_for_run(run_id):
+        while True:
+            data = requests.get(
+                f"{BASE}/runs/{run_id}",
+                headers={"Authorization": f"Bearer {KEY}"},
+            ).json()["data"]
+            if data["status"] == "completed":
+                return data["outputs"]
+            if data["status"] == "failed":
+                raise RuntimeError(data["error"])
+            time.sleep(2.5)
+    ```
+    </CodeGroup>
+
+    ```json Response
     { "data": {
       "runId": "RUN_ID", "appId": "APP_ID", "status": "completed",
       "outputs": [
-        { "nodeId": "node_9", "kind": "image", "url": "https://cdn.flowy…/headshot.png" }
+        { "nodeId": "node_9", "kind": "image", "url": "https://cdn.tryflowy.ai/runs/headshot.png" }
       ]
     } }
     ```
@@ -185,5 +179,5 @@ All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication]
 </Steps>
 
 <Tip>
-  Output URLs are signed and expire. Download or copy the asset to your own storage soon after the run completes rather than storing the URL long‑term.
+  Output URLs are signed and expire. Download or copy the asset to your own storage soon after the run completes rather than storing the URL long-term.
 </Tip>

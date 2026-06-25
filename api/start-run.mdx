@@ -1,0 +1,7 @@
+---
+title: "Start a run"
+description: "Start an asynchronous run of an app. Bills the key's workspace."
+openapi: "/api-reference/openapi.json POST /v1/apps/{appId}/runs"
+---
+
+The run starts asynchronously and returns a `runId` immediately. Poll [Get a run](/api/get-run) until its `status` is `completed` or `failed`.
