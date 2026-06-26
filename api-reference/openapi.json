@@ -9,14 +9,6 @@
     {
       "url": "https://apis.tryflowy.ai/genstudio-svc-v2/api",
       "description": "Flowy production API"
-    },
-    {
-      "url": "https://fi.development.flamapis.com/genstudio-svc-v2/api",
-      "description": "Development"
-    },
-    {
-      "url": "http://localhost:8000/genstudio-svc-v2/api",
-      "description": "Local"
     }
   ],
   "security": [
