@@ -4,4 +4,4 @@ description: "Fetch an app's identity and its input/output schema."
 openapi: "/api-reference/openapi.json GET /v1/apps/{appId}"
 ---
 
-Each input's `nodeId` is the key you pass in the run request's `inputs` map. See [Run an app](/api/running-apps) for the full flow.
+Each input's `name` (its kebab-cased title) is the `node_id` you pass in a run request `inputs` entry. See [Run an app](/api/running-apps) for the full flow.

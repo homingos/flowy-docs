@@ -43,7 +43,7 @@ All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication]
   </Step>
 
   <Step title="Look up the app's inputs">
-    Fetch the app to see which inputs it expects. Each input's `nodeId` is the key you'll send in the run request.
+    Fetch the app to see which inputs it expects. Each input's `name` (its kebab-cased title) is the `node_id` you'll send in the run request.
 
     <CodeGroup>
     ```bash cURL
@@ -68,16 +68,18 @@ All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication]
     { "data": {
       "id": "APP_ID", "title": "Headshot generator",
       "inputs": [
-        { "nodeId": "node_1", "label": "Your photo", "kind": "image_url", "required": true },
-        { "nodeId": "node_2", "label": "Style", "kind": "text", "required": false }
+        { "nodeId": "node_1", "name": "selfie", "label": "Your photo", "kind": "image_url", "required": true },
+        { "nodeId": "node_2", "name": "style", "label": "Style", "kind": "text", "required": false }
       ],
-      "outputs": [ { "nodeId": "node_9", "label": "Headshot", "outputType": "image" } ]
+      "outputs": [ { "nodeId": "node_9", "name": "headshot", "label": "Headshot", "outputType": "image" } ]
     } }
     ```
+
+    Use each input's **`name`** (here `selfie`, `style`) as the `node_id` in the run request below.
   </Step>
 
   <Step title="Start the run">
-    `POST` to the app's `runs` endpoint with an `inputs` map of `nodeId → value`. Text inputs take a string; media inputs take a URL. You get a `runId` back right away.
+    `POST` to the app's `runs` endpoint with an `inputs` **array**. Each entry's `node_id` is the input's `name` from the previous step. Set its value with **`asset_url`** for media inputs (a URL) or **`prompt`** for text inputs (the text itself). You get a `runId` back right away.
 
     <CodeGroup>
     ```bash cURL
@@ -85,10 +87,10 @@ All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication]
       -H "Authorization: Bearer $FLOWY_KEY" \
       -H "Content-Type: application/json" \
       -d '{
-        "inputs": {
-          "node_1": "https://example.com/me.jpg",
-          "node_2": "studio lighting, neutral background"
-        }
+        "inputs": [
+          { "node_id": "selfie", "asset_url": "https://example.com/me.jpg" },
+          { "node_id": "style", "prompt": "studio lighting, neutral background" }
+        ]
       }'
     ```
 
@@ -100,10 +102,10 @@ All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication]
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        inputs: {
-          node_1: "https://example.com/me.jpg",
-          node_2: "studio lighting, neutral background",
-        },
+        inputs: [
+          { node_id: "selfie", asset_url: "https://example.com/me.jpg" },
+          { node_id: "style", prompt: "studio lighting, neutral background" },
+        ],
       }),
     });
     const { data } = await res.json();
@@ -114,10 +116,10 @@ All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication]
     res = requests.post(
         f"{BASE}/apps/APP_ID/runs",
         headers={"Authorization": f"Bearer {KEY}"},
-        json={"inputs": {
-            "node_1": "https://example.com/me.jpg",
-            "node_2": "studio lighting, neutral background",
-        }},
+        json={"inputs": [
+            {"node_id": "selfie", "asset_url": "https://example.com/me.jpg"},
+            {"node_id": "style", "prompt": "studio lighting, neutral background"},
+        ]},
     )
     run_id = res.json()["data"]["runId"]
     ```
@@ -171,7 +173,7 @@ All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication]
     { "data": {
       "runId": "RUN_ID", "appId": "APP_ID", "status": "completed",
       "outputs": [
-        { "nodeId": "node_9", "kind": "image", "url": "https://cdn.tryflowy.ai/runs/headshot.png" }
+        { "nodeId": "node_9", "name": "headshot", "kind": "image", "url": "https://cdn.tryflowy.ai/runs/headshot.png" }
       ]
     } }
     ```

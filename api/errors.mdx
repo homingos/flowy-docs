@@ -25,7 +25,7 @@ In general: `2xx` means success, `4xx` means the request was rejected and usuall
   <Accordion title="400 — Bad request">
     **Problem:** The request was malformed — for example, invalid JSON or a missing required input.
 
-    **Solution:** Check the request body against the app's input schema from [Get an app](/api/get-app). Each input's `nodeId` is the key in the `inputs` map.
+    **Solution:** Check the request body against the app's input schema from [Get an app](/api/get-app). `inputs` must be an array of entries, each with a `node_id` (the input's `name` from the schema) and a value — `asset_url` for media inputs or `prompt` for text inputs.
   </Accordion>
 
   <Accordion title="401 — Unauthorized">

@@ -9,6 +9,14 @@
     {
       "url": "https://apis.tryflowy.ai/genstudio-svc-v2/api",
       "description": "Flowy production API"
+    },
+    {
+      "url": "https://fi.development.flamapis.com/genstudio-svc-v2/api",
+      "description": "Development"
+    },
+    {
+      "url": "http://localhost:8000/genstudio-svc-v2/api",
+      "description": "Local"
     }
   ],
   "security": [
@@ -143,6 +151,11 @@
                       "type": "string",
                       "example": "node_9"
                     },
+                    "name": {
+                      "type": "string",
+                      "description": "The output's public id — its kebab-cased title from the app schema. Use this to match a result to an output by title. Omitted for apps published before titles.",
+                      "example": "headshot"
+                    },
                     "kind": {
                       "type": "string",
                       "enum": [
@@ -249,13 +262,14 @@
             "items": {
               "type": "object"
             },
-            "description": "Input field schema; each item's nodeId is the key used in the run request inputs map."
+            "description": "Input field schema. Each item's `name` (its kebab-cased title) is the value you pass as `node_id` in a run request `inputs` entry."
           },
           "outputs": {
             "type": "array",
             "items": {
               "type": "object"
-            }
+            },
+            "description": "Output field schema. Each item's `name` (its kebab-cased title) is echoed on the matching run output."
           }
         }
       }
@@ -344,7 +358,7 @@
           "Apps"
         ],
         "summary": "Get an app",
-        "description": "Returns an app's identity plus its input/output schema. Use each input's `nodeId` as the key in the run request's `inputs` map. Allowed when the app is published (any key) or belongs to the key's own workspace. **Requires the `apps:read` scope.**",
+        "description": "Returns an app's identity plus its input/output schema. Use each input's `name` (its kebab-cased title) as the `node_id` of an entry in the run request's `inputs` array. Allowed when the app is published (any key) or belongs to the key's own workspace. **Requires the `apps:read` scope.**",
         "operationId": "getApp",
         "parameters": [
           {
@@ -444,19 +458,41 @@
                 "type": "object",
                 "properties": {
                   "inputs": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "description": "Map of input nodeId -> value (text, or a URL for media inputs). Get the keys from GET /v1/apps/{appId}."
+                    "type": "array",
+                    "description": "One entry per input you want to set. Get the `node_id` values (and which are required) from GET /v1/apps/{appId}.",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "node_id",
+                        "asset_url"
+                      ],
+                      "properties": {
+                        "node_id": {
+                          "type": "string",
+                          "description": "The input's public id — its kebab-cased title from the app schema.",
+                          "example": "selfie"
+                        },
+                        "asset_url": {
+                          "type": "string",
+                          "description": "The value for this input: a media URL for image/video/audio inputs, or the text itself for text inputs.",
+                          "example": "https://example.com/me.jpg"
+                        }
+                      }
+                    }
                   }
                 }
               },
               "example": {
-                "inputs": {
-                  "node_1": "https://example.com/me.jpg",
-                  "node_2": "studio lighting, neutral background"
-                }
+                "inputs": [
+                  {
+                    "node_id": "selfie",
+                    "asset_url": "https://example.com/me.jpg"
+                  },
+                  {
+                    "node_id": "style-prompt",
+                    "asset_url": "studio lighting, neutral background"
+                  }
+                ]
               }
             }
           }
