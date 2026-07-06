@@ -151,27 +151,51 @@ if (which === "addnode") {
   await page.screenshot({ path: `${SCRATCH}/ag6-connmenu.png` });
 } else if (which === "connbuild") {
   // Build Text->Image->Video via the connection menu; verify persistence.
+  const vw = 1280, vh = 800;
   await openCanvas(PROJECT);
   await page.keyboard.press("Shift+T");
   await page.waitForTimeout(900);
   await page.mouse.click(360, 700);
   await page.keyboard.press("Shift+Digit1");
   await page.waitForTimeout(1000);
+  const zoomOut = async (n: number) => {
+    await page.mouse.move(vw / 2, vh / 2, { steps: 4 });
+    await page.keyboard.down("Meta");
+    for (let i = 0; i < n; i++) { await page.mouse.wheel(0, 120); await page.waitForTimeout(120); }
+    await page.keyboard.up("Meta");
+    await page.waitForTimeout(400);
+  };
+  const centerNode = async (nodeSel: string, targetX = vw * 0.42, targetY = vh * 0.42) => {
+    const nb = await page.locator(nodeSel).first().boundingBox();
+    if (!nb) return;
+    const cx = nb.x + nb.width / 2, cy = nb.y + nb.height / 2;
+    await page.mouse.move(vw / 2, vh / 2, { steps: 4 });
+    // pan: wheel with no modifier moves the canvas; deltaX pans horizontally
+    await page.mouse.wheel(cx - targetX, cy - targetY);
+    await page.waitForTimeout(500);
+  };
   const pickFrom = async (nodeSel: string, item: string) => {
+    await page.keyboard.press("Shift+Digit1");
+    await page.waitForTimeout(800);
+    await zoomOut(3);
+    await centerNode(nodeSel);
     const nb = await page.locator(nodeSel).first().boundingBox();
     if (nb) { await page.mouse.move(nb.x + nb.width / 2, nb.y + nb.height / 2, { steps: 10 }); await page.waitForTimeout(300); }
     const h = await page.locator(`${nodeSel} .react-flow__handle.source`).first().boundingBox();
     if (!h) throw new Error("no source handle for " + nodeSel);
     await page.mouse.click(h.x + h.width / 2, h.y + h.height / 2);
     await page.waitForTimeout(800);
-    const opt = page.getByRole("button", { name: item, exact: true }).first();
+    const grp = page.getByRole("group", { name: "Connect node type" });
+    const opt = grp.getByRole("button", { name: new RegExp(`^${item}`) }).first();
     await opt.waitFor({ state: "visible", timeout: 5000 });
-    await opt.click();
+    const ob = await opt.boundingBox();
+    console.log("opt box for", item, JSON.stringify(ob));
+    await opt.click({ timeout: 4000 }).catch(async () => {
+      if (ob) await page.mouse.click(ob.x + ob.width / 2, ob.y + ob.height / 2);
+    });
     await page.waitForTimeout(1200);
   };
   await pickFrom(".react-flow__node-textBlock", arg2 || "Image");
-  await page.keyboard.press("Shift+Digit1");
-  await page.waitForTimeout(1000);
   console.log("after 1st: node classes", await page.locator(".react-flow__node").evaluateAll((e) => e.map((n) => (n.className.match(/node-(\w+)/) || [])[1])));
   await pickFrom(".react-flow__node-emptyImageBlock", "Video");
   await page.keyboard.press("Shift+Digit1");
@@ -399,6 +423,108 @@ if (which === "addnode") {
   }
   await page.waitForTimeout(800);
   console.log("final node classes:", await page.locator(".react-flow__node").evaluateAll((els) => els.map((e) => e.className.replace(/react-flow__node ?/, "").split(" ")[0])));
+} else if (which === "delkit") {
+  await page.goto(`${BASE}/dashboard/brandkit`, { waitUntil: "domcontentloaded" });
+  await page.waitForLoadState("networkidle").catch(() => {});
+  await page.waitForTimeout(3000);
+  const name = arg2 || "Figma";
+  const card = page.getByText(name, { exact: true }).first();
+  if (!(await card.isVisible().catch(() => false))) {
+    console.log("no kit named", name);
+  } else {
+    const cb = await card.boundingBox();
+    if (cb) await page.mouse.move(cb.x + cb.width / 2, cb.y - 60, { steps: 6 });
+    await page.waitForTimeout(600);
+    await page.getByRole("button", { name: "Delete" }).first().click();
+    await page.waitForTimeout(800);
+    // confirm dialog
+    const confirm = page.getByRole("button", { name: /Delete/ }).last();
+    if (await confirm.isVisible().catch(() => false)) await confirm.click();
+    await page.waitForTimeout(1500);
+    console.log("kits remaining:", await page.getByText(name, { exact: true }).count());
+  }
+} else if (which === "reprompt") {
+  // Inspect the prompt-edit + regenerate controls on an ALREADY-generated
+  // image node (no generation triggered).
+  await openCanvas(PROJECT);
+  await page.keyboard.press("Shift+Digit1");
+  await page.waitForTimeout(1200);
+  const img = page.locator(".react-flow__node-staticImageBlock").first();
+  await img.click();
+  await page.waitForTimeout(600);
+  const snap = await page.locator(".react-flow__node-staticImageBlock").first().ariaSnapshot();
+  console.log("==== NODE SNAPSHOT ====");
+  console.log(snap);
+  const btns = await img.evaluate((n) =>
+    [...n.querySelectorAll("button")].map((b) => ({
+      label: b.getAttribute("aria-label") || b.title || (b.textContent || "").trim().slice(0, 20),
+      x: Math.round(b.getBoundingClientRect().x),
+      y: Math.round(b.getBoundingClientRect().y),
+    })),
+  );
+  console.log("NODE BTNS:", JSON.stringify(btns));
+  const tas = await img.evaluate((n) => n.querySelectorAll("textarea").length);
+  console.log("textareas in node:", tas);
+  await page.screenshot({ path: `${SCRATCH}/ag6-reprompt.png` });
+} else if (which === "extract") {
+  await page.goto(`${BASE}/dashboard/brandkit`, { waitUntil: "domcontentloaded" });
+  await page.waitForLoadState("networkidle").catch(() => {});
+  await page.waitForTimeout(3000);
+  await page.getByRole("button", { name: "Not now" }).click({ timeout: 2000 }).catch(() => {});
+  const url = arg2 || "figma.com";
+  await page.getByRole("textbox", { name: "example.com" }).fill(url);
+  await page.waitForTimeout(400);
+  const extractBtn = page.getByRole("button", { name: "Extract" });
+  console.log("extract disabled?", await extractBtn.isDisabled());
+  const t0 = Date.now();
+  await extractBtn.click();
+  await page.waitForTimeout(2000);
+  await snap("ag6-extract-started", 60);
+  // Wait for a kit card to appear / finish processing
+  for (let i = 0; i < 40; i++) {
+    await page.waitForTimeout(3000);
+    const s = await page.locator("body").ariaSnapshot();
+    const processing = /processing/i.test(s);
+    const kitCard = await page.getByRole("button", { name: /Open .*kit|View kit/i }).count();
+    console.log(`t+${((Date.now() - t0) / 1000).toFixed(0)}s processing=${processing} cards=${kitCard}`);
+    if (!processing && i > 1) break;
+  }
+  await snap("ag6-extract-done", 80);
+} else if (which === "kitdetail") {
+  await page.goto(`${BASE}/dashboard/brandkit`, { waitUntil: "domcontentloaded" });
+  await page.waitForLoadState("networkidle").catch(() => {});
+  await page.waitForTimeout(3000);
+  await page.getByRole("button", { name: "Not now" }).click({ timeout: 2000 }).catch(() => {});
+  await snap("ag6-kits-grid", 50);
+  // click the Figma kit card
+  const card = page.getByText(arg2 || "Figma", { exact: true }).first();
+  const cb = await card.boundingBox();
+  console.log("card box:", JSON.stringify(cb));
+  if (cb) {
+    await page.mouse.click(cb.x + cb.width / 2, cb.y - 40);
+    await page.waitForTimeout(2500);
+    await snap("ag6-kit-detail", 140);
+  }
+} else if (which === "bknode-pick") {
+  await openCanvas(PROJECT);
+  await page.getByRole("button", { name: "Add a node" }).click();
+  await page.waitForTimeout(700);
+  await page.locator('[aria-label="Node selection"]').getByRole("button", { name: /^Brand Kit/ }).click();
+  await page.waitForTimeout(1500);
+  const search = page.getByRole("textbox", { name: /Search kits/ }).first();
+  await search.click();
+  await page.waitForTimeout(600);
+  await page.keyboard.type("fig", { delay: 60 });
+  await page.waitForTimeout(1200);
+  await snap("ag6-bknode-list", 120);
+} else if (which === "bknode") {
+  await openCanvas(PROJECT);
+  await page.getByRole("button", { name: "Add a node" }).click();
+  await page.waitForTimeout(700);
+  await page.locator('[aria-label="Node selection"]').getByRole("button", { name: /^Brand Kit/ }).click();
+  await page.waitForTimeout(1800);
+  console.log("node classes", await page.locator(".react-flow__node").evaluateAll((e) => e.map((n) => (n.className.match(/node-(\w+)/) || [])[1])));
+  await snap("ag6-bknode", 120);
 } else if (which === "download") {
   // needs a project that ALREADY has a generated image node
   await openCanvas(PROJECT);

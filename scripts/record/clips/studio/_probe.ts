@@ -9,15 +9,17 @@
 import { chromium, type Locator, type Page } from "playwright";
 import { STATE_PATH } from "../../lib/auth.ts";
 import { BASE_URL as BASE } from "../../lib/env.ts";
+import { valueCentre } from "./_helpers.ts";
 
 const SCRATCH = process.env.SCRATCH ?? "/tmp";
 const which = process.argv[2] ?? "comp";
 const PROJECT = process.argv[3] ?? "6a4b636d1263d94b3dfbdd2a";
 
 const browser = await chromium.launch({ headless: true });
+const [VW, VH] = (process.env.VIEW ?? "1280x800").split("x").map(Number);
 const context = await browser.newContext({
   storageState: STATE_PATH,
-  viewport: { width: 1280, height: 800 },
+  viewport: { width: VW, height: VH },
   colorScheme: "dark",
 });
 const page = await context.newPage();
@@ -92,10 +94,19 @@ if (which === "comp") {
   await page.waitForTimeout(1500);
 
   if (which === "seed") {
-    // ensure N clips exist in this project
+    // ensure N total clips exist (argv[4]), placing varied stock terms
+    const target = Number(process.argv[4] ?? 3);
+    const i = insp();
+    await i.getByRole("button", { name: "Nodes" }).click().catch(() => {});
+    await page.waitForTimeout(600);
     const have = await clipNodes().count().catch(() => 0);
     console.log("existing clips:", have);
-    if (have < 2) await placeClips(2 - have);
+    const terms = ["mountain sunrise", "city night", "forest"];
+    for (let k = have; k < target; k++) {
+      await placeClips(1, terms[k % terms.length]);
+    }
+    await i.getByRole("button", { name: "Nodes" }).click().catch(() => {});
+    await page.waitForTimeout(600);
     await snap("s-seed", 40);
     console.log("clip count now:", await clipNodes().count().catch(() => 0));
   } else if (which === "addfx") {
@@ -247,6 +258,79 @@ if (which === "comp") {
       return out.slice(0, 40);
     }, cx);
     console.log("\n--- near cut ---\n", JSON.stringify(near));
+  } else if (which === "cleanup") {
+    // Neutralise any grade/effects left on clips so previews look clean.
+    const i = insp();
+    await i.getByRole("button", { name: "Nodes" }).click().catch(() => {});
+    await page.waitForTimeout(500);
+    const count = await clipNodes().count();
+    for (let k = 0; k < count; k++) {
+      await clipNodes().nth(k).click();
+      await page.waitForTimeout(700);
+      // clear effects rack
+      await i.getByRole("button", { name: /^Effects$/ }).click().catch(() => {});
+      await page.waitForTimeout(300);
+      const x = i.getByRole("button", { name: "✕" });
+      for (let g = 0; g < 8 && (await x.first().isVisible().catch(() => false)); g++) { await x.first().click(); await page.waitForTimeout(300); }
+      // reset color sliders via double-click
+      await i.getByRole("button", { name: /^Color$/ }).click().catch(() => {});
+      await page.waitForTimeout(300);
+      for (const lbl of ["Exposure", "Contrast", "Saturation"]) {
+        try { const c = await valueCentre(page, lbl); await page.mouse.dblclick(c.x, c.y); await page.waitForTimeout(200); } catch {}
+      }
+      await i.getByRole("button", { name: "Nodes" }).click().catch(() => {});
+      await page.waitForTimeout(300);
+    }
+    await snap("s-cleanup", 20);
+    console.log("cleaned", count, "clips");
+  } else if (which === "vc") {
+    await selectFirstClip();
+    const i = insp();
+    async function report(labels: string[]) {
+      for (const l of labels) {
+        try { const c = await valueCentre(page, l); console.log(`  ${l}: ${JSON.stringify(c)}`); }
+        catch (e) { console.log(`  ${l}: FAIL ${(e as Error).message}`); }
+      }
+    }
+    await i.getByRole("button", { name: /^Color$/ }).click(); await page.waitForTimeout(500);
+    console.log("COLOR:"); await report(["Exposure", "Contrast", "Saturation"]);
+    await i.getByRole("button", { name: /^Transform$/ }).click(); await page.waitForTimeout(500);
+    console.log("TRANSFORM:"); await report(["Blur", "Rotation"]);
+    await i.getByRole("button", { name: /^Effects$/ }).click(); await page.waitForTimeout(500);
+    const x = i.getByRole("button", { name: "✕" });
+    for (let g = 0; g < 6 && (await x.first().isVisible().catch(() => false)); g++) { await x.first().click(); await page.waitForTimeout(300); }
+    await i.locator("select").first().selectOption({ label: "Vignette" }).catch(() => {});
+    await i.getByRole("button", { name: /^Add$/ }).click(); await page.waitForTimeout(700);
+    console.log("VIGNETTE:"); await report(["Amount", "Feather"]);
+  } else if (which === "chroma") {
+    await selectFirstClip();
+    const i = insp();
+    await i.getByRole("button", { name: /^Compositing$/ }).click();
+    await page.waitForTimeout(600);
+    await i.getByRole("checkbox", { name: "Enable chroma key removal" }).click().catch(async () => {
+      await i.getByText("Enable chroma key removal").click().catch(() => {});
+    });
+    await page.waitForTimeout(1000);
+    await snap("s-chroma-on", 60);
+    console.log("\n--- chroma buttons ---\n", JSON.stringify(await i.getByRole("button").allInnerTexts()));
+    console.log("\n--- chroma text ---\n", (await i.innerText()).slice(0, 1200));
+  } else if (which === "fxlabels") {
+    await selectFirstClip();
+    const i = insp();
+    for (const fx of ["Temperature", "Tint", "Curves", "Crop", "Blur"]) {
+      await i.getByRole("button", { name: /^Effects$/ }).click().catch(() => {});
+      await page.waitForTimeout(400);
+      // clear
+      const x = i.getByRole("button", { name: "✕" });
+      for (let g = 0; g < 6 && (await x.first().isVisible().catch(() => false)); g++) { await x.first().click(); await page.waitForTimeout(300); }
+      if (fx === "Blur") break;
+      await i.locator("select").first().selectOption({ label: fx }).catch(() => {});
+      await page.waitForTimeout(300);
+      await i.getByRole("button", { name: /^Add$/ }).click().catch(() => {});
+      await page.waitForTimeout(800);
+      console.log(`\n=== ${fx} ===\n`, (await i.innerText()).slice(0, 900));
+      await snap(`s-fx-${fx.toLowerCase()}`, 10);
+    }
   } else if (which === "ai") {
     await snap("s-ai", 300);
     // open modes menu
