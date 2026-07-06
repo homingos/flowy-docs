@@ -1,0 +1,52 @@
+---
+title: "Audio Node"
+description: "Generate sound effects, music, and voiceover from a text prompt."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+The Audio node turns text into sound — a sound effect, a music bed, a full song, or spoken narration — ready to wire into video generations and compositions.
+
+<DemoVideo
+  src="/videos/canvas/node-audio.mp4"
+  poster="/images/posters/canvas/node-audio.jpg"
+  caption="Generating a sound effect and playing it back in the node"
+/>
+
+## Modes
+
+Pick a mode, describe what you want to hear, and click **Run**. The generated clip plays back right in the node as a waveform.
+
+<Tabs>
+  <Tab title="SFX">
+    The default mode: a single sound effect or ambience from a description — *"helicopter takeoff: blades building, engine whine"*. Durations are `5`, `10`, `15`, `20`, or `30` seconds.
+
+    Fine-tune with **prompt influence** (`0`–`1` — higher follows your description more literally, lower is more creative), a **loop** toggle for seamlessly looping effects, and a **fast** toggle that trades some quality for speed and unlocks the 30-second length.
+  </Tab>
+
+  <Tab title="Music">
+    Three sub-types cover different jobs:
+
+    - **Instrumental** — a music bed from genre and instrument tags (*"lofi, chill piano, soft drums, 90 BPM"*). Durations: `15`, `30`, `60`, `120`, `180`, or `240` seconds.
+    - **Song** — a track with vocals. Describe the style in the prompt and structure the lyrics with `[Intro]`, `[Verse]`, `[Chorus]`, `[Bridge]`, and `[Outro]` tags — or let the lyrics optimizer write them for you.
+    - **Pro Song** — for precise control: a style prompt plus timed lyrics in the lyrics editor, at a `95s` or `285s` length preset.
+
+    Song and Pro Song both have an **instrumental** toggle to generate the track without vocals.
+  </Tab>
+
+  <Tab title="Speech">
+    Narration and dialogue from a script. Pick a voice and a model tier — **Gemini Flash** for fast narration and multi-speaker dialogue, **MiniMax HD** for expressive, emotional delivery, or **ElevenLabs** for premium character voiceover — and optionally add a style direction like *"warm, slow, documentary narration"*.
+  </Tab>
+</Tabs>
+
+## Connect audio downstream
+
+Generated audio is made to be wired onward:
+
+- **Audio → Video** — in the Video node's Default engine, a connected clip conditions the soundtrack and timing. Name it `@Audio1` in the video prompt, and connect at least one image or video alongside it.
+- **Audio → Composition** — the clip lands as an audio layer on the [Composition](/canvas/nodes/composition) timeline, ready to sit under your footage.
+- **Audio → Storyboard** — attach sound references while planning a sequence.
+
+<Note>
+  Audio credits scale with clip length, so longer generations cost more. See [how credits work](/billing/credits).
+</Note>

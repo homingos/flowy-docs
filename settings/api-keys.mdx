@@ -1,0 +1,57 @@
+---
+title: "API Keys"
+description: "Create scoped secret keys for the Flowy API and revoke them the moment you're done."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+API keys let servers and scripts call the [Flowy API](/api/introduction) on your workspace's behalf. Runs started with a key are billed to the workspace, so keep keys private and never ship them in client-side code. Manage them under **Developers → API keys** in the settings sidebar — workspace Owners and Editors can create and manage keys.
+
+<DemoVideo
+  src="/videos/settings/api-keys.mp4"
+  poster="/images/posters/settings/api-keys.jpg"
+  caption="Creating a restricted API key and copying the secret once"
+/>
+
+## Create a key
+
+<Steps>
+  <Step title="Start a new key">
+    Click **Create API key** and give it a name you'll recognize later, like "Production server".
+  </Step>
+  <Step title="Choose an owner">
+    **You** ties the key to your account — it's deleted if you're removed from the workspace. **Machine** puts a workspace service account behind the key, so it keeps working even if you leave.
+  </Step>
+  <Step title="Set permissions">
+    Pick **All**, **Read Only**, or **Restricted** (see below), and optionally open **Advanced options** to set a daily spend cap in credits and a rate limit in requests per minute.
+  </Step>
+  <Step title="Copy the secret">
+    The full key is shown once, right after creation. Copy it now — for security, you won't be able to see it again. The list shows only a preview from then on.
+  </Step>
+</Steps>
+
+## Permission presets
+
+| Preset | What the key can do |
+| --- | --- |
+| All | Full access to all resources. |
+| Read Only | Inspect flows and read run results; can't start runs. |
+| Restricted | Exactly what you choose, per resource. |
+
+Restricted keys use a resource matrix:
+
+- **Flows** — *Read* lists flows and reads a flow's input/output schema.
+- **Runs** — *Read* polls a run's status and results; *Write* also starts runs, which spends credits.
+
+See [API permissions](/api/permissions) for how scopes map to endpoints, and [Authentication](/api/authentication) for how to send the key.
+
+## Manage and revoke keys
+
+The key list shows each key's name, its permission preset, a key preview, when it was created, and when it was last used — a quick way to spot keys that are no longer in use. From the row menu you can:
+
+- **Edit** — rename the key or adjust its settings.
+- **Delete** — permanently delete the key. You'll type the key's name to confirm, and requests using it stop working immediately.
+
+<Warning>
+  Deleting a key can't be undone. If a key may have leaked, delete it first and create a replacement after — a moment of downtime beats an open key.
+</Warning>

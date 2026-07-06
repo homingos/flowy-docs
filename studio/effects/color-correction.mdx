@@ -1,0 +1,55 @@
+---
+title: "Color Correction"
+description: "Balance exposure and contrast, shift white balance, and grade with curves."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Studio's color tools split into two groups: the primary sliders on the **Color** sub-tab, always present for every visual clip, and the additional grade effects you add from the **Effects** rack.
+
+<DemoVideo
+  src="/videos/studio/effects-color.mp4"
+  poster="/images/posters/studio/effects-color.jpg"
+  caption="Balancing a clip with exposure and contrast, then warming it with temperature"
+/>
+
+## Primary corrections — Color tab
+
+Select a clip and open **Properties → Color**. These three sliders cover most fixes:
+
+| Control | Range | What it does |
+| --- | --- | --- |
+| **Exposure** | −4 to +4 EV | Brightens or darkens in photographic stops — +1 EV doubles the light |
+| **Contrast** | −1 to +1 | Compresses or expands the spread between shadows and highlights |
+| **Saturation** | −1 to +2 | Drains color toward monochrome or pushes it past natural intensity |
+
+All three default to 0, which leaves the clip untouched.
+
+## Grade effects — Effects rack
+
+Open **Properties → Effects**, pick an effect from the dropdown, and press **Add**.
+
+### Brightness
+
+A single **Amount** slider (−1 to +1) that lifts or lowers the whole image uniformly. Use **Exposure** when you want a photographic response; use Brightness for a straight linear push.
+
+### Temperature
+
+A **Warm/Cool** slider (−1 to +1). Positive values warm the image toward orange, negative values cool it toward blue — the classic white-balance fix for footage shot under mismatched lighting.
+
+### Tint
+
+A **Magenta/Green** slider (−1 to +1) that shifts along the axis Temperature doesn't cover. Pair the two to neutralize almost any color cast.
+
+### Curves
+
+A tone map built from control points, applied to the channel you choose:
+
+- **Channel** — **RGB** grades all channels together for contrast shaping; **Red**, **Green**, or **Blue** grades one channel for color work.
+- The default curve is a straight line from black to white, meaning no change; moving points remaps input tones to output tones, with values blended smoothly between points.
+
+Under the hood, Flowy's color engine follows the same conventions as professional grading tools — CDL-style lift/gamma/gain and RGB curves — so grades translate predictably if you're coming from Resolve or Premiere.
+
+<Tip>
+  Order matters: effects apply top to bottom in the rack. Correct first (temperature, tint), then grade (curves) — the same clip reads differently if the curve runs before the white-balance fix.
+</Tip>

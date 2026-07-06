@@ -1,54 +1,66 @@
 ---
-title: "Navigation & shortcuts"
-description: "Pan, zoom, select, and the shortcuts you'll use most."
+title: "Navigation & Selection"
+description: "Pan, zoom, select, and tidy the infinite canvas without breaking flow."
 ---
 
-Moving around the canvas works like any infinite canvas. You pan to reposition, zoom to change scale, and select nodes to work on them. Once these motions feel natural, the rest of **Canvas** gets out of your way.
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
 
-{/* TODO: add screenshot of panning and zooming around the canvas */}
-{/* TODO: capture real screenshot */}
+The canvas moves the way you expect from an infinite board: pan to reposition, zoom to change scale, select nodes to act on them. Once these motions feel automatic, the rest of the [Canvas](/canvas/overview) gets out of your way.
 
-## Move, zoom, and select
+<DemoVideo
+  src="/videos/canvas/navigation.mp4"
+  poster="/images/posters/canvas/navigation.jpg"
+  caption="Panning, zooming, marquee selection, and auto layout on the canvas"
+/>
 
-Pick the input you're using. The gestures map to what you'd expect from any modern canvas tool.
+## Pan and zoom
 
 <Tabs>
   <Tab title="Mouse">
-    - Left-click to select a node and interact with it.
-    - Right-click anywhere to open the context menu.
-    - Drag or scroll on empty canvas to pan around.
-    - Drag a box on empty canvas to multi-select several nodes at once.
+    - Scroll to pan in any direction; hold <kbd>⌘</kbd>/<kbd>Ctrl</kbd> while scrolling to zoom.
+    - Drag on empty canvas to draw a selection box.
+    - Drag with the middle or right mouse button — or hold <kbd>Space</kbd> and drag — to pan.
+    - Right-click an empty spot to open the add-node menu at that point.
   </Tab>
   <Tab title="Trackpad">
     - Two-finger scroll to pan in any direction.
-    - Pinch to zoom in and out.
-  </Tab>
-  <Tab title="Keyboard">
-    | Action | Shortcut |
-    | --- | --- |
-    | Zoom in / out | `Cmd/Ctrl + scroll` |
-    | Delete selected | `Delete` or `Backspace` |
-    | Copy | `Cmd/Ctrl + C` |
-    | Paste | `Cmd/Ctrl + V` |
-    | Run / generate selected | `Enter` |
+    - Pinch to zoom in and out, anchored at your cursor.
   </Tab>
 </Tabs>
 
+Zoom runs from 5% up to 400%. The pill in the bottom-left corner shows the current level — click it for presets:
+
+| Action | Shortcut |
+| --- | --- |
+| Zoom in / out | <kbd>⌘</kbd> <kbd>+</kbd> / <kbd>⌘</kbd> <kbd>−</kbd> |
+| Zoom to 100% | <kbd>⇧</kbd> <kbd>0</kbd> |
+| Zoom to fit | <kbd>⇧</kbd> <kbd>1</kbd> |
+| Zoom to selection | <kbd>⇧</kbd> <kbd>2</kbd> |
+
+The same pill toggles the **minimap**, a small overview map for finding your way around a large board.
+
 <Tip>
-  Select a node and press `Enter` to generate without leaving the keyboard. It's the fastest way to run a node you've just set up.
+Prefer CAD-style navigation? In Preferences you can switch the mouse-wheel mode so that scrolling zooms, left-drag pans, and <kbd>⇧</kbd>-drag draws the selection box.
 </Tip>
 
-<Note>
-  Exact shortcuts may vary slightly across platforms and updates. You can always confirm the current keys in the in-app help.
-</Note>
+## Select nodes
 
-## Where to next
+- **Click** a node to select it; the [inspector](/canvas/overview#node-inspector) opens with its controls.
+- **<kbd>⌘</kbd>/<kbd>Ctrl</kbd>-click** to add more nodes to the selection.
+- **Drag a marquee** on empty canvas to select several at once — any node the box touches is included.
+- **<kbd>⌘</kbd> <kbd>A</kbd>** selects every node; <kbd>Esc</kbd> deselects.
 
-<CardGroup cols={2}>
-  <Card title="Canvas overview" icon="diagram-project" href="/canvas/overview">
-    See how the infinite canvas fits together.
-  </Card>
-  <Card title="Working with nodes" icon="layer-group" href="/canvas/nodes">
-    Learn the node types and how to connect them.
-  </Card>
-</CardGroup>
+A floating action bar appears under any selection with **Delete**, **Group** / **Ungroup**, **Auto layout** (for two or more nodes, or a frame), and **Generate all**, which runs every runnable node in the selection.
+
+## Auto layout
+
+When the board gets messy, auto layout arranges connected flows and packs loose nodes into a tidy arrangement, animating everything into place:
+
+- Press <kbd>⇧</kbd> <kbd>O</kbd> — or click **Auto layout** in the [left toolbar](/canvas/toolbar) — to lay out the whole canvas.
+- Use **Auto layout** in the selection action bar to tidy just a frame or a multi-selection, in place.
+
+## Command palette
+
+Press <kbd>⌘</kbd> <kbd>K</kbd> (or click **Search** in the header) to open the command palette. It runs project actions, switches between Canvas and Studio, reopens recent projects, and opens Preferences or the shortcuts reference. Start typing and it also searches every node on the canvas by title, prompt, or type — select a result to jump straight to that node.
+
+For the complete key reference, see [Keyboard Shortcuts](/canvas/keyboard-shortcuts).

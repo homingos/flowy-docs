@@ -1,0 +1,32 @@
+---
+title: "Outpaint"
+description: "Drag an image's edges outward and let AI fill in what would be there."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Outpaint extends an image beyond its original frame — AI imagines the scene past each edge. Turn a square crop into a wide banner, or give a tight shot breathing room.
+
+<DemoVideo
+  src="/videos/canvas/image-tools-outpaint.mp4"
+  poster="/images/posters/canvas/image-tools-outpaint.jpg"
+  caption="Dragging the outpaint handles outward and generating the extended scene"
+/>
+
+## Using it
+
+Right-click an image node and choose **Tools → Outpaint**. On the connected Outpaint node:
+
+1. **Drag the handles outward** on any side of the image — top, bottom, left, right, or several at once. The **Output** readout shows the resulting canvas size live.
+2. Press **Outpaint**. The job runs in the background and the extended image lands in the node.
+3. Not right? Drag the handles again and re-run, or hit **Reset** to zero the expansion.
+
+## Iterating outward
+
+Each run builds on the last: once a result exists, the drag handles expand *from the result*, and the expansion values reset to zero after every run. To grow an image dramatically, extend it in a few medium steps rather than one giant one.
+
+The expanded canvas is capped at 2560 px on its longest side and roughly 4.2 megapixels in total — if you drag past the budget, the readout shows **(max)** and the expansion is scaled down to fit.
+
+<Tip>
+  Extend one direction at a time when the scene matters. Growing left and right in separate runs gives the model a full-resolution view of each new region.
+</Tip>

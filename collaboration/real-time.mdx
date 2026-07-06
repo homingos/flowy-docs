@@ -1,0 +1,49 @@
+---
+title: "Real-Time Collaboration"
+description: "Edit the same canvas together with live cursors, presence, and follow mode."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Every Flowy project is multiplayer. Open the same project as a teammate and you're both on the same live canvas — every node move, edit, and generation syncs instantly, with no save button and nothing to refresh.
+
+<DemoVideo
+  src="/videos/collab/realtime.mp4"
+  poster="/images/posters/collab/realtime.jpg"
+  caption="Two collaborators editing the same canvas with live cursors"
+/>
+
+## Live cursors
+
+Each collaborator gets a named cursor in their own color, moving across the canvas in real time. You always know who's working where, and simultaneous edits merge automatically — two people can build different parts of the same flow without stepping on each other.
+
+## Presence avatars
+
+The editor header shows who's in the project right now — up to three avatars, with an overflow count when more people are online. Click the avatars to open the collaborators dropdown, which lists everyone with access to the project:
+
+- **Active now** — currently in the project, marked with an online dot.
+- **Everyone else** — shown with when they were last active.
+
+The dropdown is also where you start [voice chat](/collaboration/voice-rooms) and manage [sharing](/collaboration/sharing).
+
+## Follow mode
+
+Follow mode locks your viewport to another collaborator's, so you see exactly what they see — ideal for walkthroughs, reviews, and "look at this" moments.
+
+<Steps>
+  <Step title="Open the collaborators dropdown">
+    Click the presence avatars in the editor header.
+  </Step>
+  <Step title="Spotlight someone">
+    On any active member's row, click **Spotlight**. The dropdown closes and your canvas starts tracking their view — panning and zooming as they do.
+  </Step>
+  <Step title="Stop when you're done">
+    A "Following" banner appears on the canvas while follow mode is on. Click **Stop** or press <kbd>Esc</kbd> to take back control. Follow mode also ends automatically if the person leaves the project.
+  </Step>
+</Steps>
+
+While you're following someone, their avatar is highlighted with a ring in the editor header so it's always clear whose view you're seeing.
+
+<Tip>
+  Pair follow mode with a [voice room](/collaboration/voice-rooms) to run a live review: one person drives the canvas while everyone else follows and talks it through.
+</Tip>

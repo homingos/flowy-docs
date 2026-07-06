@@ -33,7 +33,7 @@ There are two kinds of key. Pick the one that matches where your code runs.
 
 <Steps>
   <Step title="Open API keys settings">
-    In the app, go to **Settings → API keys** (the **API** page). You'll need to be a workspace **owner** or **editor**.
+    In the app, go to [Settings → API keys](/settings/api-keys). You'll need to be a workspace **owner** or **editor**.
   </Step>
   <Step title="Choose the key's shape">
     Pick an **owner** (You or Machine) and a **permission** level (All, Read-only, or Restricted). Optionally set a daily spend cap and rate limit under advanced options.
@@ -86,6 +86,8 @@ data = res.json()["data"]
 ```
 </CodeGroup>
 
+Every request you make with a key is recorded in [Settings → Logs](/settings/logs) — useful for debugging your integration and auditing what a key has been doing.
+
 ## Using a publishable key in the browser
 
 <Note>
@@ -116,7 +118,7 @@ Because a leaked key spends your workspace credits, every key has several safegu
 | **Domain allowlist** | For publishable keys: only requests from your domains are accepted. |
 | **Daily spend cap** | Once the key spends its cap (credits/day), new runs are rejected with `402` until the next UTC day. |
 | **Rate limit** | Caps requests per minute for the key. Excess requests get `429`. See [Rate limits](/api/rate-limits). |
-| **Revoke** | Disables the key immediately. The **Last used** column helps you spot a key behaving unexpectedly. |
+| **Revoke** | Disables the key immediately. The **Last used** column and the [request logs](/settings/logs) help you spot a key behaving unexpectedly. |
 
 <Note>
   Your workspace's available credit balance is always the final backstop: when it reaches zero, runs stop regardless of any cap.

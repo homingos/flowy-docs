@@ -1,0 +1,36 @@
+---
+title: "Composition Node"
+description: "Layer clips and stills into an editable composition that opens in Studio."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+The Composition node is a lightweight editor inside your canvas — stack connected clips, images, and audio into a layered timeline, then open it in Studio when you're ready for the full edit.
+
+<DemoVideo
+  src="/videos/canvas/node-composition.mp4"
+  poster="/images/posters/canvas/node-composition.jpg"
+  caption="Assembling connected media into a layered composition and opening it in Studio"
+/>
+
+## Build a composition
+
+Connect media into the node and each one lands as a layer: images, videos, audio, [flams](/canvas/nodes/flam), [vectors](/canvas/nodes/vector), and sketches all stack into the same timeline. The node shows a live preview of the assembled result, so you can see the edit taking shape without leaving the canvas.
+
+This is the natural landing spot for a generation pipeline — storyboard frames become clips, clips and a music bed become a cut — all while everything stays wired to the nodes that produced it.
+
+## Open in Studio
+
+The Composition node and [Studio](/studio/overview) are two views of the same edit. Click **Open in Studio** on the node and the canvas hands off to Studio's full editing surface — the [timeline](/studio/timeline), the [inspector](/studio/inspector), and the [effects](/studio/effects/overview) — with your composition as the working project. The node keeps a preview snapshot on the canvas, so the edit stays visible in context when you come back.
+
+Use the node for assembly and rough structure; use Studio for the finishing pass — trims, transitions, color, and export.
+
+## Not the same as Video → Compose
+
+<Note>
+  Composition is a manual clip-stacking timeline — it doesn't generate anything. To *generate* a new clip from multiple images or videos, use a [Video node](/canvas/nodes/video) with its source set to **Compose**.
+</Note>
+
+## Downstream
+
+A composition outputs video, so you can wire it onward like a clip — connect it into a [Video node](/canvas/nodes/video) to use the assembled edit as a reference for the next generation.

@@ -1,0 +1,48 @@
+---
+title: "Plan Mode"
+description: "See the assistant's plan, edit its steps, and approve before anything is built."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+For anything bigger than a quick edit, the assistant proposes a plan before touching your canvas. You review the steps, reshape them if you like, and nothing builds until you approve.
+
+<DemoVideo
+  src="/videos/canvas/ai-plan-mode.mp4"
+  poster="/images/posters/canvas/ai-plan-mode.jpg"
+  caption="Editing a proposed plan's steps and approving it to start the build"
+/>
+
+## How a plan works
+
+<Steps>
+  <Step title="Describe the goal">
+    Give the assistant the brief — "a 30-second teaser with three scenes and a soundtrack". For ambitious work it drafts a step-by-step plan of the canvas actions it intends to take.
+  </Step>
+  <Step title="Review the proposal">
+    The plan appears as an editable card in the chat: reorder steps with the up/down arrows, remove the ones you don't want, or add your own before committing.
+  </Step>
+  <Step title="Approve & build">
+    Click **Approve & build** to hand the (possibly edited) plan back to the assistant — approval also green-lights the generations that plan needs this turn. **Reject** sends it back to the drawing board; tell it what to change instead.
+  </Step>
+  <Step title="Follow the progress">
+    An accepted plan docks above the composer with a progress ring and live step states — pending, active, done, or skipped — so you always know where the build stands.
+  </Step>
+</Steps>
+
+## Plans and approvals
+
+Plan approval and generation approval are two layers of the same control:
+
+- In the default **Review** mode, every generation still shows a **Ready to generate?** card with a credit estimate — approving a plan authorizes the turn, and the confirm card is where credits actually get spent.
+- In **Auto** mode (the **Modes** picker in the composer), plans are accepted automatically and generations run without confirmation.
+
+Plan steps are always canvas actions the assistant will execute itself — never a "wait for you" placeholder.
+
+## Deep planning for big briefs
+
+For genuinely ambitious work — films, multi-piece campaigns, anything needing continuity across many shots — the assistant can bring in a heavier planning pass that designs the full node graph and art-directs each generative node before building. You still see the plan, and you still approve before anything generates.
+
+<Tip>
+  Treat the plan card as a brief you co-write. Cutting a step you don't need before approving is faster — and cheaper — than undoing a build afterward.
+</Tip>

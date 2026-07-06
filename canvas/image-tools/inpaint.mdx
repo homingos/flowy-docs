@@ -1,0 +1,39 @@
+---
+title: "Inpaint"
+description: "Paint a mask over any region and regenerate it to match a reference image."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Inpaint replaces a painted region of an image with AI-generated content drawn from a second, connected reference image. Swap a product, patch a background, or blend an element in — without touching the rest of the frame.
+
+<DemoVideo
+  src="/videos/canvas/image-tools-inpaint.mp4"
+  poster="/images/posters/canvas/image-tools-inpaint.jpg"
+  caption="Painting a mask on an image and filling it from a connected reference"
+/>
+
+## Using it
+
+<Steps>
+  <Step title="Attach the tool">
+    Right-click the image you want to edit and choose **Tools → Inpaint**. A connected Inpaint node appears beside it.
+  </Step>
+  <Step title="Connect a reference image">
+    Wire a second image node into the Inpaint node — this is what fills the masked area. With two or more images connected, thumbnails in the controls let you pick which one is **Main** (the image you mask) and which is the **Reference**.
+  </Step>
+  <Step title="Paint the mask">
+    Draw directly on the image inside the node. Switch between **Paint** and **Erase**, adjust the brush **Size** (4–80), or hit **Clear** to start over.
+  </Step>
+  <Step title="Run it">
+    Set **Strength** (0–1) to control how strongly the fill departs from the original pixels, then press **Inpaint**. The result lands in the node when the job finishes.
+  </Step>
+</Steps>
+
+## Iterating
+
+The mask paints on whatever the node currently shows — so once a result arrives, you can mask the result itself and run again to refine it. Past runs stay in the node's history carousel, and **Add result as node** pushes any version out as its own image node.
+
+<Tip>
+  Paint the mask slightly larger than the object you're replacing. A little margin gives the model room to blend edges cleanly against the surrounding pixels.
+</Tip>

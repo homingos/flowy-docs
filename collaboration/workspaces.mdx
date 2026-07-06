@@ -1,47 +1,57 @@
 ---
-title: "Workspaces & members"
-description: "Organize projects and invite your team."
+title: "Workspaces"
+description: "Keep each team's projects, members, credits, and brand kits in one shared home."
 ---
 
-A workspace holds your projects and your team members. It is the home base where everything you create lives, and where you bring collaborators in to build alongside you.
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
 
-You can create more than one workspace and switch between them at any time. Each workspace keeps its own projects and its own people separate.
+A workspace is the shared home for a team and everything it makes. You can belong to several workspaces and switch between them at any time — each one keeps its own projects and people fully separate.
 
-## Set up your workspace
+<DemoVideo
+  src="/videos/collab/workspaces.mp4"
+  poster="/images/posters/collab/workspaces.jpg"
+  caption="Switching workspaces from the sidebar rail and creating a new one"
+/>
+
+## What a workspace scopes
+
+Everything in Flowy belongs to exactly one workspace:
+
+- **Projects** — a project lives in the workspace it was created in, and only that workspace's members can see it.
+- **Members** — each workspace has its own roster of Owners, Editors, and Viewers. See [Roles & permissions](/collaboration/roles).
+- **Credits and billing** — generations are paid from the workspace's credit balance, and the workspace's plan sets its limits. See [Credits](/billing/credits) and [Usage](/settings/usage).
+- **Brand kits** — logos, colors, fonts, and voice are stored per workspace, so every member applies the same [Brand Kit](/dashboard/brand-kit).
+
+<Note>
+  Check the workspace switcher before you create a project — a project belongs to the workspace you're in when you create it.
+</Note>
+
+## Create a workspace
 
 <Steps>
-  <Step title="Create a workspace">
-    From the dashboard, create a new workspace and give it a name. This becomes a fresh home for a set of projects and the team you want working on them.
+  <Step title="Open the workspace switcher">
+    Click your workspace avatar in the sidebar rail, then choose **Create workspace**.
   </Step>
-  <Step title="Switch between workspaces">
-    Use the workspace switcher to move between any workspaces you belong to. Each one shows only its own projects and members, so context stays clean.
+  <Step title="Name it">
+    Give the workspace a name. Flowy derives a URL handle from the name automatically — you can edit it, and the form checks that your custom handle is available as you type.
   </Step>
-  <Step title="Invite members">
-    Send an invite from the workspace to bring someone in. They will receive an invite link to join your team.
-  </Step>
-  <Step title="Accept an invite">
-    Open the invite link you were sent to join the workspace. Once you accept, the workspace and its projects appear in your switcher.
+  <Step title="Start working">
+    On create, Flowy switches you into the new workspace and lands on its (empty) projects list. Invite your team from **Settings → Members**.
   </Step>
 </Steps>
 
-{/* TODO: add screenshot of a workspace with its projects and members */}
-{/* TODO: capture real screenshot */}
+## Switch between workspaces
 
-<Note>
-  Projects live inside a workspace. When you create a project, it belongs to the workspace you are currently in, so pick the right one before you start.
-</Note>
+The workspace switcher lists every workspace you belong to — ones you created and ones you joined by invite. Selecting one swaps the whole dashboard to that workspace's projects, members, and settings. Each workspace also has its own URL handle, so links you share always point at the right one.
 
-<Tip>
-  Once members are in, give each person the right level of access on a project so everyone can do exactly what they need.
-</Tip>
+## Your default workspace
+
+One workspace is marked as your **default**. It's where Flowy takes you when you sign in without a last-used workspace, and it's where projects that other people share with you appear.
+
+To change it, open the workspace switcher, click the **⋮** menu on a workspace you own, and choose **Make default workspace**. You can only set a workspace you own as your default.
 
 ## Next steps
 
-<CardGroup cols={2}>
-  <Card title="Roles" icon="users" href="/collaboration/roles">
-    See what Owner, Editor, and Viewer can each do.
-  </Card>
-  <Card title="Sharing" icon="diagram-project" href="/collaboration/sharing">
-    Share projects and approve requests for access.
-  </Card>
-</CardGroup>
+- [Roles & permissions](/collaboration/roles) — what Owners, Editors, and Viewers can do.
+- [Sharing projects](/collaboration/sharing) — invite collaborators and manage share links.
+- [Workspace settings](/settings/workspace) — rename your workspace, change its URL, and manage members.

@@ -1,45 +1,37 @@
 ---
-title: "Sharing & access help"
-description: "Invite people, set roles, and work together in real time."
+title: "Sharing & Access Help"
+description: "Fix the common invite, role, and access problems when working with your team."
 ---
 
-Invite people to your workspace or project, give them a role, and you can edit together live. Roles are **Owner**, **Editor**, and **Viewer** only, so access stays simple to reason about.
+Collaboration in Flowy runs on workspaces, three roles — **Owner**, **Editor**, and **Viewer** — and a request-access flow for projects. Most sharing problems come down to one of the situations below.
 
-{/* TODO: add screenshot of a shared canvas with live cursors and an invite dialog */}
-{/* TODO: capture real screenshot */}
+## Someone can't edit my project
 
-<AccordionGroup>
-  <Accordion title="How do I invite someone?">
-    Invite members to your workspace, and they can open the projects inside it.
+They most likely have the **Viewer** role, which is view-only. Give them the **Editor** role, or approve their access request, and they can create nodes, generate, and edit right away. Compare what each role can do in [roles](/collaboration/roles).
 
-    <Steps>
-      <Step title="Open your workspace members">
-        Head to your workspace settings, where members live.
-      </Step>
-      <Step title="Send the invite">
-        Add the person by email and send the invitation.
-      </Step>
-      <Step title="Set their role">
-        Give them **Editor** if they should create and generate, or **Viewer** if they should only look.
-      </Step>
-    </Steps>
+## I can't invite another person
 
-    For the full walkthrough, see [workspaces](/collaboration/workspaces).
-  </Accordion>
+Two things to check:
 
-  <Accordion title="Why can't someone edit my project?">
-    They likely have the **Viewer** role, which is view-only. Give them the **Editor** role, or approve their access request, and they will be able to create and edit nodes, work on the canvas, and generate. See what each role can do in [roles](/collaboration/roles).
-  </Accordion>
+- **Seat limit** — each plan caps seats per workspace (1 on Free, up to 5 on Lite, up to 20 on Pro, unlimited on Ultra). When every seat is taken, Flowy tells you the limit is reached; upgrade on [plans & pricing](/billing/plans) or free a seat by removing a member.
+- **Permission to invite** — invites are managed from the workspace's members settings. See [workspaces](/collaboration/workspaces) for who can send them.
 
-  <Accordion title="How do I request access?">
-    A **Viewer** can request access to a project, and the **Owner** approves it. Once approved, you can start editing right away. Learn how the request-and-approve flow works in [sharing](/collaboration/sharing).
-  </Accordion>
+## The invite email never arrived
 
-  <Accordion title="Can we work at the same time?">
-    Yes. Live presence and multiplayer cursors keep everyone in sync, so simultaneous edits land together and you can see who is working where. You can also leave comments on the canvas to talk things through.
-  </Accordion>
-</AccordionGroup>
+Ask the invitee to check their spam folder and confirm you sent the invite to the address they sign in with. If it still hasn't landed, revoke the pending invite and send a fresh one from the workspace members list.
 
-<Warning>**Viewers** are view-only until granted access. They can request access, and an **Owner** approves it before they can edit.</Warning>
+## I need access to a project
 
-<Tip>Not sure who should be a **Viewer**, an **Editor**, or the **Owner**? Compare what each one can do in [roles](/collaboration/roles).</Tip>
+Open the project and request access — the owner gets a notification and can approve you. Once approved, you can start editing immediately. The full request-and-approve flow is described in [sharing](/collaboration/sharing).
+
+## A teammate can't see a project
+
+Projects live inside workspaces, so the person needs to be in the right workspace (or have the project shared with them directly). Check the workspace switcher first — they may be looking in a different workspace. See [workspaces](/collaboration/workspaces).
+
+## Live edits aren't showing up
+
+Flowy syncs the canvas in real time with live presence and multiplayer cursors. If someone's changes look out of date, refresh the page and check the internet connection on both sides, then confirm everyone sees the same state. More on how syncing works in [real-time collaboration](/collaboration/real-time).
+
+<Tip>
+  Working session going long? Hop into a [voice room](/collaboration/voice-rooms) to talk it through without leaving the canvas.
+</Tip>

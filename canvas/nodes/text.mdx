@@ -1,0 +1,36 @@
+---
+title: "Text Node"
+description: "Write prompts, scripts, and notes that feed downstream generations."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Text nodes hold the words on your canvas — prompts, scripts, captions, and notes — and feed them into whatever you connect next. Type directly, or give the node an instruction and let it generate or transform the text with AI.
+
+<DemoVideo
+  src="/videos/canvas/node-text.mp4"
+  poster="/images/posters/canvas/node-text.jpg"
+  caption="Writing in a Text node and feeding it into an image generation"
+/>
+
+## Write or generate
+
+Type straight into the content area when you already know what you want to say. For everything else, write an instruction in the prompt bar and click **Run**: draft ad copy, write a voiceover script, punch up a caption, or rewrite existing text in a different tone. The node holds the result, and you can keep editing it by hand afterwards.
+
+You can also connect one image into a Text node and write about it — caption a product shot, describe a generated frame, or turn a moodboard image into a reusable prompt.
+
+## Feed it downstream
+
+A Text node's output can drive nearly every other node on the canvas:
+
+- **Text → Image** — the text becomes prompt context for the generation.
+- **Text → Video** or **Text → Flam** — scripts and shot descriptions steer the clip.
+- **Text → Audio** — narration scripts, lyrics, and sound descriptions feed voiceover, music, and SFX.
+- **Text → Storyboard** — a brief becomes the source material for a full scene plan.
+- **Text → Vector** or **Text → 3D** — describe the logo, icon, or model you want.
+
+Because connections carry context automatically, a single well-written Text node can drive several generations at once — connect it to three Image nodes with different settings and compare the results side by side.
+
+<Tip>
+  Keep reusable direction in its own Text node — a style description, a brand voice, a recurring character brief — and wire it into every generation that should follow it. Update it once, and every downstream run picks up the change.
+</Tip>

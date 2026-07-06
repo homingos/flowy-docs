@@ -29,6 +29,7 @@
         "groups": [
           {
             "group": "Getting Started",
+            "expanded": true,
             "pages": [
               "index",
               "getting-started/quickstart",
@@ -36,23 +37,65 @@
             ]
           },
           {
-            "group": "Canvas Editor",
+            "group": "Dashboard",
             "pages": [
-              "canvas/overview",
-              "canvas/navigation",
-              "canvas/nodes",
-              "canvas/ai-chat"
+              "dashboard/overview",
+              "dashboard/projects",
+              "dashboard/assets",
+              "dashboard/brand-kit",
+              "dashboard/community",
+              "dashboard/updates"
             ]
           },
           {
-            "group": "Generators",
+            "group": "Canvas",
             "pages": [
-              "generators/overview",
-              "generators/image",
-              "generators/video",
-              "generators/audio",
-              "generators/flam",
-              "generators/storyboard"
+              "canvas/overview",
+              "canvas/navigation",
+              "canvas/toolbar",
+              {
+                "group": "Nodes",
+                "pages": [
+                  "canvas/nodes/overview",
+                  "canvas/nodes/text",
+                  "canvas/nodes/image",
+                  "canvas/nodes/video",
+                  "canvas/nodes/audio",
+                  "canvas/nodes/3d",
+                  "canvas/nodes/vector",
+                  "canvas/nodes/flam",
+                  "canvas/nodes/storyboard",
+                  "canvas/nodes/composition",
+                  "canvas/nodes/motion-path",
+                  "canvas/nodes/utility-nodes"
+                ]
+              },
+              {
+                "group": "Image Tools",
+                "pages": [
+                  "canvas/image-tools/overview",
+                  "canvas/image-tools/transform-and-adjust",
+                  "canvas/image-tools/upscale",
+                  "canvas/image-tools/inpaint",
+                  "canvas/image-tools/outpaint",
+                  "canvas/image-tools/remove-background",
+                  "canvas/image-tools/change-angle",
+                  "canvas/image-tools/separate-layers"
+                ]
+              },
+              "canvas/quick-actions",
+              {
+                "group": "AI Assistant",
+                "pages": [
+                  "canvas/ai/overview",
+                  "canvas/ai/agent-actions",
+                  "canvas/ai/plan-mode",
+                  "canvas/ai/memory-and-skills",
+                  "canvas/ai/voice-and-cursor-chat",
+                  "canvas/ai/canvas-audit"
+                ]
+              },
+              "canvas/keyboard-shortcuts"
             ]
           },
           {
@@ -60,15 +103,39 @@
             "pages": [
               "studio/overview",
               "studio/timeline",
+              "studio/inspector",
+              {
+                "group": "Effects & Transitions",
+                "pages": [
+                  "studio/effects/overview",
+                  "studio/effects/color-correction",
+                  "studio/effects/stylize",
+                  "studio/effects/chroma-key",
+                  "studio/effects/transitions"
+                ]
+              },
+              "studio/ai-chat",
               "studio/export"
             ]
           },
           {
-            "group": "Collaboration & Workspaces",
+            "group": "Collaboration",
             "pages": [
               "collaboration/workspaces",
               "collaboration/roles",
-              "collaboration/sharing"
+              "collaboration/real-time",
+              "collaboration/sharing",
+              "collaboration/voice-rooms"
+            ]
+          },
+          {
+            "group": "Settings",
+            "pages": [
+              "settings/account",
+              "settings/workspace",
+              "settings/usage",
+              "settings/api-keys",
+              "settings/logs"
             ]
           }
         ]
@@ -78,7 +145,8 @@
         "icon": "life-ring",
         "groups": [
           {
-            "group": "Start here",
+            "group": "Start Here",
+            "expanded": true,
             "pages": [
               "help/overview",
               "help/account",
@@ -86,8 +154,9 @@
             ]
           },
           {
-            "group": "Credits & billing",
+            "group": "Plans, Credits & Billing",
             "pages": [
+              "billing/plans",
               "billing/credits",
               "help/payments",
               "help/refunds"
@@ -116,6 +185,7 @@
         "groups": [
           {
             "group": "Get started",
+            "expanded": true,
             "pages": [
               "api/introduction",
               "api/authentication",
@@ -144,6 +214,17 @@
       }
     ]
   },
+  "redirects": [
+    { "source": "/quickstart", "destination": "/getting-started/quickstart" },
+    { "source": "/canvas/nodes", "destination": "/canvas/nodes/overview" },
+    { "source": "/canvas/ai-chat", "destination": "/canvas/ai/overview" },
+    { "source": "/generators/overview", "destination": "/canvas/nodes/overview" },
+    { "source": "/generators/image", "destination": "/canvas/nodes/image" },
+    { "source": "/generators/video", "destination": "/canvas/nodes/video" },
+    { "source": "/generators/audio", "destination": "/canvas/nodes/audio" },
+    { "source": "/generators/flam", "destination": "/canvas/nodes/flam" },
+    { "source": "/generators/storyboard", "destination": "/canvas/nodes/storyboard" }
+  ],
   "logo": {
     "light": "/logo/flowy-black.png",
     "dark": "/logo/flowy-white.png",

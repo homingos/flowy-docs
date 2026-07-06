@@ -1,63 +1,66 @@
 ---
-title: "Generation help & tips"
-description: "Get better results and fix generation issues."
+title: "Generation Help & Tips"
+description: "Write better prompts, pick the right node, and fix results you don't like."
 ---
 
-A clear prompt and the right generator make a big difference. Here is how to get great results from Flowy's **Quick Creates** and how to handle the occasional hiccup along the way.
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
 
-{/* TODO: add screenshot of the Quick Creates generator menu on the canvas */}
-{/* TODO: capture real screenshot */}
+A clear prompt and the right node make the biggest difference to your results. Here's how to get great output on the canvas — and what to do when a generation misses or stalls.
+
+<DemoVideo
+  src="/videos/help/generating.mp4"
+  poster="/images/posters/help/generating.jpg"
+  caption="Refining a prompt and re-running a node for a better result"
+/>
 
 ## Write better prompts
 
-Most results improve the moment your prompt gets more specific. Tell the generator exactly what you want.
+Most results improve the moment your prompt gets more specific:
 
-- Describe the **subject** clearly: who or what is in the scene.
-- Name a **style**: photo-real, illustration, cinematic, flat, hand-drawn.
-- Set the **mood**: lighting, color, energy, time of day.
-- Add a **reference image** when you want consistency across generations.
-- Iterate. Run it, read the result, and refine one detail at a time.
+- Describe the **subject** clearly — who or what is in the scene.
+- Name a **style** — photo-real, illustration, cinematic, flat, hand-drawn.
+- Set the **mood** — lighting, color, energy, time of day.
+- Connect a **reference image** when you want a consistent look across generations.
+- **Iterate** — run it, read the result, and change one detail per attempt so you can see what each tweak does.
 
-<Tip>Change one thing per attempt. Small, deliberate edits make it easy to see what each tweak does.</Tip>
+## Pick the right node
 
-## Pick the right generator
+Each node type is tuned for a different kind of output, so matching the task to the node saves time and credits:
 
-Each generator is tuned for a different kind of output, so matching the task to the tool saves time and credits.
+- [Image](/canvas/nodes/image) for stills, frames, and concept art.
+- [Video](/canvas/nodes/video) for motion and short clips.
+- [Audio](/canvas/nodes/audio) for speech, music, and sound effects.
+- [Vector](/canvas/nodes/vector) for logos and scalable graphics.
+- [Storyboard](/canvas/nodes/storyboard) for multi-shot sequences.
+- [Flam](/canvas/nodes/flam) for interactive, motion-rich HTML pieces.
 
-- Use **Image** for stills, frames, and concept art.
-- Use **Video** for motion and short clips.
-- Use **Audio** for speech, music, and sound effects.
-- Use **Flam** for interactive, motion-rich HTML pieces.
+Browse the full lineup in the [nodes overview](/canvas/nodes/overview), or let the [AI assistant](/canvas/ai/overview) build the node graph for you.
 
-Browse them all in the [generators overview](/generators/overview), or jump straight to [Image](/generators/image) or [Video](/generators/video).
+## Fix results you don't like
 
-## When a generation fails
+- **Anchor the look** — reuse the same reference image and keep your style wording steady between runs.
+- **Change one variable** — adjust a single detail per attempt instead of rewriting the whole prompt.
+- **Touch up instead of re-rolling** — for images, the [image tools](/canvas/image-tools/overview) let you inpaint, outpaint, upscale, or remove the background without regenerating from scratch.
 
-A failed generation is not a lost credit. Flowy refunds it automatically, so you can simply try again.
+## When a generation fails or gets stuck
+
+A failed generation is not a lost credit — Flowy refunds it automatically, so you can try again.
 
 <Steps>
+  <Step title="Give it time">
+    Video takes noticeably longer than images. Let it finish before assuming it's stuck.
+  </Step>
+  <Step title="Retry the node">
+    Run it again. Many failures are temporary and clear on a second attempt.
+  </Step>
   <Step title="Simplify your prompt">
     Trim extra detail and keep the core idea. A shorter, clearer prompt often succeeds where a crowded one stalls.
   </Step>
-  <Step title="Retry">
-    Run it again. Many hiccups are temporary and clear on a second attempt.
-  </Step>
-  <Step title="Give video extra time">
-    Video takes longer to render than images. Let it finish before assuming something went wrong.
+  <Step title="Check your credits">
+    Generations need available credits to start. Check your balance in [Settings → Billing](/billing/credits).
   </Step>
 </Steps>
 
-<Note>If failures keep happening, check [troubleshooting](/help/troubleshooting). To confirm a credit came back, see how [refunds](/help/refunds) work.</Note>
-
-## Common questions
-
-<AccordionGroup>
-  <Accordion title="Why did my generation come out different than expected?">
-    Generators interpret your words, so vague prompts leave room for surprises. Be specific about subject, style, and mood, and add a reference image to anchor the look. Then iterate one detail at a time until it matches your intent.
-  </Accordion>
-  <Accordion title="How do I make results more consistent?">
-    Reuse the same reference image and keep your style and mood wording steady across attempts. Change only the detail you want to adjust, and you will hold the overall look while you refine.
-  </Accordion>
-</AccordionGroup>
-
-<Tip>Ready to explore everything you can create? Start with the [generators overview](/generators/overview).</Tip>
+<Note>
+  If failures keep happening, work through [troubleshooting](/help/troubleshooting). To confirm a credit came back after a failure, see [refunds](/help/refunds).
+</Note>

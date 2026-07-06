@@ -1,60 +1,68 @@
 ---
-title: "Timeline & editing"
-description: "Arrange clips, tracks, scenes, and keyframes."
+title: "Timeline & Editing"
+description: "Arrange clips and tracks, cut with precision, and animate with keyframes."
 ---
 
-The timeline is where you arrange and trim your clips into a sequence. It sits below the video player in **Studio**, and it's the part of the editor you'll spend the most time in as you shape your composition into a finished video.
+import { VideoPlayer } from "/snippets/components/video-player.jsx";
 
-{/* TODO: add screenshot of the Studio timeline with tracks, clips, and waveforms */}
-{/* TODO: capture real screenshot */}
+The timeline sits below the preview player and is where your edit takes shape: clips laid out across tracks, cut and trimmed against the playhead, with keyframe rows for animation.
+
+<VideoPlayer
+  src="/videos/studio/timeline.mp4"
+  poster="/images/posters/studio/timeline.jpg"
+  title="Watch: arranging and keyframing on the timeline"
+/>
 
 ## Tracks and clips
 
-Your composition is made of clips laid out across tracks. You can add a clip, trim its start and end, and reorder clips to change the sequence.
+Each row on the timeline is a track, labeled by what it holds — `V1` for video, `A1` for audio, `T1` for text and other overlays. Hover a track's sidebar to reveal **Add track above** and **Add track below** buttons, drag the handle to reorder tracks, or use the trash button to delete one. Dropping an asset below the last row creates a new track automatically.
 
-Drag a clip along a track to move it in time, or drag it onto another track to stack visuals and audio together. Waveform previews on audio clips and frame-strip previews on video clips help you line everything up, so you can match a cut to a beat or a moment in the footage without guessing.
+Clips show a preview inside the bar — a frame strip on video clips, a waveform on audio clips, and a thumbnail strip on images — so you can line up cuts against the actual content.
 
-## Scenes and compositions
+- **Move** a clip by dragging it along its track; drag vertically to move it to another track. A ghost outline shows where it will land before you drop.
+- **Select multiple** clips with <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + click, then drag to slide the whole group in time.
+- **Right-click** a clip for quick actions: **Split at playhead**, **Duplicate**, **Lock**, **Show**/**Hide**, **Mute**/**Unmute**, and **Delete clip**.
 
-A scene is a composition you can switch to inside **Studio**. If your project has more than one composition, you can jump between them as scenes and edit each on its own timeline.
+## Trim, split, and snap
 
-This keeps longer projects organized. You build each part as its own scene, then move between them as you refine the whole piece.
+Drag either edge of a clip to trim it — the cursor changes at the edge, and the preview follows the moving edge so you can see the exact frame you're cutting to. To split a clip in two, park the playhead inside it and press <kbd>⌘</kbd> <kbd>K</kbd>, or use the scissors button in the transport bar.
 
-## Inspector
+Snapping is always on: as you move or trim, edges snap to other clips' edges within a few pixels, and a dashed guide line marks the alignment.
 
-The inspector is where you edit the properties of whatever you've selected. It's organized into three tabs.
+## Keyframes
 
-| Tab | What you edit |
+When a clip has animated properties, a chevron appears in its track sidebar — click **Expand keyframes** to open a sub-row per property (position, scale, rotation, opacity, volume, and more). Each row shows keyframes as diamonds; click a diamond to jump the playhead to it, and drag it horizontally to retime it.
+
+Expand a property row again to open the **keyframe graph**, where you shape the motion itself:
+
+- Select a diamond to reveal its curve handles, then drag them to sculpt a custom bezier ease.
+- Right-click the segment between two keyframes to pick an easing preset: **Linear**, **Ease In**, **Ease Out**, **Smooth**, **Hold**, or **Custom curve**.
+- Right-click a diamond to **Delete keyframe**.
+
+You add keyframes from the [inspector](/studio/inspector): click the diamond next to a property to set its value at the current frame.
+
+## Playback and transport
+
+The transport bar under the player covers playback, editing shortcuts, a **Scene** switcher, playback speed (0.5×–4×), a loop region, fullscreen, and timeline zoom (25%–200%). The header shows the current timecode and your project's frame rate.
+
+| Action | Shortcut |
 | --- | --- |
-| **Media** | Properties of the selected clip or asset |
-| **Nodes** | Properties tied to the source node from your canvas |
-| **Plugins** | Plugin-driven settings and effects |
+| Play / pause | <kbd>Space</kbd> |
+| Previous / next frame | <kbd>←</kbd> / <kbd>→</kbd> |
+| Back / forward one second | <kbd>↓</kbd> / <kbd>↑</kbd> |
+| Skip to start / end | <kbd>⌘</kbd> <kbd>↓</kbd> / <kbd>⌘</kbd> <kbd>↑</kbd> |
+| Split at playhead | <kbd>⌘</kbd> <kbd>K</kbd> |
+| Duplicate clip | <kbd>⌘</kbd> <kbd>J</kbd> |
+| Delete clip | <kbd>Delete</kbd> |
+| Undo / redo | <kbd>⌘</kbd> <kbd>Z</kbd> / <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>Z</kbd> |
+| Export current frame | <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>X</kbd> |
+| Set / clear loop region | <kbd>⇧</kbd> <kbd>W</kbd> |
+| Fullscreen | <kbd>⇧</kbd> <kbd>F</kbd> |
 
-Select a clip on the timeline, open the tab you need, and adjust its values right there.
+<Note>
+  On Windows and Linux, use <kbd>Ctrl</kbd> wherever a shortcut shows <kbd>⌘</kbd>.
+</Note>
 
-## Animator and keyframes
+## Scenes
 
-The animator lets you animate properties over time using keyframes. You set a value at one point, set a different value at another, and Flowy fills in the motion between them.
-
-Easing curves control how that motion feels. Use them to ease a movement in and out so transitions land smoothly instead of snapping into place.
-
-## Trim a clip
-
-<Steps>
-  <Step title="Select the clip">
-    Click the clip on the timeline you want to trim.
-  </Step>
-  <Step title="Drag an edge">
-    Grab the start or end edge of the clip and drag it inward to shorten it, or outward to extend it.
-  </Step>
-  <Step title="Line it up">
-    Use the waveform or frame-strip preview to land the trim exactly where you want it.
-  </Step>
-  <Step title="Preview the result">
-    Scrub the player above the timeline to check the cut in context.
-  </Step>
-</Steps>
-
-<Tip>
-  Ready to ship it? Head to [export](/studio/export) to render a downloadable video, or revisit the [Studio overview](/studio/overview) for the full layout.
-</Tip>
+Every Composition node on your canvas is a scene with its own timeline. Switch between them with the **Scene** dropdown at the left of the transport bar — useful for building a longer piece as separate cuts, or keeping alternate versions side by side. [Export](/studio/export) renders one scene at a time.

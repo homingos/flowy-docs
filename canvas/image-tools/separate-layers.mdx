@@ -1,0 +1,28 @@
+---
+title: "Separate Layers"
+description: "Pull an image apart into independent layers you can edit, move, and recompose."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Separate Layers decomposes the connected image into distinct layers — subject, background, and the elements in between — each one an image you can edit on its own.
+
+<DemoVideo
+  src="/videos/canvas/image-tools-layers.mp4"
+  poster="/images/posters/canvas/image-tools-layers.jpg"
+  caption="Decomposing an image into layers and splitting them into separate nodes"
+/>
+
+## Using it
+
+Right-click an image node and choose **Tools → Separate layers**. On the connected tool node, set **Max layers** (2–6, default 4) to cap how many pieces the image splits into, then press **Separate layers**. The job runs in the background.
+
+When it finishes, the node shows a thumbnail strip of every extracted layer — click a thumbnail to preview it. To work with the layers individually, click **Split into N nodes**: each layer becomes its own connected image node on the canvas.
+
+## What to do with the layers
+
+Once split out, each layer is a normal image node. Recolor the background with [Transform & Adjust](/canvas/image-tools/transform-and-adjust), upscale only the subject, swap one element with [Inpaint](/canvas/image-tools/inpaint), or stack the pieces in a [Composition](/canvas/nodes/composition) to animate them separately.
+
+<Tip>
+  Fewer layers means cleaner splits. Start with **Max layers** at 2–3 for a subject/background separation, and raise it only when the image genuinely has more distinct elements.
+</Tip>

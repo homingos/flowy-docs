@@ -1,37 +1,55 @@
 ---
-title: "Roles & permissions"
-description: "What Owners, Editors, and Viewers can do."
+title: "Roles & Permissions"
+description: "Give each person exactly the access they need with three simple roles."
 ---
 
-Flowy projects use exactly three roles: **Owner**, **Editor**, and **Viewer**. Each role sets what a person can do inside a project, from full control to view-only.
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
 
-## What each role can do
+Flowy uses three roles everywhere — **Owner**, **Editor**, and **Viewer**. The same three names apply at the workspace level (your whole team) and at the project level (a single canvas).
 
-Here is how the three roles compare.
+<DemoVideo
+  src="/videos/collab/roles.mp4"
+  poster="/images/posters/collab/roles.jpg"
+  caption="Browsing the members roster, filtering by role, and the seat-limit prompt on Invite"
+/>
 
-| Role | What it can do |
-| --- | --- |
-| **Owner** | Full control, including deleting the project and managing access. |
-| **Editor** | Create and edit nodes and the canvas, and generate. |
-| **Viewer** | View-only, and can request access. |
+## What each role can do on a project
 
-{/* TODO: add screenshot of the project access panel listing roles */}
-{/* TODO: capture real screenshot */}
+| Capability | Owner | Editor | Viewer |
+| --- | --- | --- | --- |
+| View the canvas and its media | Yes | Yes | Yes |
+| Edit nodes and run generations | Yes | Yes | — |
+| Invite collaborators | Yes, at any role | Yes, as Editor or Viewer | Yes, as Viewer only |
+| Change roles and remove collaborators | Yes | — | — |
+| Turn link sharing on or off | Yes | — | — |
+| Approve access requests | Yes | — | — |
+| Delete the project | Yes | — | — |
+| Leave a project shared with them | — | Yes | Yes |
 
-<Warning>
-  Viewers cannot edit the canvas or generate anything until they are granted access. They can still open the project and request access.
-</Warning>
+Two rules worth calling out:
 
-## How access is granted
+- **You can only grant roles up to your own.** An Editor can share a project as Editor or Viewer; a Viewer can only share view access. Owners can grant anything.
+- **Owners can't leave their own project.** Transfer ownership or delete the project instead.
 
-A Viewer never gets edit access on their own. An **Owner** always makes the call.
+## Workspace roles
 
-<AccordionGroup>
-  <Accordion title="How access is granted">
-    An **Owner** grants access in one of two ways. The Owner can invite people directly and pick their role, or the Owner can approve an access request that a **Viewer** has sent. Either way, the new permission takes effect as soon as the Owner confirms it.
-  </Accordion>
-</AccordionGroup>
+Workspace membership uses the same three roles. Workspace Owners manage [workspace settings](/settings/workspace), the member roster, and billing; workspace Editors and Viewers get that level of access across the workspace's projects.
 
-<Tip>
-  Want to hand out access or pull a team together? See [Sharing](/collaboration/sharing) for the request-and-approve flow, and [Workspaces](/collaboration/workspaces) for inviting members.
-</Tip>
+Your workspace role acts as a **floor** for every project in the workspace — the most permissive role wins. If a project shares you as a Viewer but you're a workspace Editor, you can still edit, and the share dialog shows it as "Viewer · inherits Editor from workspace" so the owner isn't misled.
+
+<Note>
+  A workspace always keeps at least one Owner — you can't demote or remove the last one.
+</Note>
+
+## Inviting members
+
+There are two places to bring people in:
+
+- **Workspace members** — a workspace Owner invites from [Settings → Members](/settings/workspace) by email, picking a role for each invite. New members see every project the workspace role gives them access to. Pending invites can be revoked before they're accepted.
+- **Project collaborators** — anyone with access can invite from the project's Share dialog, capped at their own role. Each project supports up to 5 direct collaborators on top of workspace access. See [Sharing projects](/collaboration/sharing).
+
+## Seats & plan limits
+
+The number of member seats in a workspace comes from the workspace Owner's plan. When the workspace is at its seat cap, the **Invite** button takes you to the plan picker instead of the invite form — upgrade to add more seats.
+
+See [Plans](/billing/plans) for seat counts on each plan.

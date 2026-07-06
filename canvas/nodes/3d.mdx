@@ -1,0 +1,37 @@
+---
+title: "3D Node"
+description: "Generate 3D models and inspect them in the built-in viewer."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+The 3D node generates a textured 3D model from reference images, a text prompt, or both — and lets you inspect the result right on the canvas.
+
+<DemoVideo
+  src="/videos/canvas/node-3d.mp4"
+  poster="/images/posters/canvas/node-3d.jpg"
+  caption="Generating a 3D model from a reference image and orbiting the result"
+/>
+
+## Inputs
+
+Connect up to 4 Image nodes — treated as front, back, left, and right views of one object — and/or write a text prompt describing the model you want. A single clean product shot is enough to start; extra views tighten the geometry on the sides the model can't see.
+
+## Engines
+
+| Engine | Inputs | Strengths |
+| --- | --- | --- |
+| **Rodin** | Text and/or images | Premium quality, text-to-3D, material control (`PBR`, `Shaded`, or both) |
+| **Hunyuan3D v3** | Images only (at least one) | Cheaper, multi-view, polygon and face-count control |
+
+Pick Rodin when you have a text prompt or want material and quality control; pick Hunyuan3D v3 when you're working from images alone and want an economical result with mesh-level control. With Rodin and multiple images, the condition mode decides whether they're read as views of **one** object or combined as **different** objects.
+
+## The built-in viewer
+
+A finished model loads into an interactive viewer inside the node — drag to orbit around it and inspect the geometry and textures from every angle, no external tools needed. When it holds up, use **Download Model** to export it.
+
+Output formats: `GLB`, `USDZ`, `FBX`, `OBJ`, `STL`.
+
+## Where outputs go
+
+3D models are an endpoint on the graph: they don't feed other generation nodes. The output is the downloadable file — drop it into a game engine, an AR pipeline, or a DCC tool of your choice. To get more references *into* a 3D node, generate views with the [Change Angle tool](/canvas/image-tools/change-angle) first.

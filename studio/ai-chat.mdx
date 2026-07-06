@@ -1,0 +1,44 @@
+---
+title: "Studio AI Chat"
+description: "Describe the edit you want and the assistant applies it to your timeline."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Studio's AI assistant lives in a docked sidebar next to your timeline. Describe an edit in plain language — add media, animate a clip, restack layers, build a whole rough cut — and it makes the change directly in your scene.
+
+<DemoVideo
+  src="/videos/studio/ai-chat.mp4"
+  poster="/images/posters/studio/ai-chat.jpg"
+  caption="Asking the assistant to build a rough cut, then keyframing a fade-in on a clip"
+/>
+
+## Starting a chat
+
+The sidebar opens on a composer with quick actions to get you moving — **Build a rough cut**, **Generate an image**, **Generate a video clip**, **Add a voiceover**, and **Generate background music** — plus your recent chats. Type anything into the composer to start from scratch, and drag its edge to resize the panel.
+
+The modes menu in the composer switches how the assistant works:
+
+- **Flowy AI** — the default: ask it to build, connect, or generate on your Studio timeline.
+- **Scene planner** — plan a multi-scene video by setting aspect ratio, duration, genre, and scene count, then let it assemble the scenes.
+
+A **Deep thinking** toggle trades speed for more careful reasoning on complex requests.
+
+## What it can do
+
+- **Add and remove media** — bring images, video, audio, and text onto the timeline, or take them off. New clips land without overlapping: anything in the way shifts to make room.
+- **Generate media** — create images, video clips, voiceovers, and music inline. The assistant collects the details, shows you a summary, and waits for you to press **Generate**; finished media previews in the chat with **Add to Studio** / **Skip** buttons before anything touches your timeline.
+- **Keyframe animations** — pick a clip and describe motion ("fade in over the first second, then zoom out slowly") and it writes the keyframes. It can also edit existing animations: make them faster, reverse them, loop them, or add an ease-out.
+- **Adjust clips** — reposition, resize, rotate, or flip a layer; change fit, volume, speed, duration, or start time; toggle chroma key on green-screen footage.
+- **Style text** — set fonts, sizes, colors, alignment, and animations like typewriter or scramble on text layers.
+- **Rework the stack** — reorder layers and rows so the right clip sits on top.
+- **Project-level changes** — switch the canvas aspect ratio (16:9, 9:16, 1:1, 4:5), change the background, or rename the project.
+- **Research and brand** — search the web for references and pull colors, type, and logos from a brand kit into the edit.
+
+## How changes land
+
+Timeline edits apply immediately — you see the result on the timeline and in the preview as the assistant works, and each action reports what it changed in the chat thread. Generation steps always pause for your confirmation first, so nothing is created or added without a yes from you. Everything the assistant adds is a normal clip: select it and refine it by hand in the [inspector](/studio/inspector) or on the [timeline](/studio/timeline) like anything else.
+
+<Tip>
+  Be specific about timing and targets: "fade the logo in over the first second" gives the assistant everything it needs, while "make it nicer" leaves it guessing.
+</Tip>

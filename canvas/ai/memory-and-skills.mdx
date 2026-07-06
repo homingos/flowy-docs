@@ -1,0 +1,43 @@
+---
+title: "Memory & Skills"
+description: "The assistant remembers your preferences and learns reusable build patterns from you."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+The assistant gets better the more you work with it, through two kinds of durable knowledge: **memory** — facts and preferences it recalls in later chats — and **skills** — reusable build patterns it captures from successful work.
+
+<DemoVideo
+  src="/videos/canvas/ai-memory.mp4"
+  poster="/images/posters/canvas/ai-memory.jpg"
+  caption="Saving a preference to memory and browsing the learned-skill library"
+/>
+
+## Memory
+
+Tell the assistant something worth keeping — "remember that our brand font is Inter", "I always want 9:16 for social" — and it stores it as a memory. It also saves notable preferences, decisions, and lessons on its own as you work together, and recalls the relevant ones in future chats so you don't repeat yourself.
+
+Memories come in four kinds — **preferences**, **decisions**, **lessons**, and **facts** — and each carries an importance level that shapes what gets recalled first. They're scoped to the current project and stored in your browser.
+
+To manage them, ask directly: "what do you remember about this project?" surfaces stored memories, and you can tell it to forget or correct any of them.
+
+## Skills
+
+A skill is a reusable subgraph template — a build pattern like "product hero shot: text → image → video" that the assistant captured after it worked. When a later request matches, it replays the pattern instead of designing the wiring from scratch.
+
+Skills follow your **account**, not the project or browser: they're available in every project and on every device. Two ways they come to exist:
+
+- Ask for one after a build you like: "save this setup as a skill for product launches."
+- The assistant captures one itself after a verified, successful build.
+
+### The skill library
+
+The book icon in the chat panel's header opens your **Skills** library. From there you can:
+
+- **Search** skills by name, description, or when they apply.
+- **Share** a skill — send a copy to a teammate by email. Skills shared with you show who they came from.
+- **Delete** skills you've outgrown.
+
+<Tip>
+  Name the moment, not the mechanism. A skill saved as "weekly newsletter header" gets matched to future requests far more reliably than one called "text plus image setup".
+</Tip>

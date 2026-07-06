@@ -1,34 +1,46 @@
 ---
 title: "Quickstart"
-description: "Go from sign-up to your first generation in minutes."
+description: "Create your first project, generate an image, animate it, and export — all in one sitting."
 ---
 
-Quickstart walks you from creating your account to your first AI generation on the canvas. Follow the steps below and you will have an asset on your canvas in just a few minutes.
+import { VideoPlayer } from "/snippets/components/video-player.jsx";
+
+This guide takes you from a fresh account to an exported video: you create a project, generate an image, animate it with a Video node, and download the result.
+
+<VideoPlayer
+  src="/videos/getting-started/quickstart.mp4"
+  poster="/images/posters/getting-started/quickstart.jpg"
+  title="Watch: your first project, from blank canvas to export"
+/>
 
 <Steps>
   <Step title="Create your account">
-    Sign in with **Google**, **GitHub**, **Figma**, or a magic link sent to your email. If you used the magic link, verify your email when prompted, and you are in.
+    Sign in with **Google**, **GitHub**, **Figma**, or a magic link sent to your email. If you used the magic link, verify your email when prompted and you're in.
   </Step>
   <Step title="Open your workspace">
-    Your workspace holds your projects and team members. Create a fresh workspace to start your own, or accept an invite to join a team that already has one.
+    A [workspace](/collaboration/workspaces) holds your projects and teammates. Start in your own workspace, or accept an invite to join a team that already has one. Switch workspaces anytime from the rail on the left edge of the dashboard.
   </Step>
   <Step title="Create a project">
-    Inside your workspace, create a new project. A new project opens directly into the **Canvas**, your infinite node-based workspace.
-
-    {/* TODO: capture real screenshot of a fresh project opening into the canvas */}
+    From the [dashboard](/dashboard/overview), create a new project. It opens straight into the **Canvas** — the infinite node-based editor where all your work happens.
   </Step>
-  <Step title="Generate your first asset">
-    Open **Quick Creates** and pick a generator like Image or Text. Write a prompt, set your options, and generate. Your result drops onto the canvas as a node, ready to use.
+  <Step title="Add an Image node">
+    Press the **+** button in the canvas toolbar and pick **Image**. An empty [Image node](/canvas/nodes/image) lands on the canvas, ready for a prompt.
   </Step>
-  <Step title="Connect and build">
-    Wire nodes together by connecting one node's output to another's input. When you want to go further, open the **AI chat** in the sidebar to plan, add, and edit nodes from a single prompt.
+  <Step title="Prompt and generate">
+    Type what you want to see into the node's prompt field and generate. The result renders inside the node. Not what you pictured? Edit the prompt and generate again — every run is a fresh take.
+  </Step>
+  <Step title="Animate it with a Video node">
+    Add a [Video node](/canvas/nodes/video), then drag a connection from the Image node's output into the Video node's input. Describe the motion you want and generate. The video uses your image as its starting frame.
+  </Step>
+  <Step title="Export your result">
+    Open the video node's menu and choose **Download** to save the clip. When you're ready for a full edit — multiple clips, audio, effects — compose your nodes in [Studio](/studio/overview) and [export](/studio/export) from the timeline.
   </Step>
 </Steps>
 
 <Note>
-  New accounts start with free credits so you can explore and generate right away. You can top up anytime from the billing area.
+  New accounts start with free credits, so you can generate right away. Generations reserve credits up front and refund them automatically if they fail — see [Credits](/billing/credits).
 </Note>
 
 <Tip>
-  New to the model? Skim the [core concepts](/getting-started/concepts) to learn the building blocks, then browse the [generators overview](/generators/overview) to see everything you can create. 🚀
+  Want to skip the manual wiring? Describe your idea to the [AI assistant](/canvas/ai/overview) and it plans, adds, and connects the nodes for you.
 </Tip>

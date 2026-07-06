@@ -1,6 +1,7 @@
 ---
 title: "Introduction"
 description: "Run the apps you build in Flowy from your own code over a simple HTTP API."
+"og:image": "/images/hero.png"
 ---
 
 The Flowy API lets you run **apps** — the mini-apps you publish from a canvas — programmatically. With it you can:
@@ -23,7 +24,7 @@ https://apis.tryflowy.ai/genstudio-svc-v2/api/v1
 ```
 
 <Tip>
-  Copy your exact base URL — and create keys — from **Settings → API keys** in the app (the **API** page). These docs use `$FLOWY_API` for the base URL and `$FLOWY_KEY` for your key.
+  Copy your exact base URL — and create keys — from [Settings → API keys](/settings/api-keys) in the app. These docs use `$FLOWY_API` for the base URL and `$FLOWY_KEY` for your key.
 </Tip>
 
 ## Authentication
@@ -87,8 +88,11 @@ There's no official SDK yet — but the API is described by an [OpenAPI 3](https
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Authentication" icon="key" href="/api/authentication">
-    Create a secret key and send it on every request.
+  <Card title="Create an API key" icon="key" href="/settings/api-keys">
+    Mint, scope, and revoke keys from your workspace settings.
+  </Card>
+  <Card title="Authentication" icon="lock" href="/api/authentication">
+    Send your key as a Bearer token on every request.
   </Card>
   <Card title="Permissions" icon="shield-halved" href="/api/permissions">
     Scope a key to exactly what it needs: read apps, read runs, start runs.
@@ -98,5 +102,8 @@ There's no official SDK yet — but the API is described by an [OpenAPI 3](https
   </Card>
   <Card title="Rate limits" icon="gauge-high" href="/api/rate-limits">
     Per-minute limits, the `X-RateLimit-*` headers, and backing off on `429`.
+  </Card>
+  <Card title="Errors" icon="triangle-exclamation" href="/api/errors">
+    Every status code the API returns, and how to fix each one.
   </Card>
 </CardGroup>

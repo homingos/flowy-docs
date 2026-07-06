@@ -1,0 +1,52 @@
+---
+title: "Transform & Adjust"
+description: "Seven instant editing tools that run locally in your browser — no AI, no waiting."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Rotate & Flip, Crop, Resize, Levels, Blur, Invert, and Channels process the connected image right in your browser. Results update live as you drag a slider, and every parameter stays editable after the fact.
+
+<DemoVideo
+  src="/videos/canvas/image-tools-adjust.mp4"
+  poster="/images/posters/canvas/image-tools-adjust.jpg"
+  caption="Attaching a Crop tool to an image node and dialing in Levels live"
+/>
+
+To add any of these, right-click an image node and pick the tool from the **Tools** submenu, or use the **Tools** button in the node's bottom row. The tool node connects to the image and shows its result immediately.
+
+## Transform
+
+### Rotate & Flip
+
+Rotate the image in 90° steps and mirror it horizontally or vertically. The three buttons combine freely; **Reset** returns the original orientation.
+
+### Crop
+
+Trim the image by its edges. Pick an aspect ratio preset — **Free, 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, or 2:3** — or type exact output **W**/**H** values in pixels. A link toggle keeps the two dimensions locked to the current ratio, and **Reset crop** clears everything.
+
+### Resize
+
+Scale the image up or down by typing or scrubbing **W** and **H** (up to 8192 px per side). The link toggle preserves the aspect ratio; unlink it to stretch each axis independently.
+
+## Adjust
+
+### Levels
+
+A full levels panel: set the **black point, white point, and gamma** against a live histogram, then remap the **output** black and white points. A channel picker switches between **RGB** and the individual **Red**, **Green**, and **Blue** channels, so you can correct a color cast one channel at a time.
+
+### Blur
+
+Three blur types — **Gaussian**, **Box**, and **Progressive**. Gaussian and Box take a single size value; Progressive takes a **Start** and **End** radius for a gradient blur across the image.
+
+### Invert
+
+Invert the image's colors, with a **Strength** slider from 0–100 for partial inversions.
+
+### Channels
+
+Scale the **Red**, **Green**, and **Blue** channel intensities independently, each from 0–200%. Values above 100 boost a channel; values below cut it.
+
+<Tip>
+  These tools chain. Feed a Crop into Levels into [Upscale](/canvas/image-tools/upscale) and adjust any step later — everything downstream re-processes automatically.
+</Tip>

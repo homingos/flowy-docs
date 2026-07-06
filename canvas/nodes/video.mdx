@@ -1,0 +1,79 @@
+---
+title: "Video Node"
+description: "Generate video from text, images, or references with two dedicated engines."
+---
+
+import { VideoPlayer } from "/snippets/components/video-player.jsx";
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+The Video node generates AI video clips from a prompt — on its own, or conditioned by the images, videos, and audio you connect. Two engines cover different jobs: **Default** for one coherent subject, **Compose** for combining several distinct elements or authoring multi-shot clips.
+
+<VideoPlayer
+  src="/videos/canvas/node-video-seedance.mp4"
+  poster="/images/posters/canvas/node-video-seedance.jpg"
+  title="Watch: first-to-last-frame video generation"
+/>
+
+Pick the engine by intent, not by how many inputs you have. Default keeps a single subject coherent; Compose gives you per-element control when a scene combines multiple products, characters, or views.
+
+<Tabs>
+  <Tab title="Default (SeedDance 2.0)">
+    What you connect picks the route:
+
+    - **Nothing** — text-to-video from the prompt alone.
+    - **Images** — condition the clip as references or frames (see below). Up to 9.
+    - **Videos** — act as references that condition the new clip's look and motion. Up to 3. A connected video is not extended frame-by-frame — it steers the generation.
+    - **Audio** — conditions the soundtrack and timing. Up to 3, and it needs at least one image or video alongside it.
+
+    | Setting | Choices |
+    | --- | --- |
+    | Duration | `4`–`15` seconds |
+    | Resolution | `480p`, `720p`, `1080p` |
+    | Aspect ratio | `21:9`, `16:9`, `4:3`, `1:1`, `3:4`, `9:16` |
+    | Audio | On or off |
+
+    ### Reference vs. frames
+
+    The **image role** setting decides how connected images condition the clip:
+
+    - **Reference** (the default) — images are style and subject references. The clip does not start on them; instead they hold a consistent look and identity across distinct shots. This is the right choice for continuity across a sequence.
+    - **Frames** — the clip literally starts on your first image, and optionally ends on a second. Use it to animate a specific still or to continue from a previous shot's end frame. Connecting the same image to many shots in frames mode makes them all open identically.
+
+    ### Name your references in the prompt
+
+    In reference mode, a connected asset is only used when your prompt names it: `@Image1`, `@Video1`, `@Audio1` — numbered by connection order. Reference every asset you want the engine to use:
+
+    - Style transfer: *"in the style of @Image1"*
+    - Character consistency: *"@Image1 as the same subject across scenes"*
+    - Motion transfer: *"@Image1's subject performing @Video1's motion"*
+    - Scored speech: *"@Image1 speaker delivering @Audio1"*
+
+    ### Pace multi-scene clips
+
+    One Default clip can carry several scenes. Write *"Cut scene to …"* between beats and *"At N seconds …"* to time actions — the engine honors scene cuts and timestamps, so a single generation can replace a chain of one-shot clips.
+  </Tab>
+
+  <Tab title="Compose (Kling V3)">
+    <DemoVideo
+      src="/videos/canvas/node-video-kling.mp4"
+      poster="/images/posters/canvas/node-video-kling.jpg"
+      caption="Composing one scene from multiple connected elements with @Element references"
+    />
+
+    Compose treats every connected media — up to 6 images, videos, or sketches — as a distinct element: `@Element1`, `@Element2`, and so on, numbered by connection order. Reference them in your prompt to place each one in the scene: *"@Element1 sits on the table while @Element2 pans past."*
+
+    - **Scene image** — pick which connected reference sets the scene and start frame.
+    - **Element grouping** — connected several views of the same product? Group them so they read as one element instead of duplicates.
+    - **Multi-shot** — author up to 6 shots in one generation, 15 seconds total. Shot type **customize** sets each shot's length yourself; **intelligent** lets the engine pace them.
+    - **Negative prompt** — describe what to keep out of the frame.
+    - **CFG scale** — prompt strength from `0` to `1`; higher follows the prompt more literally.
+
+    Clip durations run from 3 to 15 seconds, with the same aspect ratio and resolution settings as Default.
+  </Tab>
+</Tabs>
+
+<Note>
+  Video is the most credit-intensive node type, and longer, higher-resolution clips cost more. Failed generations are refunded automatically — see [how credits work](/billing/credits).
+</Note>
+
+Once your clips are generated, wire them onward: into a [Composition](/canvas/nodes/composition) for editing, a [Flam node](/canvas/nodes/flam) as a reference, or straight into [Studio](/studio/overview) for the final cut. You can also [draw motion paths](/canvas/nodes/motion-path) over a connected image to direct the camera instead of describing it.

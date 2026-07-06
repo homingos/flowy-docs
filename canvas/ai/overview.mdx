@@ -1,0 +1,72 @@
+---
+title: "AI Assistant Overview"
+description: "Chat with Flowy's assistant and watch it plan, build, and generate on your canvas."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Flowy's AI assistant turns plain language into real work on your canvas: it creates nodes, wires them together, runs generations, and checks the results. Describe what you want — a single image or an entire campaign — and it handles the plumbing.
+
+<DemoVideo
+  src="/videos/canvas/ai-overview.mp4"
+  poster="/images/posters/canvas/ai-overview.jpg"
+  caption="Sending a prompt from the canvas dock and watching the assistant build nodes"
+/>
+
+## Opening the chat
+
+Two entry points, same assistant:
+
+- **The prompt dock** at the bottom of the canvas — "Describe what you want to generate…". Type and send, and the full chat panel opens with your request already running. Suggestion chips above the dock offer one-click starting prompts.
+- **The Flowy button** in the bottom-left corner opens the chat panel directly.
+
+The panel docks on the left edge of the canvas and is resizable. The ☰ button in its header opens your chat history — search past threads, reopen one, or start a new chat. You can also paste or drop images into the composer; the assistant sees them and can build from them.
+
+## Chat or click — your choice
+
+The assistant doesn't replace the canvas; it operates it. Everything it makes is an ordinary node you can select, rewire, and edit by hand afterward. Use chat for the broad strokes — "storyboard this ad, generate the shots, assemble a cut" — and switch to direct manipulation whenever it's faster to drag a node yourself.
+
+## What it can and can't do
+
+It can read your canvas, create and connect nodes, edit prompts and settings, tidy the layout, generate media, import images from the web, and critique its own results — the full catalog is on [Agent Actions](/canvas/ai/agent-actions).
+
+Its guardrails:
+
+- **Generations need your approval.** In the default **Review** mode, nothing spends credits until you confirm it. Switch the **Modes** picker in the composer to **Auto** to let generations run automatically.
+- **It never overwrites generated media.** To change a result it regenerates, so earlier versions stay in the node's history.
+- **It asks before guessing.** When the brief is ambiguous, it asks one short clarifying question with concrete options.
+
+## Effort levels
+
+The **Effort** picker in the composer sets how hard the assistant works on a request:
+
+| Level | Behavior |
+| --- | --- |
+| **Swift** | Fast riffs, light verification |
+| **Balanced** | The default — verified output |
+| **Thorough** | Deeper thinking and wider fan-out |
+| **Max** | Maximum fan-out with triple verification |
+
+<Note>
+  Generations the assistant runs use workspace credits, with an estimate shown before you approve. See [Credits](/billing/credits).
+</Note>
+
+## Go deeper
+
+<CardGroup cols={2}>
+  <Card title="Agent Actions" icon="wand-magic-sparkles" href="/canvas/ai/agent-actions">
+    Everything you can ask for — building, editing, arranging, generating, importing.
+  </Card>
+  <Card title="Plan Mode" icon="list-check" href="/canvas/ai/plan-mode">
+    Review, edit, and approve the assistant's plan before it builds.
+  </Card>
+  <Card title="Memory & Skills" icon="brain" href="/canvas/ai/memory-and-skills">
+    Preferences it remembers and build patterns it learns from you.
+  </Card>
+  <Card title="Canvas Audit" icon="magnifying-glass-chart" href="/canvas/ai/canvas-audit">
+    Have the assistant check wiring, layout, and result quality.
+  </Card>
+  <Card title="Voice & Cursor Chat" icon="microphone" href="/canvas/ai/voice-and-cursor-chat">
+    Talk with collaborators live and drop quick messages at your cursor.
+  </Card>
+</CardGroup>

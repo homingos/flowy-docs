@@ -1,0 +1,47 @@
+---
+title: "Quick Actions"
+description: "One-click contextual prompts that turn your selection into the next piece of work."
+---
+
+import { VideoPlayer } from "/snippets/components/video-player.jsx";
+
+Click the Flowy AI dock at the bottom of the [canvas](/canvas/overview) and a row of suggestion chips appears above the composer. These are **quick actions**: ready-made prompts that read what you have selected and propose the most useful next step. Click one and it submits straight to [Flowy AI](/canvas/ai/overview), which opens the chat panel and starts building on the canvas.
+
+<VideoPlayer
+  src="/videos/canvas/quick-actions.mp4"
+  poster="/images/posters/canvas/quick-actions.jpg"
+  title="Watch: quick actions turn selections into new work"
+/>
+
+## They follow your selection
+
+The chips change as your context changes. Select an image and you get image moves; select several nodes and you get composition moves; select nothing and they read the board as a whole.
+
+| Context | Quick actions |
+| --- | --- |
+| Empty canvas | **Brand concept** · **Storyboard ad** · **Product video** |
+| One image selected | **Animate image** · **Image variants** · **Add storyboard** |
+| One video selected | **Improve video** · **Make variants** · **Explain setup** |
+| One storyboard selected | **Generate scenes** · **Tighten story** · **Make video plan** |
+| Multiple nodes selected (with images or video) | **Compose video** · **Storyboard these** · **Organize selection** |
+| Nothing selected, canvas has storyboards | **Continue storyboard** · **Find gaps** · **Layout canvas** |
+| Nothing selected, other nodes on canvas | **Audit canvas** · **Make video** · **Organize flow** |
+
+A few examples of what they do:
+
+- **Compose video** looks at the selected nodes and builds a video that combines them into one polished shot.
+- **Animate image** uses the selected image as the source reference for a cinematic video.
+- **Make variants** keeps your original and generates three distinct creative directions from it.
+- **Product video** starts from scratch: brief, references to gather, storyboard beats, and video nodes ready to generate.
+- **Audit canvas** inspects the whole board and suggests the highest-impact next creative action — the same idea as a full [canvas audit](/canvas/ai/canvas-audit).
+- **Layout canvas** and **Organize selection** ask the assistant to frame and arrange nodes into a clean, readable workflow.
+
+## Good to know
+
+- Quick actions are prompts, not silent operations — each one opens the chat so you can watch the assistant work, steer it, or stop it. How much it confirms before acting depends on the assistant's [mode](/canvas/ai/plan-mode).
+- Sometimes the assistant offers its own follow-up suggestions after a reply; when it does, those replace the default chips until the context changes.
+- The dock is hidden for viewers on read-only projects, and while the full chat panel is open — the panel's composer takes over.
+
+<Tip>
+Quick actions are the fastest way to learn what Flowy AI can do: select something, read the three chips, and you have a menu of its best moves for that context.
+</Tip>

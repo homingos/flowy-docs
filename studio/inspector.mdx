@@ -1,0 +1,52 @@
+---
+title: "Inspector"
+description: "Browse clips, pull in media, and fine-tune every property of a selection."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+The inspector is Studio's right-hand panel. Its icon strip holds four tabs — **Nodes**, **Media**, **Properties**, and **Plugins** — and selecting a clip anywhere in Studio opens **Properties** with that clip's controls.
+
+<DemoVideo
+  src="/videos/studio/inspector.mp4"
+  poster="/images/posters/studio/inspector.jpg"
+  caption="Selecting a clip and adjusting its transform, color, and compositing properties"
+/>
+
+## Nodes
+
+A searchable list of every clip in the current scene, each with a thumbnail and a type badge (video, image, audio, text). Click a row to select that clip and jump the playhead to its start — the fastest way to find something in a busy timeline.
+
+## Media
+
+Your entry point for bringing new material into the scene:
+
+- **Generate** — create a new **Image**, **Video**, or **Audio** asset with AI.
+- **Libraries** — drop a file to upload it, or open your **Brand Kit** and **Asset library** to reuse what you already have.
+
+## Properties
+
+The per-clip editor. The header shows the clip's **Start**, **End**, and **Duration**, and the sub-tabs below adapt to the clip type — video clips get **Transform**, **General**, **Color**, **Compositing**, and **Effects**; image clips skip General; audio clips get **Audio** and **Speed**.
+
+| Sub-tab | What you control |
+| --- | --- |
+| **Transform** | Scale X/Y (with aspect lock), Position X/Y, Rotation (plus turn 90° and flip buttons), Blur |
+| **General** | Volume and Playback Speed for video clips |
+| **Color** | Exposure, Contrast, Saturation — see [Color correction](/studio/effects/color-correction) |
+| **Compositing** | Opacity, Fill mode (Contain / Cover / Fill), [Chroma Key](/studio/effects/chroma-key), Blend mode, Visibility |
+| **Effects** | The stackable effects rack — see [Effects](/studio/effects/overview) |
+| **Audio** / **Speed** | Volume, Mute, and playback speed for audio clips |
+
+Numeric fields are drag-to-scrub: drag the label left or right to change the value, hold <kbd>⇧</kbd> for fine steps or <kbd>⌥</kbd> for coarse ones.
+
+### Keyframing properties
+
+Animatable properties — scale, position, rotation, blur, opacity, and volume — show a small diamond next to the field. Click it to add a keyframe for that property at the current frame; click again to remove it. The diamond fills in when a keyframe exists at the playhead. Once a property has two or more keyframes, edit its motion in the [timeline's keyframe graph](/studio/timeline#keyframes).
+
+## Plugins
+
+A small marketplace of integrations. Open a plugin's tile for its description, then choose **Install plugin** — installed plugins get their own tab in the inspector strip. The Pexels plugin, for example, adds stock photo and video search; double-click a result to add it to your scene.
+
+<Tip>
+  Clicking a clip on the timeline and clicking it in the **Nodes** list do the same thing — pick whichever is closer to hand.
+</Tip>

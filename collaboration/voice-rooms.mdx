@@ -1,0 +1,51 @@
+---
+title: "Voice Rooms"
+description: "Talk with your collaborators in an audio room without leaving the canvas."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Every project has a built-in voice room, so you can talk while you edit instead of juggling a separate call. Voice is audio-only and scoped to the project — everyone who joins is in the same room for that canvas.
+
+<DemoVideo
+  src="/videos/collab/voice-rooms.mp4"
+  poster="/images/posters/collab/voice-rooms.jpg"
+  caption="Joining a voice room from the collaborators dropdown and muting from the voice bar"
+/>
+
+## Join a voice room
+
+<Steps>
+  <Step title="Open the collaborators dropdown">
+    Click the presence avatars in the editor header.
+  </Step>
+  <Step title="Turn on your mic">
+    Click the mic button on your own row. Flowy connects you to the project's voice room and plays a short join chime — you'll hear it even if you're the first one in.
+  </Step>
+  <Step title="Look for the voice bar">
+    Once connected, a floating voice bar appears in the top-right of the canvas. It's your in-call control surface, and you can drag it anywhere on screen if it's in the way.
+  </Step>
+</Steps>
+
+## Who's talking
+
+The voice bar shows a chip for every participant, with their avatar:
+
+- **Speaking** — the chip lights up with a ring while that person is talking.
+- **Muted** — a small mic-off badge appears on their chip.
+- **You** — hover a chip to see the name; yours is marked "(you)".
+
+## Mute and audio settings
+
+From the voice bar you can:
+
+- **Mute / unmute** — toggle your microphone with the mic button. The mic button in the collaborators dropdown does the same thing once you're connected.
+- **Audio settings** — open the settings popover to pick which **microphone** and **speakers** the call uses, without leaving the room.
+
+## Leave
+
+Click **Leave** on the voice bar to disconnect. You'll hear a short leave chime, the bar disappears, and the canvas keeps working exactly as before — voice never interrupts editing.
+
+<Note>
+  Your browser asks for microphone permission the first time you join. If nothing connects, check that the site is allowed to use your mic in the browser's site settings.
+</Note>

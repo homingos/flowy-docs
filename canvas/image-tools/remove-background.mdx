@@ -1,0 +1,28 @@
+---
+title: "Remove Background"
+description: "Cut the subject out of any image or video automatically — no masking required."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Remove Background detects the subject and strips everything behind it — no manual masking. It works on images and on video clips.
+
+<DemoVideo
+  src="/videos/canvas/image-tools-removebg.mp4"
+  poster="/images/posters/canvas/image-tools-removebg.jpg"
+  caption="Removing the background from a product shot in one run"
+/>
+
+## Using it
+
+Right-click an image node and choose **Tools → Remove Background**. On the connected tool node, leave **Refine edges** on (it cleans up hair and soft boundaries; turn it off for hard-edged graphics), then press **Remove background**. The job runs in the background and the cutout — subject on a transparent background — lands in the node.
+
+From there, wire the cutout into any downstream node, or click **Add result as node** to break it out as a standalone image node.
+
+## Video background removal
+
+Connect a video node instead and the tool keys the moving subject out of the clip. The subject is rendered against a solid green backdrop, which the canvas preview chroma-keys away automatically — so the node shows a clean transparent clip. **Add result as node** creates a [Flam node](/canvas/nodes/flam) with the keying already applied, ready to composite over other layers.
+
+<Tip>
+  Cutouts composite anywhere: drop one onto a generated backdrop with [Inpaint](/canvas/image-tools/inpaint), or wire it into a video node as a clean subject reference.
+</Tip>

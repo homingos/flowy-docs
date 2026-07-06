@@ -1,0 +1,63 @@
+---
+title: "Account Settings"
+description: "Manage your profile, sign-in security, notifications, and editor preferences in one place."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Account settings belong to you, not a workspace — changes here follow you everywhere you work in Flowy. Find them under **Account** in the settings sidebar, split into General, Security, Notifications, and Preferences.
+
+<DemoVideo
+  src="/videos/settings/account.mp4"
+  poster="/images/posters/settings/account.jpg"
+  caption="Updating a profile picture and toggling notification channels"
+/>
+
+<Tabs>
+  <Tab title="General">
+    Your profile as collaborators see it:
+
+    - **Name** — first and last name, shown on your cursor, comments, and everywhere your avatar appears.
+    - **Profile picture** — click your avatar to upload a new one. JPG, PNG, or WebP up to 5 MB. The new picture updates across the app immediately, with no refresh needed.
+  </Tab>
+
+  <Tab title="Security">
+    Your sign-in details and active devices:
+
+    - **Sign-in & email** — the email you sign in with, with a **Verified** badge once confirmed.
+    - **Active sessions** — every device currently signed in to your account, with the device type and when it was last active. Sign out any single device, or use **log out everywhere else** to end every session except the one you're using. Signing out your current device signs you out fully.
+
+    <Tip>
+      If you ever sign in on a shared machine, come back here and revoke that session rather than hoping you clicked sign out.
+    </Tip>
+  </Tab>
+
+  <Tab title="Notifications">
+    A matrix of activity types against three delivery channels — **In-app**, **Email**, and **Push** — so you decide exactly what reaches you where. Activity types are grouped into:
+
+    - **Invites & access** — workspace and project invites, join requests, access-request updates, invite responses, ownership transfers, and removals.
+    - **Comments & mentions** — comments on your projects and @mentions.
+    - **Community** — comments, likes, and remixes on your published posts, plus when your template is published.
+    - **From Flowy** — product updates.
+
+    Browser push has its own master switch: **Turn on** subscribes the device you're using, the checkbox column controls push per activity type, and **Turn off on this device** unsubscribes only that browser. If your browser has blocked notifications, the page tells you how to re-allow them from the address bar.
+  </Tab>
+
+  <Tab title="Preferences">
+    Defaults that apply to all of your new projects across Flowy:
+
+    | Preference | What it does |
+    | --- | --- |
+    | Show credit balance | Shows your remaining credits in the toolbar balance chip. |
+    | Open dashboard projects | Open projects in a new tab or the current tab. |
+    | Performance mode | Reduces animations and motion for a smoother canvas. |
+    | Snap to grid | Nodes snap to the canvas grid when moving. |
+    | Organise into project folders | Groups assets by their source project on the Assets page. |
+    | Edge style | Draws connections as Curved, Right-angle, or Straight wires. |
+    | In-app pop-ups | Shows a corner pop-up when a notification arrives. |
+    | Notification sound | Plays a soft pop when a notification arrives. |
+    | Mouse wheel | Pan moves the canvas; Zoom zooms in and out (hold <kbd>Shift</kbd> for selection). |
+  </Tab>
+</Tabs>
+
+Looking for workspace-level settings like the workspace name, members, or billing? Those live in [Workspace settings](/settings/workspace).
