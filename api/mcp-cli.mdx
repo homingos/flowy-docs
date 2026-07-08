@@ -11,13 +11,16 @@ Cursor, Codex, ChatGPT, …) generate media in your Flowy account over OAuth.
 No API key handling — your agent discovers the OAuth server, you sign in and
 consent in the browser, and the connection is **bound to your account**.
 
-It exposes nine tools:
+It exposes eighteen tools:
 
 | Tool | What it does |
 | --- | --- |
-| `generate_image` / `generate_video` | Start a generation (spends credits) |
+| `generate_image` / `generate_video` / `generate_audio` / `generate_3d` | Start a generation (spends credits) |
 | `get_generation` | Poll status, read output URLs |
 | `list_assets` / `get_asset` | Browse assets with signed URLs |
+| `list_projects` / `create_node` | Browse projects; generate as a node on a canvas |
+| `list_brandkits` / `get_brandkit` / `create_brandkit` | Brand kits (colors, fonts, logos) |
+| `start_render` / `list_renders` | Render a composition timeline to a final video |
 | `get_credits` | Read a wallet balance |
 | `get_account` | Who's signed in: email, plan, account wallet |
 | `list_workspaces` | Every workspace the account can act in |
@@ -65,6 +68,18 @@ flowy workspace credits [id]    # a wallet's balance
 
 The selection persists in `~/.flowy/settings.json` and is honored by the
 `flowy mcp stdio` tools; per-call `workspace_id` arguments always win.
+
+### Content & generation
+
+```bash
+flowy generate image "a hero shot of a ceramic mug" --wait
+flowy generate audio "rain on a tin roof" --mode sfx --duration 10
+flowy generate 3d "a low-poly fox" --format glb
+flowy generate status <generationId>
+flowy project list
+flowy node create <projectId> --type image --prompt "moodboard tile"
+flowy brandkit list | get <id> | create <url> | delete <id>
+```
 
 ### Everything else
 

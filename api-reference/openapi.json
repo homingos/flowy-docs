@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Flowy App API",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "description": "Run Flowy apps and direct generations programmatically.\n\nAuthenticate with a workspace API key in the `Authorization: Bearer` header. A **secret** key (`flowy_…`) is for servers; a **publishable** key (`flowy_pk_…`) is browser-safe and only works from its allowlisted domains. Every run or generation bills the API key's own workspace credits (caller-pays), so a leaked key can never spend another workspace's balance.\n\nKeys carry **scopes**: `apps:read` (list/inspect apps), `runs:read` (poll runs), `runs:write` (start runs), `generations:read` (poll direct generations), `generations:write` (start direct generations), `assets:read` (list/read workspace assets), and `credits:read` (read the credit balance). A request that needs a scope the key doesn't hold returns `403`.\n\nA published (public) app is runnable by any key; a private app is runnable only by a key of its own workspace."
   },
   "servers": [
@@ -674,6 +674,34 @@
             "format": "date-time"
           }
         }
+      },
+      "V1Project": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "thumbnailUrl": {
+            "type": "string"
+          },
+          "isFavorite": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
       }
     }
   },
@@ -1049,6 +1077,34 @@
                   "workspace_id": {
                     "type": "string",
                     "description": "Optionally bill a different workspace the account can manage; default is the key's own wallet."
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "sfx",
+                      "music"
+                    ],
+                    "description": "Audio only; default sfx"
+                  },
+                  "geometry_format": {
+                    "type": "string",
+                    "enum": [
+                      "glb",
+                      "usdz",
+                      "fbx",
+                      "obj",
+                      "stl"
+                    ],
+                    "description": "3d only; default glb"
+                  },
+                  "material": {
+                    "type": "string",
+                    "enum": [
+                      "All",
+                      "PBR",
+                      "Shaded"
+                    ],
+                    "description": "3d only; default All"
                   }
                 }
               },
@@ -1673,6 +1729,425 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/v1/projects": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "List projects",
+        "operationId": "listProjects",
+        "description": "The workspace's canvas projects.",
+        "parameters": [
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context; default is the key's own wallet."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Projects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "projects": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/V1Project"
+                          }
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/projects/{projectId}/nodes": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Create a node generation",
+        "operationId": "createNode",
+        "description": "Start a generation as a node on a real project's canvas (spends credits). The node id is minted server-side; output lands in the asset library.",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "prompt"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "image",
+                      "video",
+                      "audio",
+                      "3d"
+                    ]
+                  },
+                  "prompt": {
+                    "type": "string"
+                  },
+                  "input_media": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "asset_id": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "aspect_ratio": {
+                    "type": "string"
+                  },
+                  "resolution": {
+                    "type": "string"
+                  },
+                  "duration_seconds": {
+                    "type": "number"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "sfx",
+                      "music"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Node generation started",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "projectId": {
+                          "type": "string"
+                        },
+                        "nodeId": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/brandkits": {
+      "get": {
+        "tags": [
+          "Brand kits"
+        ],
+        "summary": "List brand kits",
+        "operationId": "listBrandKits",
+        "parameters": [
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context; default is the key's own wallet."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The workspace's brand kits (colors, fonts, logos)"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Brand kits"
+        ],
+        "summary": "Create a brand kit from a website",
+        "operationId": "createBrandKit",
+        "description": "Extract a brand kit from a URL (async; poll /v1/brandkits/extract/{jobId}).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string"
+                  },
+                  "workspace_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Extraction job started"
+          }
+        }
+      }
+    },
+    "/v1/brandkits/{id}": {
+      "get": {
+        "tags": [
+          "Brand kits"
+        ],
+        "summary": "Get a brand kit",
+        "operationId": "getBrandKit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context; default is the key's own wallet."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The brand kit"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Brand kits"
+        ],
+        "summary": "Update a brand kit",
+        "operationId": "patchBrandKit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context; default is the key's own wallet."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Partial brand kit fields (colors, fonts, …)"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Brand kits"
+        ],
+        "summary": "Delete a brand kit",
+        "operationId": "deleteBrandKit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context; default is the key's own wallet."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/v1/brandkits/extract/{jobId}": {
+      "get": {
+        "tags": [
+          "Brand kits"
+        ],
+        "summary": "Poll a brand kit extraction",
+        "operationId": "pollBrandKitExtract",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Extraction status"
+          }
+        }
+      }
+    },
+    "/v1/renders": {
+      "post": {
+        "tags": [
+          "Renders"
+        ],
+        "summary": "Render a composition to video",
+        "operationId": "startRender",
+        "description": "Render a composition timeline (Remotion project JSON) to a final video — the last step of an end-to-end video pipeline (async).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "project"
+                ],
+                "properties": {
+                  "project": {
+                    "type": "object",
+                    "description": "The composition timeline"
+                  },
+                  "project_id": {
+                    "type": "string"
+                  },
+                  "workspace_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Render started"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Renders"
+        ],
+        "summary": "List renders",
+        "operationId": "listRenders",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recent renders with video URLs"
           }
         }
       }

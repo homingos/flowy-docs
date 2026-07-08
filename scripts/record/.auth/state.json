@@ -1,0 +1,65 @@
+{
+  "cookies": [
+    {
+      "name": "authjs.csrf-token",
+      "value": "f605ddb68729ed81895cf11290eb27a43e4ff46f35a1ea1f317774eb4b34901b%7Cfef2a305fc32ad524f061c49298d8364cf1561138c421314e8d3d9e799c2b63c",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "authjs.callback-url",
+      "value": "http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fmagic-link%3Ftoken%3DeyJlbWFpbCI6ImNsYXVkZS11c2VyLTNAZmxhbWFwcC5jb20iLCJpYXQiOjE3ODM0MjM2MzEsImV4cCI6MTc4MzQyNDUzMX0.zn3KtZ-V8i0vnik2kXn_kUDfnb7A7h6XiEEzqkVn6rI%26callbackUrl%3D%2Fdashboard",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "last-used-auth-method",
+      "value": "email",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1814959633.466807,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "authjs.session-token",
+      "value": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiV01KYXdna2hvVElza0s4MVdsV0xOaVhXRFpFNF8tOWQ0YkM5Ym93ZXhSUHZodmpoZDZiWWJoWmQ2MVBzbFhLY3hMb1h0dlBZYmlLQksyemJoUmRVUVEifQ..2-tfacyjSiV3ko1SYuOz0Q.VnhZ5oXzgqKm_nrojV6j79diztY2NN9q0EQ7gye84k_fi1THYWNXHGc2FQAsDWXiSfGvBRvackFaEL4iYIlS7ZQOBrB2PJiVRd3tMGJJz5DxOR8lPkdJv0pcsZy_CFxOP_LgsWxKHUXUf6wHh4S45KEFCIZEDQHEZ_7Rvq5ohbEYRukZ7V46xsW6ChB1VvikuZt5EHsUauypTHLnNZt-WYaAo6nzsbVW5YBInXivsXrZ-QlPppyc5-HpYTWJFQJIXiG5upsiGCMviXQfgLl4pVhHaGa7G-GX8UMbmF-0TexuaQr75nDIunEbWS5cfwWwVXzdtyQx1Ta9ymTrqsdXFevf2h9ggHZj8XlKBt2MTGvf3-uy2pz7Wlro3Iq6SJOq6QuUYRCU4vekDA6TeSonBUDyneyQV6zQVhSi_qDmr8jLwtpN6vkX4WHIMLjQuh6t7Pq8trDxnwyuTenvUnK6sEDhU0N0J2JOme9asDJlLiCtr4Gg4RREAd-hkLtmfxLJCUS1H-bo-JkAlIfQtjPJdXWhAbN-TpAP_q9S1dIoozcKEIaCqM9eEOsa9dQzeu8qjlVrDfN3HdzOIjIFqbv8f4HeKBHSxrE9F_TWQXoMSb7F6Iy6cWlHfpAooskMiRxculoT7AnonIffgdSuF8Yt3l1mbdOfdDffV0QtMD9_8kQOc1UoKGi1KNnM6bhrsSJGavn9HthTy3fu1W15BbnLaFryPTsYIEr9nCDZTCoDUTgx2vur4SwXdmThn6FXC4czajwWMyepGyo7F4ZC4WNqyx83tnsaAcQDYHxgKu11NGqNOKSwSRERyxFzjob9fnzsW3XlSVm0CXGIEOelolaZaKSiMLNUe__bw5G7hDfLaVU.uKEG1PaCARBpUFyEz9E84vcqR-3LrhYy0MjohaaUxq8",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1786015636.618963,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "wsSlugMap",
+      "value": "%7B%22flowy-docs-s-workspace%22%3A%226a4ad8079a876dea0d2d111a%22%2C%22docs-demo-team%22%3A%226a4ae1b89a876dea0d2d113d%22%7D",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1814959637.22487,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "selectedWorkspaceId",
+      "value": "6a4ad8079a876dea0d2d111a",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1814959637.133072,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}

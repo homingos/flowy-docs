@@ -1,0 +1,7 @@
+---
+title: "Create a node generation"
+description: "Start a generation as a node on a real project's canvas."
+openapi: "/api-reference/openapi.json POST /v1/projects/{projectId}/nodes"
+---
+
+The node id is minted server-side and the generation appears on the project's canvas in real time; the output is also recorded in the workspace asset library. Canvas node *state* lives in the realtime collab layer, so reads go through [List assets](/api/list-assets).

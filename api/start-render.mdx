@@ -1,0 +1,7 @@
+---
+title: "Render a composition"
+description: "Render a composition timeline to a final video — the last step of an end-to-end video pipeline."
+openapi: "/api-reference/openapi.json POST /v1/renders"
+---
+
+An end-to-end video flow with the primitives: generate clips with [Start a generation](/api/start-generation) (type `video`), audio with type `audio`, then compose and render the timeline here. Poll [List renders](/api/list-renders) for the finished video URL.
