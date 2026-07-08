@@ -1,0 +1,65 @@
+{
+  "cookies": [
+    {
+      "name": "authjs.csrf-token",
+      "value": "95e91509e7449554ebeca15a158724c330ebbc36b7fae3ee01fee9c68781c218%7Cad282512d7ef4427e2dd8ad8aeafa3d85e189761f40bcc0105b072e9e1ebaa38",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "authjs.callback-url",
+      "value": "http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fmagic-link%3Ftoken%3DeyJlbWFpbCI6ImNsYXVkZS11c2VyLTMrY29sbGFiQGZsYW1hcHAuY29tIiwiaWF0IjoxNzgzNTE3MjY1LCJleHAiOjE3ODM1MTgxNjV9.nOfpwoDmiNHK0Y_gYbJ_Osgeo2WWpWVJ_JWx--dre_U%26callbackUrl%3D%2Fdashboard",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "last-used-auth-method",
+      "value": "email",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1815053265.939604,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "wsSlugMap",
+      "value": "%7B%22ana-reyes-s-workspace%22%3A%226a4e4911cd0cec30eb22a423%22%7D",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1815053266.33071,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "selectedWorkspaceId",
+      "value": "6a4e4911cd0cec30eb22a423",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1815053266.333514,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "authjs.session-token",
+      "value": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiV01KYXdna2hvVElza0s4MVdsV0xOaVhXRFpFNF8tOWQ0YkM5Ym93ZXhSUHZodmpoZDZiWWJoWmQ2MVBzbFhLY3hMb1h0dlBZYmlLQksyemJoUmRVUVEifQ..Q7D-QhdRLTHp-EjxEXtkbQ.gRU3475QWQJOFHhinHrWl58q0WHJDnJ674IbMX0EzGo5ACJXrnwvOhfCvnlmqg7Xu8fvO9zQFqxFS0ERp_BAWBlN9ZqlITnmGuWa7HUkcbcfTPCVUk6RLgpCJ7XcNWr7uz1fIA2FlyThEMDzqW_px8-CudGbe07gB92q998PNkztcymFmQQws25EeYwGMlveRdknCeJek7fui0ETwrrE-vlnAxk6ri1MQnBidfCvtSzJzdcloVC4eb5XGsyHb0ovvCqw7Zla9KOHD8LoB7zew_j-xX9nxgY5vTEfZ6FQ-vfAda81z_kM4ojAGAguN-OTpHkr4up92oUaOdQP8NTyVBOQQHyKrw512FTF2h0aYOWeYMJEP847PQrfZ7f0pZT2Urx0jObpUDVSXO1RuSIxlcNp4RHiFJcAyO4HWlQw2UYdbiXocSN4URFpx8Me5wsHtimuz3dVrGmy400mwe8CfCRrwGUJ2Fn723dzD_yNMTR78KqlKlWSR8ThjFQOPNDK9W4fQGMUW2hQfQS-aRBEfzhTnr8SPS9F7bWcTutF3IA6qgmdB6wKC5vSQbG7JuikRWQGFA2dRklFyDsQzXwCBk1uOlDwiVj8i2JaYHgC75k_Luo1wy1f3GcRFtr1SV3QQ18KxFI26tZB1WKbKu5N2Iv5zhu_L8h96wwKz7E_3GwfHHZihR3-dLWGUSjNozrb8JkodFobiaokU33HhexER-hXsZ6jqvLQ1ZOuBuXYrKlBQnoQhzMAU8yg9njkG1PTIs6_Ab3_Mn4ShAC5tc4u76GhxnP_TLNOk2Nejtvy6wPbjyXdUWyigZaaoMp555cJjagZKj4blS3KmA9-ADEGbesSXA9q7jPCKHD6DgZ1ocNWbZU_JT7NvBvNbiYmicBP.cjt1kfjFdKwLwfoe9pRo6kbPiQ6_eznLazcLvJRfHb0",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1786109266.782453,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}
