@@ -18,6 +18,11 @@ const context = await browser.newContext({
   viewport: { width: 1280, height: 800 },
   colorScheme: "dark",
 });
+await context.addInitScript(() => {
+  const style = document.createElement("style");
+  style.textContent = '[data-testid="react-grab-overlay"] { display: none !important; }';
+  document.addEventListener("DOMContentLoaded", () => document.head.appendChild(style));
+});
 const page = await context.newPage();
 
 async function snap(name: string, lines = 130) {
@@ -36,30 +41,38 @@ await page.getByRole("button", { name: "Not now" }).click({ timeout: 2000 }).cat
 if (which === "chat") {
   await snap("p-canvas");
   // Open the chat panel via the dot-matrix launcher.
-  await page.getByRole("button", { name: "Open Flowy chat" }).click();
+  await page.getByRole("button", { name: "Open Flowy chat" }).click({ force: true });
   await page.waitForTimeout(2000);
   await snap("p-chat-panel", 200);
 } else if (which === "dock") {
   // Expand the bottom prompt dock.
-  await page.getByRole("button", { name: "Open Flowy AI" }).click();
+  await page.getByRole("button", { name: "Open Flowy AI" }).click({ force: true });
   await page.waitForTimeout(1500);
   await snap("p-dock", 160);
+} else if (which === "dock2") {
+  // Expand the dock, focus the composer, and wait for suggestion chips.
+  await page.getByRole("button", { name: "Open Flowy AI" }).click({ force: true });
+  await page.waitForTimeout(1200);
+  const composer = page.getByRole("textbox", { name: "Describe what you want to generate…" });
+  await composer.waitFor({ state: "visible", timeout: 8000 });
+  await page.waitForTimeout(2500);
+  await snap("p-dock2", 220);
 } else if (which === "addnode") {
-  await page.getByRole("button", { name: "Add a node" }).click();
+  await page.getByRole("button", { name: "Add a node" }).click({ force: true });
   await page.waitForTimeout(1200);
   await snap("p-addnode", 160);
 } else if (which === "audio") {
-  await page.getByRole("button", { name: "Add a node" }).click();
+  await page.getByRole("button", { name: "Add a node" }).click({ force: true });
   await page.waitForTimeout(800);
   const menu = page.locator('[aria-label="Node selection"]');
-  await menu.getByRole("button", { name: /Audio/ }).click();
+  await menu.getByRole("button", { name: /Audio/ }).click({ force: true });
   await page.waitForTimeout(1500);
   await snap("p-audio-node", 200);
 } else if (which === "3d") {
-  await page.getByRole("button", { name: "Add a node" }).click();
+  await page.getByRole("button", { name: "Add a node" }).click({ force: true });
   await page.waitForTimeout(800);
   const menu = page.locator('[aria-label="Node selection"]');
-  await menu.getByRole("button", { name: /3D/ }).click();
+  await menu.getByRole("button", { name: /3D/ }).click({ force: true });
   await page.waitForTimeout(1500);
   await snap("p-3d-node", 200);
 }

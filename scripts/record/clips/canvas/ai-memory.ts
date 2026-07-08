@@ -1,6 +1,7 @@
 import type { Clip } from "../../lib/runner.ts";
 
-// Fresh, isolated project created for the AI-chat clips.
+// Fresh, isolated project created for the AI-chat clips ("Midnight Meadow").
+// A skill ("Product brief starter") was seeded here so the library isn't empty.
 const PROJECT = "6a4b7988514413fa84caca94";
 
 const clip: Clip = {
@@ -11,33 +12,33 @@ const clip: Clip = {
     await page.getByRole("button", { name: "Skip for now" }).click({ timeout: 4000 }).catch(() => {});
     await h.beat(600);
 
-    // Open the chat panel from the bottom-left launcher.
+    // Open the chat panel from the bottom-left launcher and start a clean thread.
     await h.click(page.getByRole("button", { name: "Open Flowy chat" }));
-    await page.getByRole("button", { name: "Send" }).waitFor({ state: "visible", timeout: 10_000 }).catch(() => {});
+    const composer = page.getByRole("textbox", { name: "Ask Flowy to build, wire, or generate…" });
+    await composer.waitFor({ state: "visible", timeout: 15_000 });
+    await page.getByRole("button", { name: "New chat" }).click({ timeout: 4000 }).catch(() => {});
     await h.beat(900);
     h.mark();
 
-    // The Skills library lives behind the book icon in the panel header.
-    await h.click(page.getByRole("button", { name: "Skill library" }));
-    await h.beat(1300);
-    // Rest on the library body (empty until Flowy captures a build, or a list).
-    await h.moveTo({ x: 1000, y: 220 });
-    await h.beat(1600);
-    await page.keyboard.press("Escape");
-    await h.beat(700);
-
     // Save a durable preference — Flowy acknowledges and stores it as memory.
-    const composer = page.getByRole("textbox").last();
-    await h.type(composer, "Remember: I prefer warm, golden-hour lighting");
+    await h.type(composer, "Remember: our brand accent color is teal", 55);
     await h.beat(400);
-    await h.click(page.getByRole("button", { name: "Send" }));
+    await page.keyboard.press("Enter");
     await h.skip(async () => {
-      // Wait for the turn to settle: the working indicator clears and an
-      // assistant acknowledgment lands.
-      await page.getByRole("button", { name: "Stop" }).waitFor({ state: "visible", timeout: 8000 }).catch(() => {});
-      await page.getByRole("button", { name: "Stop" }).waitFor({ state: "hidden", timeout: 90_000 }).catch(() => {});
+      await page.getByRole("button", { name: "Stop" }).waitFor({ state: "visible", timeout: 15_000 }).catch(() => {});
+      await page.getByRole("button", { name: "Stop" }).waitFor({ state: "hidden", timeout: 120_000 }).catch(() => {});
+      await page.waitForTimeout(1200);
     });
-    await h.beat(1600);
+    await h.beat(1800);
+
+    // Browse the Skills library behind the book icon in the panel header.
+    await h.click(page.getByRole("button", { name: "Skill library" }));
+    await h.beat(1200);
+    // Rest on the seeded "Product brief starter" entry.
+    await h.moveTo(page.getByText("Product brief starter").first());
+    await h.beat(2200);
+    await page.keyboard.press("Escape");
+    await h.beat(600);
   },
 };
 

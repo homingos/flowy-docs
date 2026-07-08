@@ -73,8 +73,17 @@ export async function recordClip(clip: Clip): Promise<void> {
   mkdirSync(RAW_DIR, { recursive: true });
 
   const browser = await chromium.launch({
-    headless: false,
-    args: ["--disable-infobars", "--no-default-browser-check"],
+    // HEADLESS=1 records without a visible window — long-generation takes
+    // kept dying when the on-screen Chromium got closed mid-wait. The harness
+    // draws its own cursor and the app is DOM-rendered, so footage matches.
+    headless: Boolean(process.env.HEADLESS),
+    args: [
+      "--disable-infobars",
+      "--no-default-browser-check",
+      // Voice clips: auto-accept mic prompts and provide a fake audio device.
+      "--use-fake-ui-for-media-stream",
+      "--use-fake-device-for-media-stream",
+    ],
   });
   const context = await browser.newContext({
     viewport: { width: w, height: hgt },
@@ -129,7 +138,9 @@ export async function recordClip(clip: Clip): Promise<void> {
   mkdirSync(dirname(outMp4), { recursive: true });
   mkdirSync(dirname(outPoster), { recursive: true });
 
+  console.log(`  segments: ${JSON.stringify(log)}`);
   const vf = buildFilters(log, clip.speed);
+  console.log(`  vf: ${JSON.stringify(vf)}`);
   ffmpeg([
     "-i", webm,
     "-an",

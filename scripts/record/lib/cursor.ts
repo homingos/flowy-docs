@@ -14,6 +14,7 @@ export const CURSOR_INIT_SCRIPT = `
       *::-webkit-scrollbar { display: none !important; }
       * { scrollbar-width: none !important; }
       nextjs-portal { display: none !important; }
+      [data-testid="react-grab-overlay"] { display: none !important; }
       #__rec_cursor {
         position: fixed; top: 0; left: 0; width: 22px; height: 22px;
         z-index: 2147483647; pointer-events: none;
