@@ -66,7 +66,6 @@
                   "canvas/nodes/flam",
                   "canvas/nodes/storyboard",
                   "canvas/nodes/composition",
-                  "canvas/nodes/motion-path",
                   "canvas/nodes/utility-nodes"
                 ]
               },
