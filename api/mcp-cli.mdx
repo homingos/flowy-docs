@@ -1,0 +1,77 @@
+---
+title: "MCP & CLI"
+description: "Connect Flowy to your AI agent with the hosted MCP, and manage it all from the flowy CLI."
+---
+
+## The Flowy MCP
+
+Flowy ships a hosted [MCP](https://modelcontextprotocol.io) server at
+`https://mcp.tryflowy.ai/mcp` that lets any MCP-capable agent (Claude Code,
+Cursor, Codex, ChatGPT, …) generate media in your Flowy account over OAuth.
+No API key handling — your agent discovers the OAuth server, you sign in and
+consent in the browser, and the connection is **bound to your account**.
+
+It exposes nine tools:
+
+| Tool | What it does |
+| --- | --- |
+| `generate_image` / `generate_video` | Start a generation (spends credits) |
+| `get_generation` | Poll status, read output URLs |
+| `list_assets` / `get_asset` | Browse assets with signed URLs |
+| `get_credits` | Read a wallet balance |
+| `get_account` | Who's signed in: email, plan, account wallet |
+| `list_workspaces` | Every workspace the account can act in |
+| `list_transactions` | The account's credit ledger |
+
+Generation and asset tools accept an optional `workspace_id`
+(from `list_workspaces`) to act in — and bill — a specific workspace;
+the default is your account wallet.
+
+## The `flowy` CLI
+
+```bash
+npm i -g @tryflowy/cli
+```
+
+### Set up
+
+```bash
+flowy auth login     # sign in via browser OAuth (PKCE)
+flowy mcp install    # wire the hosted MCP into Claude, Cursor, Codex…
+flowy skill install  # optional: the Flowy agent skill
+```
+
+Then restart your agent and ask it to *"generate an image with Flowy"*.
+
+### Account & credits
+
+```bash
+flowy account status                    # email, plan, available credits
+flowy account transactions --size 50    # recent credit ledger
+```
+
+### Workspace context
+
+By default you act in your private **account context**. To act in (and bill)
+a team workspace instead:
+
+```bash
+flowy workspace list            # see every workspace you can act in
+flowy workspace set <id>        # select it for future requests
+flowy workspace status          # show the current selection
+flowy workspace unset           # back to the account context
+flowy workspace credits [id]    # a wallet's balance
+```
+
+The selection persists in `~/.flowy/settings.json` and is honored by the
+`flowy mcp stdio` tools; per-call `workspace_id` arguments always win.
+
+### Everything else
+
+```bash
+flowy mcp stdio      # local stdio MCP server (for stdio-only clients)
+flowy auth status    # token state; auth logout deletes credentials
+flowy version        # CLI version
+```
+
+Run bare `flowy` for the full command list.

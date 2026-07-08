@@ -1,0 +1,9 @@
+---
+title: "Start a generation"
+description: "Generate an image or video directly. Bills the key's wallet, or an explicit workspace."
+openapi: "/api-reference/openapi.json POST /v1/generations"
+---
+
+The generation starts asynchronously and returns a `generationId` immediately. Poll [Get a generation](/api/get-generation) until its `status` is `completed`, then read `outputs[0].url`.
+
+By default the generation is billed to the key's own wallet — for account-bound keys, your **account wallet**. Pass `workspace_id` (see [List workspaces](/api/list-workspaces)) to act in and bill another workspace you can manage.

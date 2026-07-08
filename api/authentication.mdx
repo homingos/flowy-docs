@@ -3,13 +3,15 @@ title: "Authentication"
 description: "Create an API key and use it to authenticate every request."
 ---
 
-The Flowy API authenticates with **API keys**. A key belongs to a workspace, and every run you start with it is billed to that workspace. Send the key as a Bearer token in the `Authorization` header on every request:
+The Flowy API authenticates with **API keys** (created in the dashboard) or **OAuth access tokens** (minted when you connect an AI agent — see [MCP & CLI](/api/mcp-cli)). Send either as a Bearer token in the `Authorization` header on every request:
 
 ```bash
 Authorization: Bearer flowy_xxxxxxxx
 ```
 
-A missing, malformed, revoked, or expired key returns `401 Unauthorized`.
+A missing, malformed, revoked, or expired credential returns `401 Unauthorized`.
+
+**Who pays:** OAuth connections are **account-bound** — by default they act in and bill your personal account wallet, and can act in any workspace you can manage by passing `workspace_id` (see [List workspaces](/api/list-workspaces)). Dashboard API keys belong to the workspace they were created in and bill that workspace by default.
 
 ## Secret vs publishable keys
 

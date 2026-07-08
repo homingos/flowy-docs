@@ -120,7 +120,8 @@
               "api/introduction",
               "api/authentication",
               "api/permissions",
-              "api/running-apps"
+              "api/running-apps",
+              "api/mcp-cli"
             ]
           },
           {
@@ -130,6 +131,14 @@
               "api/get-app",
               "api/start-run",
               "api/get-run",
+              "api/start-generation",
+              "api/get-generation",
+              "api/list-assets",
+              "api/get-asset",
+              "api/get-account",
+              "api/list-account-transactions",
+              "api/list-workspaces",
+              "api/get-credits",
               "api/get-openapi"
             ]
           },
@@ -163,7 +172,15 @@
     }
   },
   "contextual": {
-    "options": ["copy", "view", "chatgpt", "claude", "perplexity", "cursor", "vscode"]
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {

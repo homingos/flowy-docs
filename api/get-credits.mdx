@@ -1,0 +1,7 @@
+---
+title: "Get the credit balance"
+description: "Read a wallet's credits: total, blocked, and available."
+openapi: "/api-reference/openapi.json GET /v1/credits"
+---
+
+Defaults to the key's own wallet (for account-bound keys, your account wallet). Pass `workspace_id` to read the balance of any workspace you can manage — ids come from [List workspaces](/api/list-workspaces).

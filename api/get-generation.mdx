@@ -1,0 +1,7 @@
+---
+title: "Get a generation"
+description: "Poll a generation's status and read its outputs."
+openapi: "/api-reference/openapi.json GET /v1/generations/{generationId}"
+---
+
+Returns `status` (`processing` | `completed` | `failed`), best-effort progress while processing, and `outputs[]` with freshly signed URLs once completed. If the generation was started in another workspace, pass the same `workspace_id`.
