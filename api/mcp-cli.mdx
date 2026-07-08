@@ -11,7 +11,7 @@ Cursor, Codex, ChatGPT, …) generate media in your Flowy account over OAuth.
 No API key handling — your agent discovers the OAuth server, you sign in and
 consent in the browser, and the connection is **bound to your account**.
 
-It exposes eighteen tools:
+It exposes twenty tools:
 
 | Tool | What it does |
 | --- | --- |
@@ -19,8 +19,8 @@ It exposes eighteen tools:
 | `get_generation` | Poll status, read output URLs |
 | `list_assets` / `get_asset` | Browse assets with signed URLs |
 | `list_projects` / `create_node` | Browse projects; generate as a node on a canvas |
-| `list_brandkits` / `get_brandkit` / `create_brandkit` | Brand kits (colors, fonts, logos) |
-| `start_render` / `list_renders` | Render a composition timeline to a final video |
+| `list_brandkits` / `get_brandkit` / `create_brandkit` / `poll_brandkit_extract` | Brand kits (colors, fonts, logos) |
+| `start_render` / `get_render` / `list_renders` | Render a composition timeline; watch by workflow id |
 | `get_credits` | Read a wallet balance |
 | `get_account` | Who's signed in: email, plan, account wallet |
 | `list_workspaces` | Every workspace the account can act in |

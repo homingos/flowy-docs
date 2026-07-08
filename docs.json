@@ -142,6 +142,7 @@
               "api/create-brandkit",
               "api/start-render",
               "api/list-renders",
+              "api/get-render",
               "api/get-account",
               "api/list-account-transactions",
               "api/list-workspaces",

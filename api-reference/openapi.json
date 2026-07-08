@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Flowy App API",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "description": "Run Flowy apps and direct generations programmatically.\n\nAuthenticate with a workspace API key in the `Authorization: Bearer` header. A **secret** key (`flowy_…`) is for servers; a **publishable** key (`flowy_pk_…`) is browser-safe and only works from its allowlisted domains. Every run or generation bills the API key's own workspace credits (caller-pays), so a leaked key can never spend another workspace's balance.\n\nKeys carry **scopes**: `apps:read` (list/inspect apps), `runs:read` (poll runs), `runs:write` (start runs), `generations:read` (poll direct generations), `generations:write` (start direct generations), `assets:read` (list/read workspace assets), and `credits:read` (read the credit balance). A request that needs a scope the key doesn't hold returns `403`.\n\nA published (public) app is runnable by any key; a private app is runnable only by a key of its own workspace."
   },
   "servers": [
@@ -2148,6 +2148,34 @@
         "responses": {
           "200": {
             "description": "Recent renders with video URLs"
+          }
+        }
+      }
+    },
+    "/v1/renders/{workflowId}": {
+      "get": {
+        "tags": [
+          "Renders"
+        ],
+        "summary": "Get a render",
+        "operationId": "getRender",
+        "description": "One render record by workflow id, any status (processing | completed | failed) — pending and failed renders are visible here.",
+        "parameters": [
+          {
+            "name": "workflowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The render record"
+          },
+          "404": {
+            "description": "Not found"
           }
         }
       }
