@@ -2,8 +2,8 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Flowy App API",
-    "version": "1.1.0",
-    "description": "Run Flowy apps programmatically.\n\nAuthenticate with a workspace API key in the `Authorization: Bearer` header. A **secret** key (`flowy_…`) is for servers; a **publishable** key (`flowy_pk_…`) is browser-safe and only works from its allowlisted domains. Every run bills the API key's own workspace credits (caller-pays), so a leaked key can never spend another workspace's balance.\n\nKeys carry **scopes**: `apps:read` (list/inspect apps), `runs:read` (poll runs), and `runs:write` (start runs). A request that needs a scope the key doesn't hold returns `403`.\n\nA published (public) app is runnable by any key; a private app is runnable only by a key of its own workspace."
+    "version": "1.3.1",
+    "description": "Run Flowy apps and direct generations programmatically.\n\nAuthenticate with a workspace API key in the `Authorization: Bearer` header. A **secret** key (`flowy_…`) is for servers; a **publishable** key (`flowy_pk_…`) is browser-safe and only works from its allowlisted domains. Every run or generation bills the API key's own workspace credits (caller-pays), so a leaked key can never spend another workspace's balance.\n\nKeys carry **scopes**: `apps:read` (list/inspect apps), `runs:read` (poll runs), `runs:write` (start runs), `generations:read` (poll direct generations), `generations:write` (start direct generations), `assets:read` (list/read workspace assets), and `credits:read` (read the credit balance). A request that needs a scope the key doesn't hold returns `403`.\n\nA published (public) app is runnable by any key; a private app is runnable only by a key of its own workspace."
   },
   "servers": [
     {
@@ -24,6 +24,18 @@
     {
       "name": "Runs",
       "description": "Start runs and poll for their results."
+    },
+    {
+      "name": "Generations",
+      "description": "Start direct image/video generations and poll for their results."
+    },
+    {
+      "name": "Assets",
+      "description": "Browse the workspace's asset library (uploads + generated media)."
+    },
+    {
+      "name": "Credits",
+      "description": "Read the workspace's credit balance."
     },
     {
       "name": "Spec",
@@ -143,11 +155,6 @@
                       "type": "string",
                       "example": "node_9"
                     },
-                    "name": {
-                      "type": "string",
-                      "description": "The output's public id — its kebab-cased title from the app schema. Use this to match a result to an output by title. Omitted for apps published before titles.",
-                      "example": "headshot"
-                    },
                     "kind": {
                       "type": "string",
                       "enum": [
@@ -254,14 +261,445 @@
             "items": {
               "type": "object"
             },
-            "description": "Input field schema. Each item's `name` (its kebab-cased title) is the value you pass as `node_id` in a run request `inputs` entry."
+            "description": "Input field schema; each item's nodeId is the key used in the run request inputs map."
           },
           "outputs": {
             "type": "array",
             "items": {
               "type": "object"
-            },
-            "description": "Output field schema. Each item's `name` (its kebab-cased title) is echoed on the matching run output."
+            }
+          }
+        }
+      },
+      "GenerationRequest": {
+        "type": "object",
+        "required": [
+          "type",
+          "prompt"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "image",
+              "video"
+            ],
+            "example": "image"
+          },
+          "prompt": {
+            "type": "string",
+            "example": "a studio photo of a ceramic mug on a marble counter"
+          },
+          "model": {
+            "type": "string",
+            "description": "image: gemini-3-flash (default). video: seedance-2.0 (default).",
+            "example": "gemini-3-flash"
+          },
+          "input_media": {
+            "type": "array",
+            "description": "Optional reference media: an asset from your workspace library (asset_id) or a public URL. Video generations accept up to 9 images, 3 videos and 3 audio references (12 total).",
+            "items": {
+              "type": "object",
+              "properties": {
+                "asset_id": {
+                  "type": "string",
+                  "example": "64c3f2a1e8b9c0d1f2e3a4b5"
+                },
+                "url": {
+                  "type": "string",
+                  "example": "https://example.com/reference.jpg"
+                }
+              }
+            }
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "description": "image: 1:1 (default), 2:3, 3:2, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9, 21:9. video: 16:9 (default), 9:16, 1:1.",
+            "example": "1:1"
+          },
+          "resolution": {
+            "type": "string",
+            "description": "image: 1K (default), 2K, 4K. video: 720p (default), 1080p.",
+            "example": "1K"
+          },
+          "duration_seconds": {
+            "type": "number",
+            "description": "Video only. Default 5; clamped to 4–10.",
+            "example": 5
+          }
+        }
+      },
+      "GenerationAccepted": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "generationId": {
+                "type": "string",
+                "example": "64c3f2a1e8b9c0d1f2e3a4b5"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "processing"
+                ],
+                "example": "processing"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "image",
+                  "video"
+                ],
+                "example": "image"
+              },
+              "model": {
+                "type": "string",
+                "example": "gemini-3-flash"
+              },
+              "estimatedCredits": {
+                "type": "number",
+                "description": "Credits reserved for this generation; the settled charge arrives on the generation view.",
+                "example": 12
+              }
+            }
+          }
+        }
+      },
+      "GenerationView": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "generationId": {
+                "type": "string",
+                "example": "64c3f2a1e8b9c0d1f2e3a4b5"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "image",
+                  "video"
+                ],
+                "example": "image"
+              },
+              "model": {
+                "type": "string",
+                "example": "gemini-3-flash"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "processing",
+                  "completed",
+                  "failed"
+                ],
+                "example": "completed"
+              },
+              "progress": {
+                "description": "Best-effort live progress snapshot; present only while processing.",
+                "nullable": true
+              },
+              "prompt": {
+                "type": "string",
+                "example": "a studio photo of a ceramic mug on a marble counter"
+              },
+              "outputs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "image",
+                        "video"
+                      ],
+                      "example": "image"
+                    },
+                    "assetId": {
+                      "type": "string",
+                      "description": "Library asset id, when the output was recorded as an asset."
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "Signed, downloadable media URL — expires.",
+                      "example": "https://cdn.tryflowy.ai/generations/mug.png"
+                    },
+                    "width": {
+                      "type": "integer",
+                      "example": 1024
+                    },
+                    "height": {
+                      "type": "integer",
+                      "example": 1024
+                    },
+                    "durationSeconds": {
+                      "type": "number",
+                      "example": 5
+                    }
+                  }
+                }
+              },
+              "creditsCharged": {
+                "type": "number",
+                "description": "Credits actually deducted; 0 until the generation completes.",
+                "example": 12
+              },
+              "error": {
+                "type": "string",
+                "description": "Human-readable failure reason. Present only when status is failed."
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2026-01-01T00:00:00Z"
+              },
+              "completedAt": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2026-01-01T00:01:15Z"
+              }
+            }
+          }
+        }
+      },
+      "Asset": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "64c3f2a1e8b9c0d1f2e3a4b5"
+          },
+          "fileName": {
+            "type": "string",
+            "example": "mug.png"
+          },
+          "mediaType": {
+            "type": "string",
+            "enum": [
+              "image",
+              "video",
+              "audio",
+              "flam"
+            ],
+            "example": "image"
+          },
+          "url": {
+            "type": "string",
+            "description": "Signed, downloadable media URL — expires.",
+            "example": "https://cdn.tryflowy.ai/assets/mug.png"
+          },
+          "width": {
+            "type": "integer",
+            "example": 1024
+          },
+          "height": {
+            "type": "integer",
+            "example": 1024
+          },
+          "durationSeconds": {
+            "type": "number",
+            "example": 5
+          },
+          "sizeBytes": {
+            "type": "integer",
+            "example": 524288
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "upload",
+              "generated"
+            ],
+            "example": "generated"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "The generation prompt, for generated assets."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-01-01T00:00:00Z"
+          }
+        }
+      },
+      "AssetList": {
+        "type": "object",
+        "properties": {
+          "assets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asset"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "example": 42
+          },
+          "page": {
+            "type": "integer",
+            "example": 1
+          },
+          "pageSize": {
+            "type": "integer",
+            "example": 20
+          },
+          "totalPages": {
+            "type": "integer",
+            "example": 3
+          }
+        }
+      },
+      "CreditBalance": {
+        "type": "object",
+        "properties": {
+          "workspaceId": {
+            "type": "string",
+            "example": "507f1f77bcf86cd799439011"
+          },
+          "credits": {
+            "type": "number",
+            "description": "Total credits on the workspace wallet.",
+            "example": 5000
+          },
+          "blockedCredits": {
+            "type": "number",
+            "description": "Credits reserved by in-flight generations/runs.",
+            "example": 120
+          },
+          "available": {
+            "type": "number",
+            "description": "credits - blockedCredits.",
+            "example": 4880
+          }
+        }
+      },
+      "V1Account": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "planId": {
+            "type": "string",
+            "description": "Empty/absent means the free plan"
+          },
+          "planStatus": {
+            "type": "string"
+          },
+          "planRenewsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The account wallet (personal workspace)"
+          },
+          "credits": {
+            "type": "number"
+          },
+          "blockedCredits": {
+            "type": "number"
+          },
+          "available": {
+            "type": "number"
+          }
+        }
+      },
+      "V1Workspace": {
+        "type": "object",
+        "properties": {
+          "workspaceId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "owner",
+              "editor",
+              "viewer"
+            ]
+          },
+          "isPersonal": {
+            "type": "boolean"
+          }
+        }
+      },
+      "V1Transaction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The wallet that paid"
+          },
+          "nodeType": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "blocked",
+              "deducted",
+              "refunded",
+              "failed",
+              "granted",
+              "revoked"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "V1Project": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "thumbnailUrl": {
+            "type": "string"
+          },
+          "isFavorite": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }
@@ -350,7 +788,7 @@
           "Apps"
         ],
         "summary": "Get an app",
-        "description": "Returns an app's identity plus its input/output schema. Use each input's `name` (its kebab-cased title) as the `node_id` of an entry in the run request's `inputs` array. Allowed when the app is published (any key) or belongs to the key's own workspace. **Requires the `apps:read` scope.**",
+        "description": "Returns an app's identity plus its input/output schema. Use each input's `nodeId` as the key in the run request's `inputs` map. Allowed when the app is published (any key) or belongs to the key's own workspace. **Requires the `apps:read` scope.**",
         "operationId": "getApp",
         "parameters": [
           {
@@ -450,41 +888,19 @@
                 "type": "object",
                 "properties": {
                   "inputs": {
-                    "type": "array",
-                    "description": "One entry per input you want to set. Get the `node_id` values (and which are required) from GET /v1/apps/{appId}.",
-                    "items": {
-                      "type": "object",
-                      "required": [
-                        "node_id",
-                        "asset_url"
-                      ],
-                      "properties": {
-                        "node_id": {
-                          "type": "string",
-                          "description": "The input's public id — its kebab-cased title from the app schema.",
-                          "example": "selfie"
-                        },
-                        "asset_url": {
-                          "type": "string",
-                          "description": "The value for this input: a media URL for image/video/audio inputs, or the text itself for text inputs.",
-                          "example": "https://example.com/me.jpg"
-                        }
-                      }
-                    }
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Map of input nodeId -> value (text, or a URL for media inputs). Get the keys from GET /v1/apps/{appId}."
                   }
                 }
               },
               "example": {
-                "inputs": [
-                  {
-                    "node_id": "selfie",
-                    "asset_url": "https://example.com/me.jpg"
-                  },
-                  {
-                    "node_id": "style-prompt",
-                    "asset_url": "studio lighting, neutral background"
-                  }
-                ]
+                "inputs": {
+                  "node_1": "https://example.com/me.jpg",
+                  "node_2": "studio lighting, neutral background"
+                }
               }
             }
           }
@@ -643,6 +1059,534 @@
         }
       }
     },
+    "/v1/generations": {
+      "post": {
+        "tags": [
+          "Generations"
+        ],
+        "summary": "Start a generation",
+        "description": "Starts an asynchronous image or video generation, billed to the key's workspace. Returns immediately with a `generationId` — poll `GET /v1/generations/{generationId}` for the result. Completed outputs are also recorded in the workspace asset library. **Requires the `generations:write` scope.**",
+        "operationId": "startGeneration",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerationRequest",
+                "properties": {
+                  "workspace_id": {
+                    "type": "string",
+                    "description": "Optionally bill a different workspace the account can manage; default is the key's own wallet."
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "sfx",
+                      "music"
+                    ],
+                    "description": "Audio only; default sfx"
+                  },
+                  "geometry_format": {
+                    "type": "string",
+                    "enum": [
+                      "glb",
+                      "usdz",
+                      "fbx",
+                      "obj",
+                      "stl"
+                    ],
+                    "description": "3d only; default glb"
+                  },
+                  "material": {
+                    "type": "string",
+                    "enum": [
+                      "All",
+                      "PBR",
+                      "Shaded"
+                    ],
+                    "description": "3d only; default All"
+                  }
+                }
+              },
+              "example": {
+                "type": "image",
+                "prompt": "a studio photo of a ceramic mug on a marble counter",
+                "aspect_ratio": "1:1",
+                "resolution": "1K"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Generation accepted. Poll GET /v1/generations/{generationId}.",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerationAccepted"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request (unknown type/model, bad aspect ratio or resolution, bad input media)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Daily spend cap reached or insufficient workspace credits",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The key lacks the generations:write scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit or concurrency limit exceeded",
+            "headers": {
+              "Retry-After": {
+                "$ref": "#/components/headers/Retry-After"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/generations/{generationId}": {
+      "get": {
+        "tags": [
+          "Generations"
+        ],
+        "summary": "Get a generation",
+        "description": "Returns a generation's status and, once complete, its outputs (signed, downloadable media URLs). Only generations started by your own workspace are visible. **Requires the `generations:read` scope.**",
+        "operationId": "getGeneration",
+        "parameters": [
+          {
+            "name": "generationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "64c3f2a1e8b9c0d1f2e3a4b5"
+          },
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context (from GET /v1/workspaces); default is the key's own wallet."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Generation status and outputs.",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerationView"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The key lacks the generations:read scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Generation not found (or belongs to another workspace)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/assets": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "List assets",
+        "description": "Lists the authenticated key's workspace asset library (uploads + generated media), newest first, with signed download URLs. **Requires the `assets:read` scope.**",
+        "operationId": "listAssets",
+        "parameters": [
+          {
+            "name": "media_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "image",
+                "video",
+                "audio"
+              ]
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Matches file names, tags and generation prompts."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context (from GET /v1/workspaces); default is the key's own wallet."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "One page of workspace assets.",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AssetList"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid media_type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The key lacks the assets:read scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "headers": {
+              "Retry-After": {
+                "$ref": "#/components/headers/Retry-After"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/assets/{assetId}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Get an asset",
+        "description": "Returns one workspace asset with a signed download URL. Only assets of your own workspace are visible. **Requires the `assets:read` scope.**",
+        "operationId": "getAsset",
+        "parameters": [
+          {
+            "name": "assetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "64c3f2a1e8b9c0d1f2e3a4b5"
+          },
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context (from GET /v1/workspaces); default is the key's own wallet."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The asset.",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Asset"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The key lacks the assets:read scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Asset not found (or belongs to another workspace)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/credits": {
+      "get": {
+        "tags": [
+          "Credits"
+        ],
+        "summary": "Get the credit balance",
+        "description": "Returns a credit balance: total, blocked (reserved by in-flight work) and available. Defaults to the authenticated key's own wallet (for account-bound keys, the account wallet). Pass workspace_id to read another workspace the account can manage (owner/editor).",
+        "operationId": "getCredits",
+        "responses": {
+          "200": {
+            "description": "The workspace credit balance.",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CreditBalance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The key lacks the credits:read scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "headers": {
+              "Retry-After": {
+                "$ref": "#/components/headers/Retry-After"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace id (from GET /v1/workspaces). Default: the key's own wallet."
+          }
+        ]
+      }
+    },
     "/v1/openapi.json": {
       "get": {
         "tags": [
@@ -658,6 +1602,580 @@
             "content": {
               "application/json": {}
             }
+          }
+        }
+      }
+    },
+    "/v1/account": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Get the signed-in account",
+        "description": "The account behind the key: email, name, plan, and the account wallet's credit balance. Keys are account-bound, so this identifies who authorized the connection.",
+        "operationId": "getAccount",
+        "responses": {
+          "200": {
+            "description": "The account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/V1Account"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workspaces": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "List the account's workspaces",
+        "description": "Every workspace the account can act in. Use a workspaceId with GET /v1/credits?workspace_id= to read that workspace's balance.",
+        "operationId": "listWorkspaces",
+        "responses": {
+          "200": {
+            "description": "The workspaces",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "workspaces": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/V1Workspace"
+                          }
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/account/transactions": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "List the account's credit transactions",
+        "description": "The account's credit ledger (entries where this user was the actor, across every wallet), newest first.",
+        "operationId": "listAccountTransactions",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The transactions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transactions": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/V1Transaction"
+                          }
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/projects": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "List projects",
+        "operationId": "listProjects",
+        "description": "The workspace's canvas projects.",
+        "parameters": [
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context; default is the key's own wallet."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Projects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "projects": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/V1Project"
+                          }
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/projects/{projectId}/nodes": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Create a node generation",
+        "operationId": "createNode",
+        "description": "Start a generation as a node on a real project's canvas (spends credits). The node id is minted server-side; output lands in the asset library.",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "prompt"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "image",
+                      "video",
+                      "audio",
+                      "3d"
+                    ]
+                  },
+                  "prompt": {
+                    "type": "string"
+                  },
+                  "input_media": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "asset_id": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "aspect_ratio": {
+                    "type": "string"
+                  },
+                  "resolution": {
+                    "type": "string"
+                  },
+                  "duration_seconds": {
+                    "type": "number"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "sfx",
+                      "music"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Node generation started",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "projectId": {
+                          "type": "string"
+                        },
+                        "nodeId": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/brandkits": {
+      "get": {
+        "tags": [
+          "Brand kits"
+        ],
+        "summary": "List brand kits",
+        "operationId": "listBrandKits",
+        "parameters": [
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context; default is the key's own wallet."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The workspace's brand kits (colors, fonts, logos)"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Brand kits"
+        ],
+        "summary": "Create a brand kit from a website",
+        "operationId": "createBrandKit",
+        "description": "Extract a brand kit from a URL (async; poll /v1/brandkits/extract/{jobId}).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string"
+                  },
+                  "workspace_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Extraction job started"
+          }
+        }
+      }
+    },
+    "/v1/brandkits/{id}": {
+      "get": {
+        "tags": [
+          "Brand kits"
+        ],
+        "summary": "Get a brand kit",
+        "operationId": "getBrandKit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context; default is the key's own wallet."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The brand kit"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Brand kits"
+        ],
+        "summary": "Update a brand kit",
+        "operationId": "patchBrandKit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context; default is the key's own wallet."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Partial brand kit fields (colors, fonts, …)"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Brand kits"
+        ],
+        "summary": "Delete a brand kit",
+        "operationId": "deleteBrandKit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional workspace context; default is the key's own wallet."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/v1/brandkits/extract/{jobId}": {
+      "get": {
+        "tags": [
+          "Brand kits"
+        ],
+        "summary": "Poll a brand kit extraction",
+        "operationId": "pollBrandKitExtract",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Extraction status"
+          }
+        }
+      }
+    },
+    "/v1/renders": {
+      "post": {
+        "tags": [
+          "Renders"
+        ],
+        "summary": "Render a composition to video",
+        "operationId": "startRender",
+        "description": "Render a composition timeline (Remotion project JSON) to a final video — the last step of an end-to-end video pipeline (async).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "project"
+                ],
+                "properties": {
+                  "project": {
+                    "type": "object",
+                    "description": "The composition timeline"
+                  },
+                  "project_id": {
+                    "type": "string"
+                  },
+                  "workspace_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Render started"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Renders"
+        ],
+        "summary": "List renders",
+        "operationId": "listRenders",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recent renders with video URLs"
+          }
+        }
+      }
+    },
+    "/v1/renders/{workflowId}": {
+      "get": {
+        "tags": [
+          "Renders"
+        ],
+        "summary": "Get a render",
+        "operationId": "getRender",
+        "description": "One render record by workflow id, any status (processing | completed | failed) — pending and failed renders are visible here.",
+        "parameters": [
+          {
+            "name": "workflowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The render record"
+          },
+          "404": {
+            "description": "Not found"
           }
         }
       }

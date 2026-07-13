@@ -1,0 +1,7 @@
+---
+title: "Create a brand kit"
+description: "Extract a brand kit from a website URL (async)."
+openapi: "/api-reference/openapi.json POST /v1/brandkits"
+---
+
+Extraction is asynchronous: poll `GET /v1/brandkits/extract/{jobId}` (or re-list) until the kit appears. Update with `PATCH /v1/brandkits/{id}`; delete with `DELETE`.

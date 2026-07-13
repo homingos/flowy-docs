@@ -1,0 +1,7 @@
+---
+title: "List workspaces"
+description: "Every workspace the account can act in."
+openapi: "/api-reference/openapi.json GET /v1/workspaces"
+---
+
+Returns each workspace's id, name, your role (`owner` | `editor` | `viewer`), and whether it is your personal **account wallet**. Use a `workspaceId` with [Get the credit balance](/api/get-credits) or as the `workspace_id` on generations to act in that workspace.

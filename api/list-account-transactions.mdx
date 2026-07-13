@@ -1,0 +1,7 @@
+---
+title: "List account transactions"
+description: "The account's credit ledger, newest first."
+openapi: "/api-reference/openapi.json GET /v1/account/transactions"
+---
+
+Every credit transaction the account triggered, across all wallets it acted in. `status` is one of `blocked`, `deducted`, `refunded`, `failed`, `granted`, `revoked`; grants (plan allowance, top-ups, onboarding) appear as `granted` entries.

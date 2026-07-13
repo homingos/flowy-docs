@@ -189,17 +189,75 @@
               "api/introduction",
               "api/authentication",
               "api/permissions",
-              "api/running-apps"
+              "api/running-apps",
+              "api/mcp-cli"
             ]
           },
           {
             "group": "Endpoints",
             "pages": [
-              "api/list-apps",
-              "api/get-app",
-              "api/start-run",
-              "api/get-run",
-              "api/get-openapi"
+              {
+                "group": "Apps",
+                "pages": [
+                  "api/list-apps",
+                  "api/get-app",
+                  "api/start-run",
+                  "api/get-run"
+                ]
+              },
+              {
+                "group": "Generations",
+                "pages": [
+                  "api/start-generation",
+                  "api/get-generation"
+                ]
+              },
+              {
+                "group": "Assets",
+                "pages": [
+                  "api/list-assets",
+                  "api/get-asset"
+                ]
+              },
+              {
+                "group": "Projects & nodes",
+                "pages": [
+                  "api/list-projects",
+                  "api/create-node"
+                ]
+              },
+              {
+                "group": "Brand kits",
+                "pages": [
+                  "api/list-brandkits",
+                  "api/get-brandkit",
+                  "api/create-brandkit",
+                  "api/update-brandkit"
+                ]
+              },
+              {
+                "group": "Renders",
+                "pages": [
+                  "api/start-render",
+                  "api/get-render",
+                  "api/list-renders"
+                ]
+              },
+              {
+                "group": "Account & credits",
+                "pages": [
+                  "api/get-account",
+                  "api/list-workspaces",
+                  "api/get-credits",
+                  "api/list-account-transactions"
+                ]
+              },
+              {
+                "group": "OpenAPI",
+                "pages": [
+                  "api/get-openapi"
+                ]
+              }
             ]
           },
           {
@@ -243,7 +301,15 @@
     }
   },
   "contextual": {
-    "options": ["copy", "view", "chatgpt", "claude", "perplexity", "cursor", "vscode"]
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {
