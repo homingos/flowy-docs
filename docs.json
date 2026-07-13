@@ -162,7 +162,8 @@
                 "pages": [
                   "api/list-brandkits",
                   "api/get-brandkit",
-                  "api/create-brandkit"
+                  "api/create-brandkit",
+                  "api/update-brandkit"
                 ]
               },
               {
