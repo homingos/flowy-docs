@@ -127,27 +127,67 @@
           {
             "group": "Endpoints",
             "pages": [
-              "api/list-apps",
-              "api/get-app",
-              "api/start-run",
-              "api/get-run",
-              "api/start-generation",
-              "api/get-generation",
-              "api/list-assets",
-              "api/get-asset",
-              "api/list-projects",
-              "api/create-node",
-              "api/list-brandkits",
-              "api/get-brandkit",
-              "api/create-brandkit",
-              "api/start-render",
-              "api/list-renders",
-              "api/get-render",
-              "api/get-account",
-              "api/list-account-transactions",
-              "api/list-workspaces",
-              "api/get-credits",
-              "api/get-openapi"
+              {
+                "group": "Apps",
+                "pages": [
+                  "api/list-apps",
+                  "api/get-app",
+                  "api/start-run",
+                  "api/get-run"
+                ]
+              },
+              {
+                "group": "Generations",
+                "pages": [
+                  "api/start-generation",
+                  "api/get-generation"
+                ]
+              },
+              {
+                "group": "Assets",
+                "pages": [
+                  "api/list-assets",
+                  "api/get-asset"
+                ]
+              },
+              {
+                "group": "Projects & nodes",
+                "pages": [
+                  "api/list-projects",
+                  "api/create-node"
+                ]
+              },
+              {
+                "group": "Brand kits",
+                "pages": [
+                  "api/list-brandkits",
+                  "api/get-brandkit",
+                  "api/create-brandkit"
+                ]
+              },
+              {
+                "group": "Renders",
+                "pages": [
+                  "api/start-render",
+                  "api/get-render",
+                  "api/list-renders"
+                ]
+              },
+              {
+                "group": "Account & credits",
+                "pages": [
+                  "api/get-account",
+                  "api/list-workspaces",
+                  "api/get-credits",
+                  "api/list-account-transactions"
+                ]
+              },
+              {
+                "group": "OpenAPI",
+                "pages": [
+                  "api/get-openapi"
+                ]
+              }
             ]
           },
           {
