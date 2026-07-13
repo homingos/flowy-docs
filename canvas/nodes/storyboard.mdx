@@ -1,0 +1,46 @@
+---
+title: "Storyboard Node"
+description: "Plan multi-scene narratives with a story bible and fan out to generations."
+---
+
+import { VideoPlayer } from "/snippets/components/video-player.jsx";
+
+The Storyboard node turns a one-line idea into a structured, scene-by-scene plan — complete with a story bible — and lays out ready-to-run Image nodes for every scene.
+
+<VideoPlayer
+  src="/videos/canvas/node-storyboard.mp4"
+  poster="/images/posters/canvas/node-storyboard.jpg"
+  title="Watch: from a one-line idea to a full storyboard"
+/>
+
+## Generate a storyboard
+
+<Steps>
+  <Step title="Describe the story">
+    Write a prompt covering the world, the characters, and the beats you want. Connect references — text briefs, images, video, audio — and the storyboard folds them into the plan.
+  </Step>
+  <Step title="Set the shape">
+    Choose the **number of scenes** (up to 24), a **target duration** for the whole sequence, and a **style** — cinematic, anime, documentary, noir, or anything you can name.
+  </Step>
+  <Step title="Run">
+    The node generates the full plan: every scene, plus the story bible that keeps them consistent.
+  </Step>
+</Steps>
+
+## What you get
+
+Each scene card carries a description and the craft details that make it directable: camera angle, transition, cast, location, motion type, and visual and audio cues. Read the sequence top to bottom and you have the whole film at a glance.
+
+Behind the scenes sits the **story bible** — the characters, locations, story arc, and style the storyboard committed to. Expand **Story bible & references** on the node to review it; it's what keeps scene 12 consistent with scene 2.
+
+## Fan out to generations
+
+Running the storyboard also creates a **Storyboard Scenes** frame beside the node: one Image node per scene, pre-filled with that scene's image prompt and chained in order, with the storyboard wired into the first. From there:
+
+1. **Run** the scene Image nodes to generate the frames — each already knows what its moment looks like.
+2. Connect the frames you like into [Video nodes](/canvas/nodes/video) to bring them to motion.
+3. Assemble the clips in a [Composition](/canvas/nodes/composition) or take them into [Studio](/studio/overview) for the final cut.
+
+<Tip>
+  Iterate cheaply at the plan level before spending credits on video. Rerunning the storyboard with an updated prompt lays out a fresh scene frame next to the previous one, so you can compare versions side by side.
+</Tip>

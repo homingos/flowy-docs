@@ -1,0 +1,43 @@
+---
+title: "Workspace Settings"
+description: "Rename your workspace, control its URL, and manage members and seats."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Workspace settings apply to the workspace you're currently in — its identity, its members, and its limits. Find them under **Workspace** in the settings sidebar. Only workspace Owners can make changes; everyone else sees the settings read-only.
+
+<DemoVideo
+  src="/videos/settings/workspace.mp4"
+  poster="/images/posters/settings/workspace.jpg"
+  caption="Renaming a workspace and inviting a member with a role"
+/>
+
+## General
+
+The General page holds the workspace's identity. Each field saves on its own as you finish editing, with an inline saved indicator.
+
+- **Name** — the workspace name shown in the switcher and across the app.
+- **Workspace URL** — the handle used in every link to this workspace. It's validated as you type and must be unique; if you rename it, your current tab moves to the new URL automatically. Old links using the previous handle stop resolving, so update any bookmarks.
+- **Icon** — click the workspace avatar to upload an image (up to 5 MB).
+- **Welcome message** — a short message for the workspace.
+
+## Members & seats
+
+The **Members** page is the roster for your workspace:
+
+- **Invite** — add someone by email and pick their role (Owner, Editor, or Viewer). Invites arrive by email and show as *pending* until accepted; you can revoke a pending invite at any time.
+- **Roles** — change any member's role from their row. You can't edit your own row, and the workspace always keeps at least one Owner. See [Roles & permissions](/collaboration/roles) for what each role can do.
+- **Remove** — take a member out of the workspace; they lose access to its projects immediately.
+- **Find people fast** — search the roster, filter by role, and sort by name. Each row shows whether the member is online now or when they were last seen.
+- **Export CSV** — download the full member list.
+
+<Note>
+  Seats are set by the workspace Owner's plan. When you're at the cap, the Invite button opens the plan picker instead of the invite form — see [Plans](/billing/plans).
+</Note>
+
+## Related pages
+
+- [Usage](/settings/usage) — where the workspace's credits go.
+- [API keys](/settings/api-keys) and [Logs](/settings/logs) — the workspace's developer surface.
+- [Workspaces](/collaboration/workspaces) — creating, switching, and default workspaces.

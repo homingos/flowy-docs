@@ -1,0 +1,54 @@
+---
+title: "Effects Overview"
+description: "Apply, stack, and manage effects on any visual clip."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Effects are non-destructive adjustments you layer onto a clip — color grades, blur, vignette, crop, and keying. The source stays untouched, so you can tweak, disable, or remove any effect at any time.
+
+<DemoVideo
+  src="/videos/studio/effects-overview.mp4"
+  poster="/images/posters/studio/effects-overview.jpg"
+  caption="Adding a vignette from the Effects tab, then toggling it off and on to compare"
+/>
+
+## Where effects live
+
+Select a video or image clip and open the inspector's **Properties** tab. Effects are spread across sub-tabs so the everyday adjustments stay one click away:
+
+- **Effects** — the stackable rack: Brightness, Temperature, Tint, Curves, Sharpen, Vignette, and Crop.
+- **Color** — Exposure, Contrast, and Saturation as always-present sliders.
+- **Transform** — Blur, next to scale, position, and rotation.
+- **Compositing** — Chroma Key, alongside opacity and blend modes.
+
+## Working the effects rack
+
+On the **Effects** sub-tab, pick an effect from the dropdown at the bottom and press **Add**. Each effect appears as a card with its parameters below it:
+
+- **Toggle** — the **On** / **Off** button bypasses the effect without losing its settings, handy for before/after comparisons.
+- **Remove** — the **✕** button deletes the effect from the clip.
+- **Stack** — add as many effects as you like; they apply in the order they were added, top to bottom.
+
+Every effect at its default value is a no-op, so adding one never changes the picture until you move a slider.
+
+## The effect families
+
+<CardGroup cols={2}>
+  <Card title="Color correction" icon="palette" href="/studio/effects/color-correction">
+    Brightness, exposure, contrast, saturation, temperature, tint, and curves.
+  </Card>
+  <Card title="Stylize" icon="wand-magic-sparkles" href="/studio/effects/stylize">
+    Blur, sharpen, vignette, and crop.
+  </Card>
+  <Card title="Chroma key" icon="clapperboard" href="/studio/effects/chroma-key">
+    Remove green screens and composite clips over new backgrounds.
+  </Card>
+  <Card title="Transitions" icon="arrow-right-arrow-left" href="/studio/effects/transitions">
+    Dissolves, dips, and wipes across the cut between clips.
+  </Card>
+</CardGroup>
+
+<Tip>
+  Blur, opacity, and volume can be keyframed — set values at two points in time from the [inspector](/studio/inspector#keyframing-properties) and Flowy animates between them.
+</Tip>

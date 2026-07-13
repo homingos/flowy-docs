@@ -1,0 +1,50 @@
+---
+title: "Chroma Key"
+description: "Remove green screens and composite clips over any background."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Chroma keying makes one color in a clip transparent — point it at a green screen and the subject floats free, ready to composite over whatever sits on the tracks below.
+
+<DemoVideo
+  src="/videos/studio/effects-chroma.mp4"
+  poster="/images/posters/studio/effects-chroma.jpg"
+  caption="Keying out a green screen and tuning similarity and blend for a clean edge"
+/>
+
+## Enable the keyer
+
+Select a video or image clip, open **Properties → Compositing**, and find the **Chroma Key** section. Check **Enable chroma key removal** to turn the keyer on — the controls appear below the checkbox.
+
+Place your background media on a track below the keyed clip so it shows through the transparent areas.
+
+## Controls
+
+| Control | Range | Default | What it does |
+| --- | --- | --- | --- |
+| **Screen** | Green / Blue / Red | Green | The screen color to remove |
+| **Similarity** | 0.01–1 | 0.25 | How wide a range of colors around the screen color is keyed out. Too low leaves patches of screen; too high starts eating the subject |
+| **Blend** | 0–1 | 0.25 | Softness of the edge between keyed and kept pixels — higher values feather the boundary with partial transparency |
+| **Smoothing** | 0–1 | 0 | Steadies the key from frame to frame to calm flicker on noisy footage |
+
+## Dial in a clean key
+
+<Steps>
+  <Step title="Pick the screen color">
+    Set **Screen** to match your backdrop — **Green** for standard green screens, **Blue** or **Red** for other setups.
+  </Step>
+  <Step title="Raise Similarity until the screen disappears">
+    Scrub to a frame where the subject and backdrop are both visible, then increase **Similarity** until the last traces of the screen drop out. Back off if edges of the subject start to vanish.
+  </Step>
+  <Step title="Soften with Blend">
+    Nudge **Blend** up until hair and edge detail stop looking cut out. Keep it low for crisp graphics.
+  </Step>
+  <Step title="Check it in motion">
+    Play the clip. If the edge sparkles between frames, add a little **Smoothing**.
+  </Step>
+</Steps>
+
+<Tip>
+  You can also ask the [Studio assistant](/studio/ai-chat) to enable or adjust the chroma key on a clip — useful when you're iterating on several keyed layers at once.
+</Tip>

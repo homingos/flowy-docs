@@ -1,0 +1,40 @@
+---
+title: "Utility Nodes"
+description: "Router, Group, Sticky Note, Brand Kit, and Model nodes that organize your canvas."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Not every node generates media. These nodes route, organize, annotate, and configure the rest of your canvas.
+
+<DemoVideo
+  src="/videos/canvas/node-utility.mp4"
+  poster="/images/posters/canvas/node-utility.jpg"
+  caption="Routing one source into several targets and grouping the results into a frame"
+/>
+
+## Router
+
+The Router (<kbd>⇧</kbd> <kbd>R</kbd>) is a many-to-many hub: wire multiple sources into one point and fan out to multiple targets, and everything connected flows through automatically. It's transparent to generation — a node downstream of a router sees the router's real upstream sources exactly as if they were connected directly.
+
+Use it to:
+
+- **Compare variants** — fan one prompt out to several Image or Video nodes with different settings and judge the results side by side.
+- **Share references** — feed the same set of references into many targets without drawing every edge by hand.
+- **Keep wiring stable** — the fan-out survives even when you swap or delete a source, so the graph doesn't collapse mid-iteration.
+
+## Group
+
+The Group tool in the left toolbar frames related nodes so they move and organize as one. With nodes selected, click **Group** (or press <kbd>⌘</kbd> <kbd>G</kbd>) to wrap the selection in a named frame; with nothing selected, the tool switches to drag-to-group, and you draw the frame around what you want. Frames are how a busy canvas stays navigable — one frame per experiment, per scene, per deliverable.
+
+## Sticky Note
+
+Sticky notes (<kbd>⇧</kbd> <kbd>M</kbd>, or the note tool in the left toolbar) annotate the canvas without joining the graph — reminders, feedback, and to-dos for yourself and your collaborators. They never feed a generation; they're purely for humans.
+
+## Brand Kit
+
+The Brand Kit node (<kbd>⇧</kbd> <kbd>B</kbd>) wires your [workspace brand kit](/dashboard/brand-kit) — colors, typography, logos, and design tokens — into generation. Connect it to Text, Image, Video, or Flam nodes and every downstream run stays on-brand, with the same effect as attaching the kit in a node's prompt bar. One Brand Kit node can feed as many nodes as you like, so the whole board follows the same identity.
+
+## Model
+
+The Model node (<kbd>⇧</kbd> <kbd>P</kbd>) connects any provider model by link: browse the catalog, or paste a FAL or Replicate model URL. The node reads the model's spec and builds its inputs and controls from it at runtime — so when a new model ships anywhere, you can run it on the canvas without waiting for a dedicated node type.

@@ -1,0 +1,56 @@
+---
+title: "Agent Actions"
+description: "Everything you can ask the assistant for — from one node to a finished campaign."
+---
+
+import { VideoPlayer } from "/snippets/components/video-player.jsx";
+
+The assistant works your canvas with the same moves you'd make by hand — creating, wiring, editing, arranging, generating — plus a few you can't, like importing media straight from the web. Here's what to ask for.
+
+<VideoPlayer
+  src="/videos/canvas/ai-agent-actions.mp4"
+  poster="/images/posters/canvas/ai-agent-actions.jpg"
+  title="Watch: the assistant builds a canvas from one prompt"
+/>
+
+## Build something new
+
+Ask for any structure and the assistant creates the nodes and wires them: text, image, video, audio, 3D, flam, storyboard, composition, sketch, vector, and brand kit nodes. Connections go through the canvas's validated wiring, so fan-in and fan-out get routed correctly on their own.
+
+> "Set up a product-launch board: three image concepts feeding a video node, with my brand kit wired into everything."
+
+## Edit what's there
+
+It updates existing nodes — rewriting prompts, changing generation settings, renaming, moving, resizing, duplicating, deleting, and disconnecting. Destructive changes like deletes come with a heads-up first.
+
+> "Make all three image nodes 9:16 and rewrite their prompts in a darker mood."
+
+## Arrange and tidy
+
+Layout work never generates anything and never costs credits: auto-arrange the graph, group or ungroup nodes, put a frame around a set, select things, or zoom the viewport to fit.
+
+> "Group the character shots, frame the whole campaign, and tidy the layout."
+
+## Generate media
+
+Running nodes is the only action that spends credits, and in Review mode each run shows a confirm card with a credit estimate before anything starts. The assistant sequences work properly — it waits for upstream outputs to finish before running the nodes that depend on them, and it can create, connect, and run a new node in a single approved step.
+
+> "Generate the three concepts, then run the video once they're done."
+
+## Find and import media
+
+Need a real photo rather than a generated one? The assistant searches Wikipedia, Wikimedia Commons, and Openverse for direct image URLs — with dimensions and license info — and can import any media URL onto your canvas. Imports are uploaded into your workspace as owned assets (not hot-links that can break) and arrive as ready-to-use nodes. No credits involved.
+
+> "Get a photo of the Eiffel Tower and put it next to my moodboard."
+
+## Inspect and critique
+
+The assistant checks its own work — and yours. It reads the canvas graph, examines an image's actual pixels rather than trusting the prompt, verifies wiring before generating, and judges finished assets against the brief, regenerating with a targeted fix when a result falls short. See [Canvas Audit](/canvas/ai/canvas-audit) for how to use this deliberately.
+
+## Ask and answer
+
+When a brief is missing something that would change what gets built — the subject, the format, the count — the assistant asks one short question with a few concrete options instead of guessing. Otherwise it favors sensible defaults and momentum.
+
+<Tip>
+  For big briefs, the assistant proposes a step-by-step plan you approve before it builds — see [Plan Mode](/canvas/ai/plan-mode).
+</Tip>

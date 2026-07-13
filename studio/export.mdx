@@ -1,36 +1,58 @@
 ---
-title: "Export & render"
-description: "Render your composition to a downloadable video."
+title: "Export & Render"
+description: "Render your scene to a finished video and download it anywhere."
 ---
 
-Export renders your **Studio** composition into a single, downloadable video, powered by Remotion. When your timeline looks right, you turn it into a finished file you can share or post anywhere.
+import { VideoPlayer } from "/snippets/components/video-player.jsx";
+
+When your edit is ready, **Export** renders the current scene into a finished file. Renders run in the background, so you can keep editing — or close the tab entirely — while your video processes.
+
+<VideoPlayer
+  src="/videos/studio/export.mp4"
+  poster="/images/posters/studio/export.jpg"
+  title="Watch: rendering and downloading your video"
+/>
+
+## Start an export
 
 <Steps>
-  <Step title="Open export">
-    With your composition open in **Studio**, open the export panel to set up your render.
+  <Step title="Open the export panel">
+    Click **Export** in the top bar. A panel slides in with two tabs: **Export settings** and **Export history**.
   </Step>
-  <Step title="Choose a resolution">
-    Pick the output resolution that fits where the video is headed. Higher resolutions look sharper but take longer to render.
+  <Step title="Pick the scene and mode">
+    Choose which scene to render — the one you're editing is marked **(Current)**. Leave **Mode** on **Standard** for a regular video, or pick **Flam** to get two files: the main video plus an alpha mask you can use in any compositing app.
   </Step>
-  <Step title="Start the render">
-    Kick off the render. Flowy processes your timeline frame by frame into a video file.
+  <Step title="Set quality and codec">
+    Choose a **Quality** of **High**, **Medium**, or **Low**, a codec — **H.264** or **H.265** (MP4), or **ProRes** (MOV) — and an audio sample rate of 48 or 44.1 kHz.
   </Step>
-  <Step title="Download when it's ready">
-    Once the render finishes, download your video and it's yours to use.
+  <Step title="Export">
+    Click **Export**. The panel flips to **Export history**, where your render appears with live progress.
   </Step>
 </Steps>
 
-{/* TODO: add screenshot of the Studio export panel with resolution options */}
-{/* TODO: capture real screenshot */}
+The **Video** and **Audio** toggles control what goes into the file. Turn **Video** off for an audio-only export — you'll choose **MP3** or **WAV** instead of a codec, and muted tracks are left out.
+
+## Resolution and plan limits
+
+Studio renders at up to **1080p**, at your project's frame rate. Each plan sets a maximum render height — if your plan tops out below 1080p, the export automatically renders at your plan's maximum (for example 720p) and lets you know. See [Plans](/billing/plans) to compare limits and unlock higher-resolution renders.
+
+## Track progress
+
+Each render in **Export history** shows a status — **Exporting**, **Exported**, or **Export failed** — with a progress bar, a percentage, and a time estimate. Rendering happens server-side: close the panel, keep editing, reload the page, or come back on another device, and your render keeps going and reappears in the history.
+
+## Download your video
+
+When a render finishes, its history entry shows a preview thumbnail and four actions:
+
+| Action | What it does |
+| --- | --- |
+| **Download** | Saves the finished file to your device |
+| **Play** | Opens the video in a preview overlay |
+| **Export again** | Re-runs the render with the same settings |
+| **Delete** | Removes the render from your history |
+
+Finished renders are also saved to your project's **Asset library** automatically, so you can drop an exported cut straight back onto a canvas or into another scene. Use the search box and status filter in **Export history** to find older renders.
 
 <Note>
-  Rendering takes time, and longer compositions at higher resolutions take longer still. Renders use credits where applicable. See [Credits](/billing/credits) for how the credit wallet works.
+  Need a still instead of a video? Press <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>X</kbd> in Studio to export the current frame as an image.
 </Note>
-
-<Warning>
-  Keep the project open until the render finishes. Closing it before your video is ready can interrupt the render.
-</Warning>
-
-<Tip>
-  Want a cleaner cut before you export? Trim and arrange your clips on the [timeline](/studio/timeline) first.
-</Tip>

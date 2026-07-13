@@ -1,49 +1,66 @@
 ---
-title: "Canvas overview"
-description: "The anatomy of Flowy's node-based canvas."
+title: "Canvas Overview"
+description: "Learn the anatomy of the canvas editor so every tool is one glance away."
+"og:image": "/images/hero.png"
 ---
 
-The **Canvas** is your infinite workspace for creating and connecting nodes. Everything you generate, arrange, and wire together lives here, so your thoughts, prompts, pixels, and motion stay in continuity.
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
 
-<Frame caption="The Flowy canvas: left toolbar, infinite node area, Canvas/Timeline toggle up top, and the AI assistant bar along the bottom">
+The **Canvas** is Flowy's infinite workspace: an open board where you drop nodes, wire them together, and generate text, images, video, audio, and more. Everything else in the editor — toolbar, inspector, AI chat — exists to serve what happens on this surface.
+
+<DemoVideo
+  src="/videos/canvas/overview.mp4"
+  poster="/images/posters/canvas/overview.jpg"
+  caption="A tour of the canvas editor: left toolbar, node surface, inspector, and the Flowy AI dock"
+/>
+
+<Frame caption="The canvas editor: left toolbar, infinite node surface, Canvas/Studio pill up top, and the Flowy AI dock along the bottom">
   <img src="/images/canvas-overview.png" alt="Annotated Flowy canvas layout" />
 </Frame>
 
-## Key areas
+## The node surface
 
-### Toolbar
+The infinite board fills your screen. Pan and zoom freely, spread work across as much space as you need, and connect a node's output to another node's input to pass results downstream. See [Navigation & Selection](/canvas/navigation) for every way to move around, and [Nodes](/canvas/nodes/overview) for what you can place here.
 
-The toolbar runs down the left edge. The **+** button at the top opens the [Add Node](/canvas/nodes) menu, and below it sit the select and pan tools, cut and paste, undo and redo, auto layout, and settings. Reach for it whenever you want to drop a new **Text**, **Image**, or **Video** node onto the board.
+## Left toolbar
 
-### Node area
+A vertical rail on the left edge holds the **Add a node** menu, the select, pan, cut, sticky note, and group tools, undo and redo, auto layout, and preferences. The [Canvas Toolbar](/canvas/toolbar) page walks it top to bottom.
 
-The node area is the infinite surface that fills most of your screen. You can pan and zoom freely, spreading work across as much space as you need. Each node has an output you connect to another node's input, which is how ideas flow from one step to the next.
+## Node inspector
 
-### AI assistant bar
+Select a single node and the inspector opens along the right edge with that node's full editable controls — model, settings, versions, and a credit estimate for the next run. The node itself keeps a compact summary so the board stays readable.
 
-The AI assistant lives in the bar along the bottom of the canvas — "What would you like to create, connect or manage?" Describe what you want in plain language and it proposes a plan, shows confirm-generation cards, and adds or edits nodes for you. You can also pick a model backend, so the assistant runs on Claude, OpenAI, or Gemini.
+## Flowy AI dock
 
-### Mode-switch pill
+The pill at the bottom of the canvas — "Describe what you want to generate…" — expands into the Flowy AI composer. Above it, a row of [quick actions](/canvas/quick-actions) suggests one-click prompts that change with your selection. Submitting a prompt opens the full chat panel, where the assistant plans and builds on the canvas for you. Learn more in [AI Assistant](/canvas/ai/overview).
 
-The mode-switch pill lets you move between **Canvas** and **Studio**. When you build a Composition on the canvas, switch to **Studio** to refine it on a timeline and export a finished video.
+## Header
 
-<Tip>
-The fastest way to add a node is the **+** button in the toolbar — or its keyboard shortcut, like <kbd>⇧</kbd> <kbd>I</kbd> for an Image node. Pick a type, write a prompt, and your result lands on the canvas in a few clicks.
-</Tip>
+Across the top of the editor:
+
+- **Project pill** (left) — the project name and menu; click the name to rename it.
+- **Canvas / Studio pill** (center) — switches between the node canvas and the Studio timeline, where you refine a Composition and export video.
+- **Search** (<kbd>⌘</kbd> <kbd>K</kbd>) — the command palette. Run project actions, switch modes, reopen recent projects, or type to jump to any node on the canvas by its title or prompt.
+- **Generation activity** — a live chip that appears while generations run, with a count and per-item progress.
+- **Credits** — your workspace credit balance.
+
+## Bottom-left controls
+
+A small pill in the bottom-left corner toggles the **minimap** and shows the current zoom level. Click the percentage for zoom presets: in, out, 100%, fit, and zoom to selection.
 
 ## Keep exploring
 
 <CardGroup cols={2}>
-  <Card title="Navigation" icon="diagram-project" href="/canvas/navigation">
-    Pan, zoom, and find your way around the infinite board.
+  <Card title="Nodes" icon="layer-group" href="/canvas/nodes/overview">
+    Meet every node type you can create and connect.
   </Card>
-  <Card title="Node types" icon="layer-group" href="/canvas/nodes">
-    Meet every node you can create and connect.
+  <Card title="Image Tools" icon="wand-magic-sparkles" href="/canvas/image-tools/overview">
+    Upscale, inpaint, remove backgrounds, and more.
   </Card>
-  <Card title="AI chat" icon="wand-magic-sparkles" href="/canvas/ai-chat">
-    Plan and build with the canvas assistant.
+  <Card title="AI Assistant" icon="sparkles" href="/canvas/ai/overview">
+    Plan and build the canvas with Flowy AI.
   </Card>
-  <Card title="Generators" icon="bolt" href="/generators/overview">
-    See every way to turn a prompt into an asset.
+  <Card title="Quick Actions" icon="bolt" href="/canvas/quick-actions">
+    One-click prompts that adapt to your selection.
   </Card>
 </CardGroup>

@@ -1,0 +1,53 @@
+---
+title: "Usage"
+description: "See exactly where your workspace's credits go, by type, project, and member."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+The Usage page tracks every credit that moves through your workspace — what was spent, on what, and by whom. Find it under **Workspace → Usage** in the settings sidebar. It has two views: **Overview** for the big picture and **History** for the row-by-row ledger.
+
+<DemoVideo
+  src="/videos/settings/usage.mp4"
+  poster="/images/posters/settings/usage.jpg"
+  caption="Pivoting the usage breakdown by project and browsing the credit ledger"
+/>
+
+## Overview
+
+The Overview opens with headline numbers for the selected period:
+
+- **Available** — credits ready to spend, with any amount currently on hold.
+- **Spent** — credits used this period, with the change versus the previous period.
+- **Generations** — completed generations, plus the average credits per generation.
+- **Streaks** — your current and longest runs of consecutive active days.
+
+Below the tiles, toggle between two panels:
+
+- **Activity** — a GitHub-style heatmap of the past year, one cell per day, shaded by how much was generated.
+- **Breakdown** — a chart and ranked list of spend, pivoted by the **Break down by** control: **Type** (image, video, audio, and so on), **Project**, **User**, or **Status**. The top five categories are shown individually and the rest fold into "Other". Spend breakdowns count real, successful spend only.
+
+## Filters
+
+The controls in the top-right scope both views:
+
+- **Time range** — last 7, 14, or 30 days, or all time.
+- **Activity** — everything, asset generations only, or AI chat only.
+- **Status** — filter to a single outcome:
+
+| Status | Meaning |
+| --- | --- |
+| Success | Credits were spent on a completed generation. |
+| On hold | Credits temporarily locked while a run finishes. |
+| Returned | Credits refunded to your balance. |
+| Failed | The run failed. |
+
+## History
+
+The History tab is the full ledger, 50 rows per page. Use the direction pills to see **All** entries, only **Spent**, or only **Received** — received rows cover plan credits, purchases, welcome and trial grants, and refunds, labeled with where the credits came from.
+
+Each row shows the generation type, status, credit cost, token count for AI chat, the member who ran it, and when — with a preview of the generated output where one exists. **Export CSV** downloads every row in the current range and filters, not only the visible page.
+
+<Tip>
+  Wondering what a generation costs before you run it? See [Credits](/billing/credits) for pricing by node type.
+</Tip>

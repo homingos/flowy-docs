@@ -1,35 +1,47 @@
 ---
 title: "Welcome to Flowy"
-description: "Prompt to pixel, frame to film, idea to outcome — in one connected canvas."
+description: "Generate images, video, audio, and 3D on one connected canvas — then edit, collaborate, and ship from the same place."
+"og:image": "/images/hero.png"
 ---
 
-Flowy is an AI creative-generation platform built around a multi-modal infinite canvas and a **Studio** timeline editor. You generate and connect text, image, video, audio, and interactive content in one place, then collaborate on it in real time.
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
 
-Move from prompt to pixel, frame to film, idea to outcome in one connected canvas — a multi-modal infinite canvas where your thoughts, prompts, pixels, and motion stay in continuity.
+Flowy is a node-based AI creative canvas. You generate images, video, audio, and 3D on an infinite canvas, wire results together so each step feeds the next, refine the output in the **Studio** timeline editor, and collaborate with your team in real time.
 
-<Frame caption="Flowy — one connected canvas">
-  <img src="/images/hero.png" alt="The Flowy canvas with connected nodes" />
-</Frame>
+<DemoVideo
+  src="/videos/getting-started/hero.mp4"
+  poster="/images/posters/getting-started/hero.jpg"
+  caption="Nodes generate, connect, and flow into a finished edit on the Flowy canvas"
+/>
 
-## Jump right in
-
-New here? Start with the quickstart, get comfortable with the canvas, then explore what you can make.
+## What would you like to do?
 
 <CardGroup cols={2}>
   <Card title="Quickstart" icon="rocket" href="/getting-started/quickstart">
-    Spin up your first project and make something in minutes.
+    Go from a blank canvas to an exported video in a few minutes.
   </Card>
-  <Card title="The connected canvas" icon="diagram-project" href="/getting-started/concepts">
-    Learn how nodes link output to input to keep your ideas in continuity.
+  <Card title="Learn the canvas" icon="diagram-project" href="/canvas/overview">
+    Meet the infinite node canvas where every generation lives.
   </Card>
-  <Card title="Generators" icon="wand-magic-sparkles" href="/generators/overview">
-    Create text, image, video, audio, and **Flam** assets from a prompt.
+  <Card title="Edit in Studio" icon="film" href="/studio/overview">
+    Compose your assets on a timeline and export a finished video.
   </Card>
-  <Card title="Studio" icon="film" href="/studio/overview">
-    Compose your assets into a finished, exportable video on a timeline.
+  <Card title="Work with the AI assistant" icon="wand-magic-sparkles" href="/canvas/ai/overview">
+    Describe what you want and let the assistant plan and build nodes for you.
+  </Card>
+</CardGroup>
+
+## Get help and build on Flowy
+
+<CardGroup cols={2}>
+  <Card title="Help Center" icon="life-ring" href="/help/overview">
+    Answers on accounts, plans, credits, and troubleshooting.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api/introduction">
+    Run your Flowy workflows programmatically over HTTP.
   </Card>
 </CardGroup>
 
 <Tip>
-  Not sure where to begin? Open the [AI chat assistant](/canvas/ai-chat) in the canvas sidebar. Describe what you want, and it proposes a plan and adds nodes for you.
+  New to the mental model? [Core Concepts](/getting-started/concepts) explains projects, nodes, generations, and how Canvas and Studio fit together.
 </Tip>

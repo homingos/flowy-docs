@@ -1,53 +1,55 @@
 ---
-title: "Downloading & exporting your work"
-description: "Get your assets and finished videos out of Flowy."
+title: "Exporting & Downloads"
+description: "Download assets from the canvas and render finished videos from Studio."
 ---
 
-You can download individual assets straight from the canvas, and you can render a finished video from **Studio**. Both paths are quick, and your downloads land as standard files you can use anywhere.
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
 
-{/* TODO: add screenshot of a canvas node and the Studio export panel */}
-{/* TODO: capture real screenshot */}
+There are two ways to get work out of Flowy: download an individual asset straight from a canvas node, or render a finished composition from **Studio**. Both produce standard files you can use anywhere.
 
-## Download an asset
+<DemoVideo
+  src="/videos/help/exporting.mp4"
+  poster="/images/posters/help/exporting.jpg"
+  caption="Downloading a node's asset, then rendering a composition from Studio"
+/>
 
-Use this when you just want one generated image, clip, or audio file from the canvas.
+## Download an asset from the canvas
+
+Use this when you want one generated image, clip, or audio file.
+
+1. Select the node that holds the asset.
+2. Choose **Download** from the node's menu.
+
+For image and SVG content, the download row becomes an **Export as…** menu so you can pick the format — **SVG** (original), **PNG**, or **JPG**. Vector nodes can also **Rasterize** into a connected image node when you need a pixel version on the canvas.
+
+## Export a video from Studio
+
+Use this when you want a finished, composed video rather than a single asset. Arrange your clips on the [Studio timeline](/studio/timeline), then render the whole composition:
 
 <Steps>
-  <Step title="Select the node">
-    Click the node on the canvas that holds the asset you want.
+  <Step title="Open the export panel">
+    With your composition open in **Studio**, choose **Export**.
   </Step>
-  <Step title="Download it">
-    Use the node's download action to save the file to your device.
-  </Step>
-</Steps>
-
-## Export a video
-
-Use this when you want a finished, composed video rather than a single asset. You assemble your clips on the **Studio** timeline, then render the whole composition to a downloadable file (powered by Remotion).
-
-<Steps>
-  <Step title="Open the composition in Studio">
-    Switch to **Studio** and open the composition you want to finish. See [the timeline guide](/studio/timeline) for arranging your clips.
+  <Step title="Choose resolution and format">
+    Pick the output resolution and settings that fit where the video is headed. Higher resolutions look sharper but take longer to render.
   </Step>
   <Step title="Render and download">
-    Start the render, then download the finished video. Full details live in the [export guide](/studio/export).
+    Start the render, then download the finished file when it's ready. The [export guide](/studio/export) covers every option.
   </Step>
 </Steps>
 
-## Common questions
+<Warning>
+  Keep the project open while a render runs — closing it before the video is ready can interrupt the export.
+</Warning>
 
-<AccordionGroup>
-  <Accordion title="How do I download an image or clip?">
-    Select the node that holds it on the canvas, then use the node's download action. The asset saves as a standard file to your device.
-  </Accordion>
-  <Accordion title="How do I export a finished video?">
-    Open your composition in **Studio** and render it. The render assembles your timeline into a single downloadable video. See [the export guide](/studio/export) for the full walkthrough.
-  </Accordion>
-  <Accordion title="My render is taking a long time">
-    Longer and higher-resolution videos take more time to render, so this is usually expected. Keep the project open while it runs so the render can finish. If it stalls or fails, head to [troubleshooting](/help/troubleshooting) for next steps.
-  </Accordion>
-</AccordionGroup>
+## Formats
 
-<Tip>
-  Ready to render? The [Studio export guide](/studio/export) walks you through every option step by step.
-</Tip>
+Studio renders video as **MP4** (H.264 or H.265) or **MOV** (ProRes), with a quality setting to trade file size against fidelity. Compositions that contain only audio export as a single **MP3** or **WAV** file.
+
+## Plan-gated render quality
+
+Your workspace plan sets the **maximum export resolution**: Free workspaces export up to **720p**, Lite up to **1080p**, and Pro and Ultra unlock the highest available quality. If you queue an export above your plan's ceiling, Flowy clamps it to the maximum your plan allows and lets you know. Compare limits on [plans & pricing](/billing/plans).
+
+<Note>
+  A render taking a while is usually expected — longer compositions at higher resolutions take the most time. If one stalls or fails, retry it, then check [troubleshooting](/help/troubleshooting).
+</Note>

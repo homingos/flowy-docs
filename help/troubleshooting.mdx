@@ -1,66 +1,53 @@
 ---
 title: "Troubleshooting"
-description: "Fix common issues with generations, exports, and access."
+description: "Fast fixes for failed generations, export problems, access issues, and slow canvases."
 ---
 
-Most issues in Flowy clear up with a quick retry or refresh. This page walks you through the common ones and the fastest fix for each.
+Most issues in Flowy clear up with a retry or a refresh. Work through the section that matches what you're seeing.
 
-{/* TODO: add screenshot of a failed generation node with retry on the canvas */}
-{/* TODO: capture real screenshot */}
+## A generation failed or is stuck
 
-<AccordionGroup>
-  <Accordion title="A generation failed or is stuck">
-    Failed generations are handled for you. When a generation can't finish, your reserved credits are refunded automatically, so you are never charged for work that didn't complete.
+You're never charged for failures — reserved credits refund automatically, so retrying is free.
 
-    <Steps>
-      <Step title="Retry the generation">
-        Run it again from the node or from **Quick Creates**. Most failures are temporary.
-      </Step>
-      <Step title="Simplify your prompt">
-        A shorter, clearer prompt often succeeds where a long one stalls.
-      </Step>
-      <Step title="Confirm your credit balance">
-        Generations need available credits to start. Check your wallet in [billing](/billing/credits).
-      </Step>
-    </Steps>
+<Steps>
+  <Step title="Give it time">
+    Video is the slowest node type. Let it run before assuming it's stuck.
+  </Step>
+  <Step title="Retry the node">
+    Run it again — most failures are temporary.
+  </Step>
+  <Step title="Simplify your prompt">
+    A shorter, clearer prompt often succeeds where a long one stalls. More tips in [generation help](/help/generating).
+  </Step>
+  <Step title="Check your balance">
+    Generations need available credits to start. Check the wallet in [Settings → Billing](/billing/credits).
+  </Step>
+</Steps>
 
-    <Note>Video is the slowest and most credit-intensive generator, so give it extra time before assuming it's stuck.</Note>
-  </Accordion>
+## An export or render is slow or failing
 
-  <Accordion title="Export or render is slow or failing">
-    Renders take real time to produce. Longer compositions and higher resolutions take the longest, so a `1080p` export will outlast a shorter clip.
+Renders take real time — longer compositions and higher resolutions take the longest. Keep the project open while a render runs; closing it can interrupt the export. If a render fails, retry it, and see the [export guide](/studio/export) for settings that affect render time.
 
-    <Warning>Keep the project open while a render runs. Closing the tab can interrupt the export.</Warning>
+## I can't edit a project
 
-    If a render fails, retry it. For the full walkthrough, see [export](/studio/export).
-  </Accordion>
+If the canvas is locked for you, you have the **Viewer** role, which is view-only. Request access and the owner can approve you as an Editor. See [sharing & access help](/help/collaboration) for the common access problems and fixes.
 
-  <Accordion title="I can't edit a project">
-    If nodes and the canvas are locked, you likely have the **Viewer** role, which is view-only. You can request access, and the Owner can approve you as an Editor. Learn what each role can do in [roles](/collaboration/roles).
-  </Accordion>
+## My changes aren't syncing
 
-  <Accordion title="My changes aren't syncing">
-    Flowy syncs your canvas in real time across everyone in the project. If something looks out of date, refresh the page and check your internet connection, then confirm your teammates see the same state.
-  </Accordion>
+Flowy syncs the canvas in real time for everyone in the project. If something looks out of date, refresh the page, check your internet connection, and confirm your teammates see the same state.
 
-  <Accordion title="I'm out of credits">
-    Generating consumes credits from your wallet. When you run low, top up from the billing area to keep creating. See [credits](/billing/credits) for how the wallet works.
-  </Accordion>
+## I'm out of credits
 
-  <Accordion title="The canvas feels slow">
-    Very large canvases with many nodes can lag.
+Generating spends credits from the workspace wallet. Top up from **Settings → Billing** (from $5), or turn on auto-reload so it never happens mid-project. See [how credits work](/billing/credits).
 
-    <Tip>Use **Group** nodes to organize your work, and run Flowy in a modern desktop browser. Canvas and Studio aren't optimized for small mobile screens.</Tip>
-  </Accordion>
-</AccordionGroup>
+## The canvas feels slow
+
+Very large canvases with many nodes can lag. Group nodes to keep the canvas organized, close other heavy browser tabs, and make sure your browser is up to date.
+
+## Browser support
+
+Flowy runs best in modern desktop browsers. The Canvas and Studio aren't optimized for small mobile screens, so switch to a desktop if things look cramped or unresponsive on a phone.
 
 ## Still stuck?
 
-<CardGroup cols={2}>
-  <Card title="Read the FAQ" icon="circle-question" href="/help/faq">
-    Quick answers to the questions people ask most.
-  </Card>
-  <Card title="Check your credits" icon="bolt" href="/billing/credits">
-    See how the credit wallet, reservations, and refunds work.
-  </Card>
-</CardGroup>
+Check the [FAQ](/help/faq) for quick answers, or [contact support](/help/contact) with the project name and any error text — we'll take it from there.

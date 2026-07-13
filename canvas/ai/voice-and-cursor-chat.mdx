@@ -1,0 +1,42 @@
+---
+title: "Voice & Cursor Chat"
+description: "Talk with collaborators over live voice and drop quick messages right at your cursor."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+When several people share a canvas, typing in a side panel is often too slow. Voice chat puts everyone in a live audio room, and cursor chat drops a quick message exactly where you're pointing.
+
+<DemoVideo
+  src="/videos/canvas/ai-voice-cursor.mp4"
+  poster="/images/posters/canvas/ai-voice-cursor.jpg"
+  caption="Joining canvas voice chat and sending a cursor message with the slash key"
+/>
+
+## Voice chat
+
+Every canvas has its own voice room. To join, open the collaborators dropdown in the editor header and click the **mic** button on your own row — your browser asks for microphone permission at that moment, never before.
+
+While connected, a floating **voice bar** shows everyone in the room:
+
+- Each participant appears as an avatar chip, with a ring while they're speaking and a badge when muted.
+- **Mute/unmute** and **leave** buttons sit on the bar; the mic toggle in the collaborators dropdown mirrors the same state.
+- Drag the bar anywhere on screen if it's in your way.
+
+Anyone with access to the canvas can join the same room, so a design review is one click away from the work itself. For voice across the rest of Flowy, see [Voice Rooms](/collaboration/voice-rooms).
+
+## Cursor chat
+
+Press <kbd>/</kbd> anywhere on the canvas and a small input opens at your pointer. Type your message and press <kbd>Enter</kbd> — collaborators see it as a bubble riding your live cursor, exactly where you're working. The bubble follows your pointer as you move and fades a few seconds after you send, keeping the canvas clean.
+
+| Key | Action |
+| --- | --- |
+| <kbd>/</kbd> | Open cursor chat at your pointer |
+| <kbd>Enter</kbd> | Send the message |
+| <kbd>Esc</kbd> | Dismiss without sending |
+
+Cursor chat is ephemeral by design — point at a node, say "this one", and move on. For anything worth keeping, use the [AI chat panel](/canvas/ai/overview) or a sticky note.
+
+<Note>
+  Voice and cursor chat reach the people on your canvas. To direct the AI assistant, use the chat dock — see the [AI Assistant Overview](/canvas/ai/overview).
+</Note>

@@ -1,0 +1,42 @@
+---
+title: "Stylize Effects"
+description: "Soften, sharpen, frame, and reframe clips with blur, vignette, and crop."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Four effects handle the look of a clip beyond color: blur and sharpen for focus, vignette for framing the eye, and crop for masking edges.
+
+<DemoVideo
+  src="/videos/studio/effects-stylize.mp4"
+  poster="/images/posters/studio/effects-stylize.jpg"
+  caption="Dialing in a vignette, then cropping the clip edges to reframe the shot"
+/>
+
+## Blur
+
+Blur lives on the **Transform** sub-tab, next to scale and position. The **Blur** field sets a Gaussian blur radius from 0 to 64 pixels — 0 is fully sharp, and even a few pixels reads as soft focus.
+
+Blur is keyframable: click the diamond next to the field to set a value at the current frame, then set a different value later to animate a rack-focus or a defocused intro. Blur keyframes show up as their own row in the [timeline's keyframe view](/studio/timeline#keyframes).
+
+## Sharpen
+
+Add **Sharpen** from the **Effects** rack. Its **Amount** slider (0 to 2) boosts edge contrast to recover crispness in soft footage. Push it gently — high values exaggerate noise and halo edges.
+
+## Vignette
+
+Add **Vignette** from the **Effects** rack to darken the frame's edges and pull attention to the center:
+
+| Parameter | Range | Default | What it does |
+| --- | --- | --- | --- |
+| **Amount** | 0–1 | 0 | How dark the edges get |
+| **Feather** | 0–1 | 0.5 | How gradually the darkening ramps in — low values give a hard ring, high values a soft falloff |
+| **Roundness** | 0–1 | 0.5 | The shape of the vignette, from a wide oval matching the frame to a tighter circle |
+
+## Crop
+
+Add **Crop** from the **Effects** rack to mask the clip's edges. Four sliders — **Left**, **Right**, **Top**, **Bottom** — each trim away a fraction of the frame from 0 (no crop) to 1 (the full dimension). The cropped area becomes transparent, so anything on tracks below shows through.
+
+<Tip>
+  Crop trims within the clip's own frame. To change how the clip fills the canvas instead, use the **Fit** setting on the [Compositing tab](/studio/inspector#properties).
+</Tip>

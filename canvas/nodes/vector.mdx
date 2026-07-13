@@ -1,0 +1,37 @@
+---
+title: "Vector Node"
+description: "Generate SVG artwork or vectorize any raster image."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+The Vector node produces SVG graphics — logos, icons, and illustrations that stay crisp at any size — by generating from a text prompt, vectorizing a connected image, or holding an SVG you upload.
+
+<DemoVideo
+  src="/videos/canvas/node-vector.mp4"
+  poster="/images/posters/canvas/node-vector.jpg"
+  caption="Generating SVG artwork from a text prompt and rerunning for a fresh take"
+/>
+
+## Three ways to get a vector
+
+- **Generate from text** — describe the logo, icon, or illustration in the prompt bar and click **Run**. Pick a canvas preset for the output: square, portrait, or landscape.
+- **Vectorize an image** — connect an Image node, and the Vector node traces it into clean SVG automatically. This is the move when a generated raster logo needs to become a real, scalable asset.
+- **Upload an SVG** — bring an existing vector file onto the canvas and use it like any other node.
+
+## Export
+
+Open the node's **⋮ menu** and choose **Export as…** to download the result:
+
+- **SVG (original)** — the source vector, ready for design tools and the web.
+- **PNG** or **JPG** — rasterized exports at a fixed size.
+
+There's also a **Rasterize** action that creates a connected Image node (PNG or JPG) — useful when you want pixels on the graph to feed tools that work on raster images.
+
+## Connect it downstream
+
+Vectors wire into **Image**, **Video**, and **Composition** nodes like any other visual. Flowy rasterizes the SVG behind the scenes before the run, so every generation engine can read it — you keep one scalable source of truth and still use it everywhere.
+
+<Note>
+  Vectors are for graphics with clean shapes and flat color. For photos and photoreal generations, use an [Image node](/canvas/nodes/image) instead.
+</Note>

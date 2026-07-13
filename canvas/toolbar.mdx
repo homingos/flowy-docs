@@ -1,0 +1,54 @@
+---
+title: "Canvas Toolbar"
+description: "Every tool on the left rail, from adding nodes to grouping and undo."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+The toolbar runs down the left edge of the [canvas](/canvas/overview). It holds everything you reach for constantly: node creation, the pointer tools, grouping, and history. Hover any button for its name and shortcut.
+
+<DemoVideo
+  src="/videos/canvas/toolbar.mp4"
+  poster="/images/posters/canvas/toolbar.jpg"
+  caption="Walking the left rail: add a node, pointer tools, grouping, undo and redo"
+/>
+
+## Add a node
+
+The **+** button at the top (<kbd>N</kbd>) opens the node menu with a search field and two sections. **Generate** lists every node type you can drop onto the board:
+
+| Node | Shortcut | Node | Shortcut |
+| --- | --- | --- | --- |
+| Text | <kbd>⇧</kbd> <kbd>T</kbd> | Storyboard | <kbd>⇧</kbd> <kbd>S</kbd> |
+| Image | <kbd>⇧</kbd> <kbd>I</kbd> | Composition | <kbd>⇧</kbd> <kbd>C</kbd> |
+| Video | <kbd>⇧</kbd> <kbd>V</kbd> | Router | <kbd>⇧</kbd> <kbd>R</kbd> |
+| Audio | <kbd>⇧</kbd> <kbd>A</kbd> | Model | <kbd>⇧</kbd> <kbd>P</kbd> |
+| 3D | <kbd>⇧</kbd> <kbd>D</kbd> | Brand Kit | — |
+| Flam | <kbd>⇧</kbd> <kbd>F</kbd> | | |
+
+**Libraries** sits below it with two entries: **Upload** (<kbd>⇧</kbd> <kbd>U</kbd>) brings your own files onto the canvas — images, video, audio, text, PDFs, SVGs, and 3D formats like GLB, FBX, OBJ, STL, and USDZ — and **Asset Library** (<kbd>⇧</kbd> <kbd>L</kbd>) opens your workspace [assets](/dashboard/assets) so you can place an existing one. See [Nodes](/canvas/nodes/overview) for what each type does.
+
+## All nodes
+
+The second button opens a list of every node in the current project — useful for finding a specific node on a large board.
+
+## Pointer tools
+
+- **Select** (<kbd>V</kbd>) — the default pointer. Click, drag, and marquee-select nodes.
+- **Pan** (<kbd>H</kbd>) — turns dragging into panning, anywhere on the board.
+- **Cut connection** (<kbd>K</kbd>) — slice across a wire to disconnect two nodes.
+- **Sticky note** (<kbd>⇧</kbd> <kbd>M</kbd>) — drop a note to annotate the canvas for yourself or collaborators.
+- **Group** (<kbd>⌘</kbd> <kbd>G</kbd>) — with two or more loose nodes selected, wraps them in a frame immediately. With nothing groupable selected, it arms **Drag to group**: draw a box and the nodes inside become a frame on release. To ungroup, select the frame and press <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>G</kbd> or use **Ungroup** in the selection action bar.
+
+<Note>
+Pan, Cut, and Sticky note release back to Select when you press <kbd>Esc</kbd> or tap <kbd>V</kbd>. Drag to group disarms when you complete a drag or click **Group** again.
+</Note>
+
+## History and layout
+
+- **Undo** (<kbd>⌘</kbd> <kbd>Z</kbd>) and **Redo** (<kbd>⌘</kbd> <kbd>Y</kbd>) — step through canvas history. Both buttons dim when there's nothing to step to.
+- **Auto layout** (<kbd>⇧</kbd> <kbd>O</kbd>) — tidies the whole board, arranging connected flows and loose nodes with an animated transition. More in [Navigation & Selection](/canvas/navigation#auto-layout).
+
+## Preferences
+
+The last button (<kbd>⌘</kbd> <kbd>,</kbd>) opens editor preferences — including edge wire style and the mouse-wheel navigation mode.

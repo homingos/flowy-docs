@@ -1,0 +1,65 @@
+---
+title: "Image Tools Overview"
+description: "Edit any image on your canvas with non-destructive tools — the original always survives."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Every image node on the canvas carries a set of editing tools — from instant crops and color tweaks to AI-powered upscaling, background removal, and outpainting. Each tool runs as its own node, so your source image is never touched.
+
+<DemoVideo
+  src="/videos/canvas/image-tools-menu.mp4"
+  poster="/images/posters/canvas/image-tools-menu.jpg"
+  caption="Opening the Tools menu on an image node and attaching an editing tool"
+/>
+
+## Where the tools live
+
+There are two ways to reach the same menu:
+
+- **Right-click an image node** and open the **Tools** submenu.
+- **Select an image node** and click the **Tools** button (wrench icon) in the node's bottom control row.
+
+Picking a tool spawns a new tool node beside the image, already connected to its output. The tool's controls appear in the node — or in the right-edge inspector while it's open.
+
+## Non-destructive by design
+
+A tool never edits your image in place. The source node keeps its original pixels; the tool node produces a **new output** you can wire onward like any other image. That means you can:
+
+- Chain tools — crop into levels into upscale — and adjust any step later.
+- Delete a tool node and keep the untouched original.
+- Click **Add result as node** on a finished tool to push its output out as a standalone image node.
+
+AI tools also keep a **history carousel** of past runs, so you can flip back to an earlier generation at any time.
+
+## Instant tools vs AI tools
+
+**Rotate & Flip, Crop, Resize, Levels, Blur, Invert, and Channels** run locally in your browser — no AI, no waiting. Connect an image and the result updates the moment you move a slider. They're covered together in [Transform & Adjust](/canvas/image-tools/transform-and-adjust).
+
+**Upscale, Inpaint, Outpaint, Remove Background, Change Angle, and Separate Layers** are AI edits that run as background jobs: press the run button, keep working, and the result lands in the node when it's ready.
+
+## The tool pages
+
+<CardGroup cols={2}>
+  <Card title="Transform & Adjust" icon="crop" href="/canvas/image-tools/transform-and-adjust">
+    Rotate, flip, crop, resize, and tune levels, blur, and color channels — instantly.
+  </Card>
+  <Card title="Upscale" icon="arrows-maximize" href="/canvas/image-tools/upscale">
+    Boost an image or video up to 4× its resolution with AI.
+  </Card>
+  <Card title="Inpaint" icon="paintbrush" href="/canvas/image-tools/inpaint">
+    Paint a mask and fill it from a reference image.
+  </Card>
+  <Card title="Outpaint" icon="expand" href="/canvas/image-tools/outpaint">
+    Extend an image beyond its edges — AI fills in what would be there.
+  </Card>
+  <Card title="Remove Background" icon="scissors" href="/canvas/image-tools/remove-background">
+    Cut out the subject automatically, for images and video.
+  </Card>
+  <Card title="Change Angle" icon="camera-rotate" href="/canvas/image-tools/change-angle">
+    Re-render the same subject from a different camera position.
+  </Card>
+  <Card title="Separate Layers" icon="layer-group" href="/canvas/image-tools/separate-layers">
+    Pull an image apart into independently editable layers.
+  </Card>
+</CardGroup>

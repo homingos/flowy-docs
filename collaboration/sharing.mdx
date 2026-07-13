@@ -1,49 +1,62 @@
 ---
-title: "Sharing & real-time collaboration"
-description: "Share projects, approve access, and edit together live."
+title: "Sharing Projects"
+description: "Invite collaborators, approve access requests, and publish a view-only share link."
 ---
 
-Share a project and your whole team can work on it together, in real time, on the same canvas. Everyone sees the same nodes, cursors, and edits as they happen.
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
 
-## Share a project
+Share a project to bring people onto the same live canvas, or hand out a public link that shows the project's media to anyone. Both live in the **Share** dialog, opened from the Share button in the editor header.
 
-Open the project you want to share, then invite people by email and pick a role for each person.
+<DemoVideo
+  src="/videos/collab/sharing.mp4"
+  poster="/images/posters/collab/sharing.jpg"
+  caption="Inviting a collaborator by email and turning on a public share link"
+/>
 
-- **Owner** has full control, including delete and managing access.
-- **Editor** can create and edit nodes, work the canvas, and generate.
-- **Viewer** gets view-only access and can request edit access.
+## Invite people to a project
 
-Invited members get an email and find the project in their workspace once they accept.
+In the Share dialog, type one or more email addresses — each valid address becomes a chip — pick whether they can **edit** or **view**, then send. Invitees are notified and the project appears in their workspace once they accept.
 
-{/* TODO: add screenshot of the share dialog with role options */}
-{/* TODO: capture real screenshot */}
+Two limits shape invites:
 
-## Request and approve access
+- **Role ceiling** — anyone with access can invite, but only at roles up to their own. Editors can share as Editor or Viewer; Viewers can only share view access. See [Roles & permissions](/collaboration/roles).
+- **Collaborator cap** — a project supports up to 5 direct collaborators, on top of the access workspace members already have.
 
-A **Viewer** who needs to edit can request access right from the project. The request goes to the **Owner**, who approves it and bumps the person up to **Editor**. No need to re-share from scratch.
+## Manage who has access
 
-## Real-time editing
+The Share dialog lists everyone with access: the owner, direct collaborators, and pending invites. Owners can change a collaborator's role from the badge on their row, or remove them — removal takes effect immediately.
 
-Collaboration on the canvas is fully live. You see each teammate's presence, their multiplayer cursor moving in real time, and every simultaneous edit stays in sync across everyone's screens. There is nothing to refresh and no save button to fight over.
+When a workspace role gives someone more access than their project share, the list says so — for example "Viewer · inherits Editor from workspace" — so you always see the access that actually applies.
 
-## Comments
+## Access requests
 
-Leave feedback right where it belongs. Drop comments directly on the canvas so your notes sit next to the nodes they're about, and your team can reply in context.
-
-## Approve an access request
+Someone with view-only access can ask to edit right from the canvas: Viewers see a banner with a **Request access** button.
 
 <Steps>
-  <Step title="Open the request">
-    When a **Viewer** requests edit access, you'll get a notification on the project.
+  <Step title="Spot the request">
+    New requests show as a dot on the project's Share button, and appear as rows at the top of the Share dialog — "Ana wants to edit", with the requester's email.
   </Step>
   <Step title="Review who's asking">
-    Check the requester so you're granting access to the right person.
+    Check the name and email so you grant access to the right person.
   </Step>
-  <Step title="Approve">
-    Approve the request to promote them to **Editor**, or leave them as a **Viewer** to keep things view-only.
+  <Step title="Accept or decline">
+    **Accept** grants the requested access on the spot; **Decline** leaves them as they are.
   </Step>
 </Steps>
 
+## Share links
+
+At the bottom of the Share dialog, the link-access control decides who a copied link works for:
+
+- **Only people with access** (default) — the project link only opens for invited people and workspace members.
+- **Anyone with the link** — creates a public share link. Anyone who opens it sees a read-only gallery of the project's title and generated media — images, video, and audio. They can't open the canvas, edit anything, or see your nodes.
+
+**Copy link** copies whichever link is active. Switching to "Anyone with the link" also copies the new public link for you. Only the project owner can change link access.
+
+## Revoke a share link
+
+Switch the link-access control back to **Only people with access**. The public link stops working immediately — anyone who visits it afterwards sees that the link is no longer available.
+
 <Tip>
-  Not sure which role to hand out? See the full breakdown in [roles](/collaboration/roles).
+  Not sure which role to hand out? Start people as Viewers — they can always request edit access, and you can approve it in one click.
 </Tip>

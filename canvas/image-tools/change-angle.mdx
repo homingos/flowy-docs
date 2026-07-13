@@ -1,0 +1,32 @@
+---
+title: "Change Angle"
+description: "Re-render the same subject from a new camera position — orbit, elevate, and zoom."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Change Angle generates the connected image's subject from a different camera viewpoint. Shoot a product once, then produce the three-quarter view, the top-down, and the close-up without re-staging anything.
+
+<DemoVideo
+  src="/videos/canvas/image-tools-angle.mp4"
+  poster="/images/posters/canvas/image-tools-angle.jpg"
+  caption="Setting a new camera angle with the 3D orbit preview and the angle sliders"
+/>
+
+## Using it
+
+Right-click an image node and choose **Tools → Change Angle**. The connected tool node shows a small 3D orbit preview — a turntable with a camera marker riding a sphere around your subject. Drag the preview itself to rotate the whole scene and read the setup from any side.
+
+Set the camera with three sliders:
+
+| Control | Range | What it does |
+| --- | --- | --- |
+| **Horizontal angle** | −180° to 180° | Orbits the camera around the subject |
+| **Vertical angle** | −30° to 90° | Raises or lowers the camera, up to straight overhead |
+| **Zoom** | 0.5× to 10× | Moves the camera closer or further |
+
+Press **Generate angle** and the new view lands in the node when the job finishes. Every run is kept in the node's history carousel, so you can generate several viewpoints from one tool node and flip between them — or push any result out with **Add result as node**.
+
+<Tip>
+  Move in steps. A 45° orbit holds the subject's identity better than a single 180° jump — generate the intermediate view first, then go further from there.
+</Tip>

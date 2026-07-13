@@ -1,0 +1,45 @@
+---
+title: "Canvas Audit"
+description: "Have the assistant check your wiring, judge your results, and find what's missing."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+The assistant isn't only a builder — it's a reviewer. Ask it to audit your canvas and it checks the graph for real problems, examines generated media pixel by pixel, and judges finished work against the brief.
+
+<DemoVideo
+  src="/videos/canvas/ai-audit.mp4"
+  poster="/images/posters/canvas/ai-audit.jpg"
+  caption="Asking the assistant to audit the canvas and fix the blockers it finds"
+/>
+
+## Check the wiring before you spend
+
+Before generating, the assistant can run a deterministic check of the whole graph. It separates **errors** — invalid connections, inputs over a node's limit, nodes that can't generate, compose setups that aren't ready — from **advisories**, creative suggestions it applies only when they serve the brief. Errors are real blockers worth fixing before any credits go out; ask for this check after any big build.
+
+> "Before we generate anything, check the graph for problems."
+
+## Judge the results, not the prompts
+
+A prompt says what you asked for; only the pixels say what you got. The assistant inspects an image's actual content when you ask it to verify a result, and for finished deliverables it can run a full critique: an adversarial judgment of the asset against its brief. When a result falls short, it comes back with a targeted fix, regenerates, and judges again.
+
+> "Critique the hero image against the brief — does it actually read as premium?"
+
+## Review layout and coverage
+
+Audits aren't only technical. Ask the assistant to look at the canvas the way an art director would:
+
+- **Layout** — "tidy this up": it auto-arranges the graph, groups related nodes, and frames sections so the board reads clearly.
+- **Gaps** — "what's missing for a complete campaign?": it reads the canvas and reports what the deliverable still needs — a missing aspect ratio, an unscored video, a shot without continuity references.
+- **Consistency** — "do these shots hold the same character?": it examines the media itself, not the prompts, and flags drift.
+
+## Prompts to steal
+
+- "Audit the canvas: blockers first, then suggestions."
+- "Look at every generated image and tell me which ones miss the brief."
+- "Check that the compose setup is ready before running the video."
+- "What would you cut, and what's missing?"
+
+<Tip>
+  Audit at the checkpoints, not at the end: after the build (wiring), after the first generations (fidelity), and before assembly (coverage). Each pass is cheap next to regenerating a finished piece.
+</Tip>

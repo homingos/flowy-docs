@@ -1,0 +1,54 @@
+---
+title: "API Request Logs"
+description: "Trace every API request to your workspace, filter down fast, and inspect full payloads."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Logs record every API request made against your workspace, so you can debug an integration without adding a single print statement. Find them under **Developers → Logs** in the settings sidebar.
+
+<DemoVideo
+  src="/videos/settings/logs.mp4"
+  poster="/images/posters/settings/logs.jpg"
+  caption="Filtering logs by status code and opening a request's detail view"
+/>
+
+## What's captured
+
+Each log entry records:
+
+- **Endpoint** — the request path and its route pattern.
+- **Method** and **status code**.
+- **Actor** — the signed-in user, or the API key that made the request.
+- **Duration** in milliseconds and the exact **timestamp**.
+- **Request and response bodies**, plus the client's **user agent**.
+- A unique **request ID** for pinpointing a single call.
+
+The table shows Endpoint, Method, Status, Actor, Duration, and Time by default; use the column control on the header row to add the API Key column or hide ones you don't need — your choice is remembered.
+
+## Filter and search
+
+The **Filter** menu narrows the list by:
+
+- **Status** — a specific status code (200, 400, 401, 429, 500, and so on).
+- **Endpoint** — a route pattern, with a request count next to each.
+- **Method** — GET, POST, PATCH, PUT, or DELETE.
+- **API Key** — requests made with one of your [API keys](/settings/api-keys).
+- **Request Type** — API traffic.
+
+Alongside filters, pick a **date range** (last 24 hours, 7 days, or 30 days) or paste a **request ID** into the search box to jump straight to one call. Hovering a value in the table — a status, method, or endpoint — reveals a shortcut to filter by that value. Active filters appear as chips, and the whole view lives in the URL, so a filtered list survives refresh and can be shared as a link.
+
+Results are paginated 50 per page.
+
+## Drill into a request
+
+Select a request to open its detail view:
+
+- **Response body** and **request body**, pretty-printed as JSON with one-click copy.
+- A **Log details** panel with the path, date, status, method, duration, user agent, the API key (or user) behind the call, and the request ID with a copy button.
+
+<Tip>
+  Debugging a failed call with support or a teammate? Copy the request ID from the detail panel — it identifies that exact request.
+</Tip>
+
+For what error responses mean, see [API errors](/api/errors).

@@ -16,7 +16,7 @@ You can set a **custom per‑key rate limit** when you create or edit a key (und
 
 ## Rate-limit headers
 
-Every response includes headers describing your current window, following the [IETF draft](https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-ratelimit-headers):
+Successful responses include headers describing your current window, and a `429` adds `Retry-After`:
 
 | Header | Meaning |
 | --- | --- |

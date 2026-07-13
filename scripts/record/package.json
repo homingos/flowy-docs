@@ -1,0 +1,18 @@
+{
+  "name": "flowy-docs-recorder",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "record": "tsx run.ts",
+    "list": "tsx run.ts --list"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0",
+    "tsx": "^4.19.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

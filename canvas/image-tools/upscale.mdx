@@ -1,0 +1,32 @@
+---
+title: "Upscale"
+description: "Boost an image or video up to 4× its resolution with AI, without leaving the canvas."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Upscale enlarges the connected image — or video — up to 4× with AI, recovering detail instead of stretching pixels. It runs as a background job, so you can keep working while it processes.
+
+<DemoVideo
+  src="/videos/canvas/image-tools-upscale.mp4"
+  poster="/images/posters/canvas/image-tools-upscale.jpg"
+  caption="Attaching an Upscale tool to an image and choosing the 2× or 4× factor"
+/>
+
+## Using it
+
+Right-click an image or video node, choose **Tools → Upscale**, and a connected Upscale node appears beside it. Then:
+
+- Pick the **Factor** — **2×** or **4×**.
+- For images, optionally turn on **Face fix** and set its **Strength** (0–1) to enhance faces during the upscale.
+- Press **Upscale**. The node shows *Processing…* and swaps in the result when the job finishes.
+
+The source node is untouched; the upscaled version is the tool node's output. Wire it downstream, or click **Add result as node** to break it out as a standalone image node.
+
+## Video upscaling
+
+Connect a video node instead of an image and the same tool upscales the clip. The Face fix option applies to images only.
+
+<Tip>
+  Make Upscale the last step in an editing chain. Crop, retouch, and color-correct first, then upscale the finished frame — you avoid re-running the slow step every time an earlier edit changes.
+</Tip>

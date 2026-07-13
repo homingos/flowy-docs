@@ -1,0 +1,4 @@
+node_modules/
+.auth/
+raw/
+pnpm-lock.yaml

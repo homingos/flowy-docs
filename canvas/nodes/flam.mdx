@@ -1,0 +1,40 @@
+---
+title: "Flam Node"
+description: "Generate alpha-channel motion clips you can composite over anything."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+A Flam is a 5–10 second motion clip with transparency — Flowy's own media type for animated overlays. Generate one from text, images, or video references, then composite it over any other footage without a box around it.
+
+<DemoVideo
+  src="/videos/canvas/node-flam.mp4"
+  poster="/images/posters/canvas/node-flam.jpg"
+  caption="Generating a 5-second flam — an alpha-keyed motion clip ready to composite"
+/>
+
+## Generate a flam
+
+Write a prompt describing the motion you want, optionally connect image or video references, and click **Run**.
+
+| Setting | Choices |
+| --- | --- |
+| Duration | `5s`, `10s` |
+| Aspect ratio | `16:9`, `9:16`, `1:1` |
+| Resolution | `720p`, `1080p`, `4k` |
+| Audio | On or off |
+
+## Frames vs. reference inputs
+
+Connected images and videos play one of two roles, set on the node:
+
+- **Frames** — first/last conditioning: the clip starts on your first image, and optionally ends on the second. Maximum of 2 inputs. Use it to bring a specific still to life.
+- **Reference** — style and subject references: up to 9 images and videos condition the look without pinning the start frame. Use it to keep a character or product consistent while the flam invents its own motion.
+
+If you connect more than two inputs while in frames mode, the node asks you to switch to reference mode before it generates.
+
+## Built for compositing
+
+The point of a flam is the alpha. The clip is keyed against its background color, so when you drop it into a [Composition](/canvas/nodes/composition) or a [Studio](/studio/overview) timeline, it sits cleanly over your footage — animated characters, particles, lower-thirds, and effects layers all read as native parts of the shot. Fine-tune the matte with the chroma key controls in [Studio's effects](/studio/effects/chroma-key) if an edge needs work.
+
+Flam outputs also connect onward into **Video** and **Storyboard** nodes as references, so a flam you like can seed the next generation.

@@ -1,0 +1,40 @@
+---
+title: "Transitions"
+description: "Bridge cuts between clips with dissolves, dips, and wipes."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+A transition blends the cut between two clips instead of switching on a single frame. In Studio, transitions belong to the cut itself: they run across the boundary where one clip ends and the next begins on the same track.
+
+<DemoVideo
+  src="/videos/studio/transitions.mp4"
+  poster="/images/posters/studio/transitions.jpg"
+  caption="A cross dissolve carrying one clip into the next across a cut"
+/>
+
+## Available transitions
+
+| Transition | What it looks like |
+| --- | --- |
+| **Cross Dissolve** | The outgoing clip fades directly into the incoming clip |
+| **Dip to Black** | The outgoing clip fades to black, then the incoming clip fades up from it |
+| **Dip to White** | The same dip, through white — brighter and more energetic |
+| **Wipe (Left → Right)** | The incoming clip sweeps across the frame from the left edge |
+| **Wipe (Top → Bottom)** | The incoming clip sweeps down from the top of the frame |
+
+Cross Dissolve is the default and the safest choice — dips read as deliberate chapter breaks, and wipes carry a stronger stylistic flavor.
+
+## Placement
+
+Transitions work between **adjacent clips on the same track**. Each one is anchored to the cut: half of its duration plays over the end of the outgoing clip, half over the start of the incoming clip. That means both clips need a little material on either side of the cut — if a clip runs out of frames, Flowy blends with whatever is available.
+
+A transition rides with its clip. Moving the clip moves the transition with it, and duplicating a clip (<kbd>⌘</kbd> <kbd>J</kbd>) copies its transitions too.
+
+## Duration
+
+Transitions default to **0.5 seconds** — long enough to register, short enough not to drag. Shorter durations tighten the cut toward a subtle blend; longer ones slow the pacing and draw attention to the change.
+
+<Tip>
+  Transitions render across the cut in the preview and in your [exported video](/studio/export) alike — scrub the playhead slowly across a cut to inspect the blend frame by frame.
+</Tip>

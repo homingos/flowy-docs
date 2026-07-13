@@ -1,62 +1,60 @@
 ---
-title: "How credits work"
-description: "Flowy's credit wallet, free credits, and refunds — explained."
+title: "How Credits Work"
+description: "Flowy's credit wallet — what spends credits, topping up, auto-reload, and refunds."
 ---
 
-Flowy runs on a credit wallet, and generating spends credits. Every account has its own wallet, so you always know what powers your creations.
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
 
-{/* TODO: add screenshot of credit wallet in the billing area */}
-{/* TODO: capture real screenshot */}
+Flowy runs on credits: generating spends them, and every workspace has its own shared wallet. Credits never expire, and failed generations refund themselves.
 
-## Your wallet
-
-Every account comes with a credit wallet built in. When you sign up, you start with free credits so you can explore the **Canvas**, try the generators, and see what Flowy can do — no setup required.
-
-Your balance lives in the **Payment** area of your dashboard, where you can watch it move as you create.
+<DemoVideo
+  src="/videos/help/topup.mp4"
+  poster="/images/posters/help/topup.jpg"
+  caption="Checking the balance and buying credits from Settings → Billing"
+/>
 
 ## What uses credits
 
-Generating content is what spends credits. That includes images, video, audio, and other generations you run from **Quick Creates** or the canvas.
+Generating content spends credits — images, video, audio, and the other node types you run on the [canvas](/canvas/nodes/overview). Video is the most credit-intensive, so longer, higher-resolution clips cost more than a quick image. Studio renders use credits where applicable, and the [AI assistant](/canvas/ai/overview) is metered as it plans, edits nodes, and analyzes your work.
 
-The AI chat assistant works a little differently — it is metered by tokens as it plans, edits nodes, and analyzes your images.
+Paid plans include a monthly credit allowance — 20,000 on Lite up to 300,000 on Ultra — while the Free plan is pure pay-as-you-go. See [plans & pricing](/billing/plans).
 
-<Note>
-  Video is the most credit-intensive generator, so longer, higher-resolution clips spend more than a quick image.
-</Note>
+## View your balance
 
-## The credit lifecycle
-
-Credits move through three clear states whenever you generate. This keeps your balance honest, even when something goes wrong.
-
-<Steps>
-  <Step title="Reserved">
-    The moment a generation starts, the needed credits are blocked in your wallet so they cannot be spent twice.
-  </Step>
-  <Step title="Deducted">
-    When the generation succeeds, the reserved credits are charged and the work lands on your canvas.
-  </Step>
-  <Step title="Refunded">
-    If the generation fails, the reserved credits are returned to your wallet automatically.
-  </Step>
-</Steps>
-
-<Warning>
-  You are never charged for failed generations. If something fails, the credits are refunded automatically — no support ticket needed.
-</Warning>
+Open **Settings → Billing**. The overview shows your available credits, plus any credits temporarily on hold for in-flight generations. The wallet is shared across everyone in the workspace.
 
 ## Top up
 
-When you want more credits, you top up from the billing area. Head to the **Payment** surface in your dashboard to add to your wallet and keep creating.
+You can buy credits on any plan, and they stack on top of any monthly allowance.
+
+<Steps>
+  <Step title="Open Settings → Billing and choose Buy credits">
+    Only the workspace owner can buy credits.
+  </Step>
+  <Step title="Pick an amount">
+    Choose a preset credit pack, or enter a custom amount from **$5 to $1,000**. Some packs include bonus credits, and the dialog shows exactly how many credits you'll receive.
+  </Step>
+  <Step title="Complete checkout">
+    Pay through the secure checkout. Your balance updates as soon as the payment completes.
+  </Step>
+</Steps>
 
 <Note>
-  For current prices, see the in-app pricing at [tryflowy.ai](https://tryflowy.ai).
+  Purchased credits **never expire** — they stay in the workspace wallet until you spend them.
 </Note>
 
-<CardGroup cols={2}>
-  <Card title="What spends credits" icon="bolt" href="/generators/overview">
-    See how each generator works and what it produces.
-  </Card>
-  <Card title="Heaviest generator" icon="video" href="/generators/video">
-    Learn why video is the most credit-intensive.
-  </Card>
-</CardGroup>
+## Auto-reload
+
+Turn on **Auto-reload** in **Settings → Billing** to top up automatically when the balance runs low. Add a card, then set a credit threshold and a reload amount between $5 and $1,000 — for example, "charge $20 when the balance falls below 5,000 credits." Flowy charges your default payment method whenever the balance crosses the threshold, so a long render never stalls on an empty wallet.
+
+## The credit lifecycle
+
+Credits move through three states on every generation, which keeps your balance honest when something goes wrong:
+
+1. **Reserved** — when a generation starts, the credits it needs go on hold so they can't be spent twice.
+2. **Deducted** — when it succeeds, the reserved credits are charged and the result lands on your canvas.
+3. **Refunded** — if it fails, the reserved credits return to your wallet automatically.
+
+<Warning>
+  You are never charged for failed generations — the refund is automatic, no support ticket needed. See [refunds](/help/refunds) for details.
+</Warning>

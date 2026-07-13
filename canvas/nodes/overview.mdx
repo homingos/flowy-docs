@@ -1,0 +1,99 @@
+---
+title: "Nodes Overview"
+description: "How nodes work: anatomy, connections, running generations, and the add-node menu."
+---
+
+import { DemoVideo } from "/snippets/components/demo-video.jsx";
+
+Nodes are the building blocks of the canvas. Each one holds a piece of content — a prompt, an image, a clip, a sound — and you wire them together so one node's output becomes the next node's input.
+
+<DemoVideo
+  src="/videos/canvas/nodes-connect.mp4"
+  poster="/images/posters/canvas/nodes-connect.jpg"
+  caption="Adding nodes, wiring them together, and running a generation"
+/>
+
+## Node anatomy
+
+Every node shares the same shape: a **header** with the type icon and name, the **content area** where the result appears, **connection handles** on the left (input) and right (output) edges, and a **prompt bar** with a **Run** button at the bottom. The **⋮ menu** in the top-right corner holds per-node actions, and the pills around the prompt bar hold that node's generation settings — aspect ratio, resolution, duration, and so on.
+
+<Frame caption="An Image node, showing its header, content area, side connection handles, and prompt-and-Run footer">
+  <img src="/images/node-anatomy.png" alt="A canvas node showing its header, content, handles, and footer" />
+</Frame>
+
+## Add a node
+
+Click the **+** button in the left toolbar to open the add-node menu. **Generate** lists the AI node types, **Tools** lists the [image tools](/canvas/image-tools/overview), and **Libraries** holds **Upload** and **Asset Library** for bringing your own files onto the canvas. The menu is searchable, and most entries have a shortcut so you can drop a node without opening it at all:
+
+| Node | Shortcut | Node | Shortcut |
+| --- | --- | --- | --- |
+| Text | <kbd>⇧</kbd> <kbd>T</kbd> | Storyboard | <kbd>⇧</kbd> <kbd>S</kbd> |
+| Image | <kbd>⇧</kbd> <kbd>I</kbd> | Composition | <kbd>⇧</kbd> <kbd>C</kbd> |
+| Video | <kbd>⇧</kbd> <kbd>V</kbd> | Router | <kbd>⇧</kbd> <kbd>R</kbd> |
+| Audio | <kbd>⇧</kbd> <kbd>A</kbd> | Model | <kbd>⇧</kbd> <kbd>P</kbd> |
+| 3D | <kbd>⇧</kbd> <kbd>D</kbd> | Brand Kit | <kbd>⇧</kbd> <kbd>B</kbd> |
+| Flam | <kbd>⇧</kbd> <kbd>F</kbd> | Upload | <kbd>⇧</kbd> <kbd>U</kbd> |
+| Asset Library | <kbd>⇧</kbd> <kbd>L</kbd> | | |
+
+<Frame caption="The add-node menu, opened from the + button in the left toolbar">
+  <img src="/images/add-node-menu.png" alt="The add-node menu showing Generate and Libraries sections with keyboard shortcuts" />
+</Frame>
+
+## Connect nodes
+
+Each node has an **input handle** on its left edge and an **output handle** on its right. Click and drag from an output handle to another node's input handle — a curved edge appears, and the source now feeds the target.
+
+<Frame caption="Dragging from a Text node's output handle to an Image node's input handle">
+  <img src="/images/connect-nodes.png" alt="A connection being dragged between two nodes' handles" />
+</Frame>
+
+There's a faster way when the next node doesn't exist yet: hover a handle and a **radial menu** fans out with every node type that connection supports. Pick one, and Flowy creates the new node already wired up.
+
+To remove a connection, select the edge and press <kbd>Delete</kbd>.
+
+## Run a generation
+
+Write a prompt in the node's prompt bar and click **Run**. The node shows its progress, and when the generation finishes the result appears in the content area — the node is auto-named from your prompt so your canvas stays readable.
+
+## How outputs feed inputs
+
+Connections are how context flows. Everything wired into a node becomes material for its next run: connect **Text → Image** and the text drives the image prompt; connect **Image → Video** and the image conditions the clip; connect **Audio → Composition** and the sound lands on the timeline. Each node type accepts specific inputs and produces specific outputs — the radial menu only ever offers compatible types, so you can't wire something a node can't use.
+
+## Node types
+
+<CardGroup cols={2}>
+  <Card title="Text" icon="pen-line" href="/canvas/nodes/text">
+    Prompts, scripts, and notes that feed every other node.
+  </Card>
+  <Card title="Image" icon="image" href="/canvas/nodes/image">
+    Generate stills up to 4K, with references and photobooth mode.
+  </Card>
+  <Card title="Video" icon="video" href="/canvas/nodes/video">
+    AI video clips with two engines: Default and Compose.
+  </Card>
+  <Card title="Audio" icon="music" href="/canvas/nodes/audio">
+    Sound effects, music, and voiceover from a prompt.
+  </Card>
+  <Card title="3D" icon="cube" href="/canvas/nodes/3d">
+    3D models from images and text, with a built-in orbit viewer.
+  </Card>
+  <Card title="Vector" icon="bezier-curve" href="/canvas/nodes/vector">
+    SVG graphics — generate from text or vectorize an image.
+  </Card>
+  <Card title="Flam" icon="wand-magic-sparkles" href="/canvas/nodes/flam">
+    Alpha-channel motion clips you can composite over anything.
+  </Card>
+  <Card title="Storyboard" icon="film" href="/canvas/nodes/storyboard">
+    Scene-by-scene plans with a story bible, fanned out to nodes.
+  </Card>
+  <Card title="Composition" icon="layer-group" href="/canvas/nodes/composition">
+    A layered timeline inside the canvas that opens in Studio.
+  </Card>
+  <Card title="Utility nodes" icon="diagram-project" href="/canvas/nodes/utility-nodes">
+    Router, Group, Sticky Note, Brand Kit, and Model nodes.
+  </Card>
+</CardGroup>
+
+<Tip>
+  Not sure which node to start with? Ask the [AI assistant](/canvas/ai/overview) to plan and add nodes for you.
+</Tip>
