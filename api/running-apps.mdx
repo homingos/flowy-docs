@@ -1,19 +1,19 @@
 ---
-title: "Run an app"
-description: "The end-to-end flow: find an app, send inputs, and poll for the result."
+title: "Run a flow"
+description: "The end-to-end path: find a flow, send inputs, and poll for the result."
 ---
 
-Running an app is **asynchronous**: you start a run and get a `runId` back immediately, then poll until it completes. This guide walks through the whole flow.
+Running a flow is **asynchronous**: you start a run and get a `runId` back immediately, then poll until it completes. This guide walks through the whole thing.
 
 All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication](/api/authentication).
 
 <Note>
-  This flow touches all three [scopes](/api/permissions): listing and fetching an app needs `apps:read`, starting the run needs `runs:write`, and polling needs `runs:read`. A **Full**-access key has all three; a **Read-only** key can do every step except start the run.
+  This touches all three [scopes](/api/permissions): listing and fetching a flow needs `apps:read`, starting the run needs `runs:write`, and polling needs `runs:read`. A **Full**-access key has all three; a **Read-only** key can do every step except start the run.
 </Note>
 
 <Steps>
-  <Step title="Find the app you want to run">
-    List the apps in your workspace and grab an app's `id`.
+  <Step title="Find the flow you want to run">
+    List the flows in your workspace and grab a flow's `id`.
 
     <CodeGroup>
     ```bash cURL
@@ -42,8 +42,8 @@ All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication]
     ```
   </Step>
 
-  <Step title="Look up the app's inputs">
-    Fetch the app to see which inputs it expects. Each input's `name` (its kebab-cased title) is the `node_id` you'll send in the run request.
+  <Step title="Look up the flow's inputs">
+    Fetch the flow to see which inputs it expects. Each input's `name` (its kebab-cased title) is the `node_id` you'll send in the run request.
 
     <CodeGroup>
     ```bash cURL
@@ -79,7 +79,7 @@ All examples assume you've set `FLOWY_API` and `FLOWY_KEY` from [Authentication]
   </Step>
 
   <Step title="Start the run">
-    `POST` to the app's `runs` endpoint with an `inputs` **array**. Each entry's `node_id` is the input's `name` from the previous step. Set its value with **`asset_url`** for media inputs (a URL) or **`prompt`** for text inputs (the text itself). You get a `runId` back right away.
+    `POST` to the flow's `runs` endpoint with an `inputs` **array**. Each entry's `node_id` is the input's `name` from the previous step. Set its value with **`asset_url`** for media inputs (a URL) or **`prompt`** for text inputs (the text itself). You get a `runId` back right away.
 
     <CodeGroup>
     ```bash cURL

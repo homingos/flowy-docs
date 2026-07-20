@@ -25,7 +25,7 @@ In general: `2xx` means success, `4xx` means the request was rejected and usuall
   <Accordion title="400 — Bad request">
     **Problem:** The request was malformed — for example, invalid JSON or a missing required input.
 
-    **Solution:** Check the request body against the app's input schema from [Get an app](/api/get-app). `inputs` must be an array of entries, each with a `node_id` (the input's `name` from the schema) and a value — `asset_url` for media inputs or `prompt` for text inputs.
+    **Solution:** Check the request body against the flow's input schema from [Get a flow](/api/get-app). `inputs` must be an array of entries, each with a `node_id` (the input's `name` from the schema) and a value — `asset_url` for media inputs or `prompt` for text inputs.
   </Accordion>
 
   <Accordion title="401 — Unauthorized">
@@ -41,15 +41,15 @@ In general: `2xx` means success, `4xx` means the request was rejected and usuall
   </Accordion>
 
   <Accordion title="403 — Forbidden">
-    **Problem:** The request is authenticated but not allowed. Common causes: the key lacks the required [scope](/api/permissions); the app is private and not in the key's workspace; the run belongs to another workspace; or a publishable key was used from a domain that isn't allowlisted.
+    **Problem:** The request is authenticated but not allowed. Common causes: the key lacks the required [scope](/api/permissions); the flow is private and not in the key's workspace; the run belongs to another workspace; or a publishable key was used from a domain that isn't allowlisted.
 
-    **Solution:** Grant the key the needed scope, use a key from the app's own workspace, or call from an allowed domain.
+    **Solution:** Grant the key the needed scope, use a key from the flow's own workspace, or call from an allowed domain.
   </Accordion>
 
   <Accordion title="404 — Not found">
-    **Problem:** No app or run matches the `appId` / `runId` in the path.
+    **Problem:** No flow or run matches the `appId` / `runId` in the path.
 
-    **Solution:** Double-check the id. List apps with [List apps](/api/list-apps), and use the `runId` returned by [Start a run](/api/start-run).
+    **Solution:** Double-check the id. List flows with [List flows](/api/list-apps), and use the `runId` returned by [Start a run](/api/start-run).
   </Accordion>
 
   <Accordion title="429 — Too many requests">

@@ -3,13 +3,14 @@ title: "Permissions"
 description: "Scope an API key to exactly the operations it needs."
 ---
 
-Every API key carries a set of **scopes** that decide which operations it can perform. Giving a key the narrowest scopes it needs limits the blast radius if it ever leaks — a read‑only key, for instance, can inspect apps and read run results but can never spend a credit.
+Every API key carries a set of **scopes** that decide which operations it can perform. Giving a key the narrowest scopes it needs limits the blast radius if it ever leaks — a read‑only key, for instance, can inspect flows and read run results but can never spend a credit.
 
 ## Scopes
 
 | Scope | Grants |
 | --- | --- |
-| `apps:read` | List apps and read an app's input/output schema |
+| `apps:read` | List flows and read a flow's input/output schema |
+| `apps:write` | Create and publish a flow |
 | `runs:read` | Poll a run's status and outputs |
 | `runs:write` | Start runs (spends credits) |
 
@@ -19,14 +20,14 @@ When you create a key you pick a preset. Internally it resolves to the scopes ab
 
 <CardGroup cols={3}>
   <Card title="Full">
-    `apps:read` · `runs:read` · `runs:write`
+    `apps:read` · `apps:write` · `runs:read` · `runs:write`
 
-    Everything — discover apps, start runs, and read results.
+    Everything — discover flows, create/publish flows, start runs, and read results.
   </Card>
   <Card title="Read-only">
     `apps:read` · `runs:read`
 
-    Inspect apps and read run results, but **cannot start runs**. A good default for keys that only poll.
+    Inspect flows and read run results, but **cannot start runs**. A good default for keys that only poll.
   </Card>
   <Card title="Restricted">
     You choose
@@ -40,6 +41,7 @@ When you create a key you pick a preset. Internally it resolves to the scopes ab
 | Endpoint | Required scope |
 | --- | --- |
 | `GET /v1/apps` | `apps:read` |
+| `POST /v1/apps` | `apps:write` |
 | `GET /v1/apps/{appId}` | `apps:read` |
 | `POST /v1/apps/{appId}/runs` | `runs:write` |
 | `GET /v1/runs/{runId}` | `runs:read` |
@@ -51,7 +53,7 @@ A request to an endpoint whose scope the key doesn't hold returns `403`:
 ```
 
 <Tip>
-  A common, safe setup for a browser **publishable** key is `apps:read` + `runs:write` + `runs:read` (so the page can fetch the app's inputs, start a run, and show the result) combined with a tight domain allowlist and a daily spend cap.
+  A common, safe setup for a browser **publishable** key is `apps:read` + `runs:write` + `runs:read` (so the page can fetch the flow's inputs, start a run, and show the result) combined with a tight domain allowlist and a daily spend cap.
 </Tip>
 
 ## Editing a key's permissions

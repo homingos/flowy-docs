@@ -1,18 +1,18 @@
 ---
 title: "Introduction"
-description: "Run the apps you build in Flowy from your own code over a simple HTTP API."
+description: "Run the flows you build in Flowy from your own code over a simple HTTP API."
 "og:image": "/images/hero.png"
 ---
 
-The Flowy API lets you run **apps** — the mini-apps you publish from a canvas — programmatically. With it you can:
+The Flowy API lets you run **flows** — the reusable tools you publish from a canvas — programmatically. With it you can:
 
-- **List the apps** in your workspace
-- **Read an app's inputs and outputs** so you know what to send
+- **List the flows** in your workspace
+- **Read a flow's inputs and outputs** so you know what to send
 - **Start a run** with your own inputs
 - **Poll a run** and download its results — images, video, audio, and more
 
 <Note>
-  An **app** is a canvas you've turned into a reusable tool by marking its input and output nodes. Anyone can fill in the inputs and run it. Learn more in [Concepts](/getting-started/concepts).
+  A **flow** is a canvas you've turned into a reusable tool by marking its input and output nodes. Anyone can fill in the inputs and run it. Learn more in [Concepts](/getting-started/concepts).
 </Note>
 
 ## Base URL
@@ -95,10 +95,10 @@ There's no official SDK yet — but the API is described by an [OpenAPI 3](https
     Send your key as a Bearer token on every request.
   </Card>
   <Card title="Permissions" icon="shield-halved" href="/api/permissions">
-    Scope a key to exactly what it needs: read apps, read runs, start runs.
+    Scope a key to exactly what it needs: read flows, read runs, start runs.
   </Card>
-  <Card title="Run an app" icon="play" href="/api/running-apps">
-    The end-to-end flow: list apps, start a run, poll for the result.
+  <Card title="Run a flow" icon="play" href="/api/running-apps">
+    The end-to-end path: list flows, start a run, poll for the result.
   </Card>
   <Card title="Rate limits" icon="gauge-high" href="/api/rate-limits">
     Per-minute limits, the `X-RateLimit-*` headers, and backing off on `429`.

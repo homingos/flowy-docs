@@ -197,10 +197,11 @@
             "group": "Endpoints",
             "pages": [
               {
-                "group": "Apps",
+                "group": "Flows",
                 "pages": [
                   "api/list-apps",
                   "api/get-app",
+                  "api/create-flow",
                   "api/start-run",
                   "api/get-run"
                 ]

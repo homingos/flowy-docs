@@ -1,0 +1,60 @@
+---
+title: "Create a flow"
+description: "Publish a canvas project as a reusable flow. Bills nothing; requires apps:write."
+---
+
+`POST /v1/apps` turns a canvas project into a reusable flow — the same thing the
+Studio "Publish" button does, over the API. It needs the `apps:write`
+[scope](/api/permissions).
+
+<Note>
+  A flow is a **published canvas**: creating one needs the authoring payload
+  (`input_node_ids`, `output_node_ids`, `param_schema`, and the compiled
+  `executable_graph`) that Flowy Studio builds from the canvas. Today that
+  payload is produced by the Studio editor — a plain API caller must supply it.
+</Note>
+
+## Request
+
+`POST /v1/apps`
+
+| Field | Type | Notes |
+| --- | --- | --- |
+| `source_project_id` | string | The canvas project to publish (from [List projects](/api/list-projects)). |
+| `title` | string | The flow's title. |
+| `description` | string | Optional. |
+| `input_node_ids` | string[] | Node ids exposed as the flow's inputs. |
+| `output_node_ids` | string[] | Node ids exposed as the flow's outputs. |
+| `param_schema` | object | The input/output parameter schema (names, kinds, labels). |
+| `executable_graph` | object | The runnable node graph compiled from the canvas. |
+| `thumbnail_url` | string | Optional; falls back to the project's canvas thumbnail. |
+| `publish` | boolean | `true` publishes immediately; otherwise the flow is a draft. |
+
+```bash cURL
+curl -X POST "$FLOWY_API/apps" \
+  -H "Authorization: Bearer $FLOWY_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "source_project_id": "PROJECT_ID",
+    "title": "Headshot generator",
+    "input_node_ids": ["node_1"],
+    "output_node_ids": ["node_9"],
+    "param_schema": { },
+    "executable_graph": { },
+    "publish": true
+  }'
+```
+
+```json Response
+{ "data": {
+  "id": "507f1f77bcf86cd799439011",
+  "title": "Headshot generator",
+  "published": true,
+  "inputs": [ { "nodeId": "node_1", "name": "selfie", "kind": "image_url", "required": true } ],
+  "outputs": [ { "nodeId": "node_9", "name": "headshot", "outputType": "image" } ]
+} }
+```
+
+The flow is created in the key's workspace and owned by the key's actor. Once
+published, run it with [Start a run](/api/start-run) and poll with
+[Get a run](/api/get-run).
