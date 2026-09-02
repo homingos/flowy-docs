@@ -259,9 +259,52 @@
           "inputs": {
             "type": "array",
             "items": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "nodeId": {
+                  "type": "string",
+                  "example": "node_1"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The public key to use as `node_id` in the run request.",
+                  "example": "selfie"
+                },
+                "label": {
+                  "type": "string",
+                  "example": "Your photo"
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "image_url",
+                    "video_url",
+                    "audio_url",
+                    "text"
+                  ],
+                  "example": "image_url"
+                },
+                "required": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "arity": {
+                  "type": "object",
+                  "description": "Present on a VARIADIC input: the run accepts between `min` and `max` values for this one key — send them as an array-valued `asset_url`/`prompt`.",
+                  "properties": {
+                    "min": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "max": {
+                      "type": "integer",
+                      "example": 4
+                    }
+                  }
+                }
+              }
             },
-            "description": "Input field schema; each item's nodeId is the key used in the run request inputs map."
+            "description": "Input field schema; each item's `name` is the `node_id` to send in the run request's `inputs` array. Items carrying `arity` are variadic (array-valued)."
           },
           "outputs": {
             "type": "array",
@@ -702,6 +745,61 @@
             "format": "date-time"
           }
         }
+      },
+      "RunInputEntry": {
+        "type": "object",
+        "required": [
+          "node_id"
+        ],
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "description": "The input's `name` from GET /v1/apps/{appId} (its kebab-cased title). Raw node ids are also accepted for flows published before titles.",
+            "example": "selfie"
+          },
+          "asset_url": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ],
+            "description": "Media value: a publicly fetchable URL. An ARRAY provides multiple values for a variadic input (one published with `arity`): between `arity.min` and `arity.max` entries, in order."
+          },
+          "prompt": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ],
+            "description": "Text value. An ARRAY provides multiple values for a variadic input (one published with `arity`): between `arity.min` and `arity.max` entries, in order."
+          },
+          "asset_urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Plural equivalent of an array-valued `asset_url`; entries are appended in order."
+          },
+          "prompts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Plural equivalent of an array-valued `prompt`."
+          }
+        }
       }
     }
   },
@@ -888,11 +986,11 @@
                 "type": "object",
                 "properties": {
                   "inputs": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/RunInputEntry"
                     },
-                    "description": "Map of input nodeId -> value (text, or a URL for media inputs). Get the keys from GET /v1/apps/{appId}."
+                    "description": "One entry per flow input. A variadic input (see `arity` on GET /v1/apps/{appId}) takes ONE entry whose `asset_url`/`prompt` is an array of its values; values beyond `arity.max` are ignored. Repeating the same `node_id` across entries is an accepted equivalent."
                   }
                 }
               },

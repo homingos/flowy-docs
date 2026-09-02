@@ -25,7 +25,7 @@ Studio "Publish" button does, over the API. It needs the `apps:write`
 | `description` | string | Optional. |
 | `input_node_ids` | string[] | Node ids exposed as the flow's inputs. |
 | `output_node_ids` | string[] | Node ids exposed as the flow's outputs. |
-| `param_schema` | object | The input/output parameter schema (names, kinds, labels). |
+| `param_schema` | object | The input/output parameter schema (names, kinds, labels). An input carrying `arity: { min, max }` is a **variable input** — at run time it takes an array of between `min` and `max` values under its one key. |
 | `executable_graph` | object | The runnable node graph compiled from the canvas. |
 | `thumbnail_url` | string | Optional; falls back to the project's canvas thumbnail. |
 | `publish` | boolean | `true` publishes immediately; otherwise the flow is a draft. |
