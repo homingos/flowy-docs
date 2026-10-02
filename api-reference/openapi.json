@@ -38,6 +38,10 @@
       "description": "Read the workspace's credit balance."
     },
     {
+      "name": "Session",
+      "description": "First-party session step-up for OAuth-token principals."
+    },
+    {
       "name": "Spec",
       "description": "The machine-readable OpenAPI document."
     }
@@ -798,6 +802,35 @@
               "type": "string"
             },
             "description": "Plural equivalent of an array-valued `prompt`."
+          }
+        }
+      },
+      "V1SessionResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "description": "The account's profile projection — the same shape GET /profile returns."
+          },
+          "token": {
+            "type": "string",
+            "description": "A short-lived access JWT (carries the session id)."
+          },
+          "refresh_token": {
+            "type": "string",
+            "description": "Opaque refresh/rotation credential."
+          },
+          "expires_in": {
+            "type": "integer",
+            "description": "Access token lifetime, in seconds."
+          },
+          "session_id": {
+            "type": "string",
+            "description": "The opaque session id."
+          },
+          "workspace_id": {
+            "type": "string",
+            "description": "The access token's bound workspace (hex) — the wallet to default to on a later /v1 call that omits workspace_id."
           }
         }
       }
@@ -2274,6 +2307,74 @@
           },
           "404": {
             "description": "Not found"
+          }
+        }
+      }
+    },
+    "/v1/session": {
+      "post": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Exchange an OAuth access token for a session",
+        "description": "Mints the same access+refresh session pair the web sign-in returns, for the account behind the bearer token. Restricted to OAuth-token principals — a workspace API key (`flowy_…` / `flowy_pk_…`) is refused with 403, since the minted session is NOT scope-limited like the OAuth grant it is exchanged from.",
+        "operationId": "exchangeSession",
+        "responses": {
+          "200": {
+            "description": "The minted session",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/V1SessionResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The credential is not an OAuth access token, or the account is suspended",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The account behind the token no longer exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
